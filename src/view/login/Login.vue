@@ -102,6 +102,7 @@ import router from "../../router/router.js";
 import { useMessage } from 'naive-ui';
 import {getCodeImg} from "/src/api/login";
 import useUserStore from "/src/store/modules/user";
+import {getEnterpriseInfoToLogin} from "../../api/enterprise.js";
 const userStore = useUserStore()
 
 const isSignUpMode = ref(false);
@@ -156,6 +157,9 @@ function getCode() {
 function handleLoginSubmit() {
   // 调用action的登录方法
   userStore.login(form.value).then(res => {
+    getEnterpriseInfoToLogin({username: form.value.username}).then(res => {
+      localStorage.setItem("user",JSON.stringify(res.data))
+    })
     message.success("登录成功")
     router.push("/MasterConsole")
   }).catch(err => {
