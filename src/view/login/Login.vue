@@ -14,7 +14,9 @@
             <svg class="fas fa-password" aria-hidden="true">
               <use xlink:href="#v-icon-mima"></use>
             </svg>
-            <input type="password" placeholder="密码" v-model="form.password">
+            <input placeholder="密码" v-model="form.password" :type="showPassword ? 'text' : 'password'">
+            <img src="../../assets/img/show.png" class="eyes" v-if="!showPassword" @click="toggleShowPassword">
+            <img src="../../assets/img/hide.png" class="eyes" v-else @click="toggleShowPassword">
           </div>
           <div class="input-field code" style="background: #fff">
             <div class="box left_box">
@@ -126,7 +128,21 @@ const success =  () => {
       "'登录成功"
   )
 }
-// 登录
+
+// 显示隐藏
+const showPassword = ref(false);
+
+const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+  const passwordInput = document.querySelector('input[type="password"]');
+  if (passwordInput) {
+    if (showPassword.value) {
+      passwordInput.setAttribute('type', 'text');
+    } else {
+      passwordInput.setAttribute('type', 'password');
+    }
+  }
+};
 
 function getCode() {
   getCodeImg().then(res => {
@@ -165,6 +181,17 @@ getCode()
   img {
     cursor: pointer;
     vertical-align: middle;
+  }
+}
+.input-field {
+  position: relative;
+  .eyes {
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    height: 30px;
   }
 }
 </style>
