@@ -6,7 +6,7 @@
     <n-avatar
         round
         :size="48"
-        src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+        :src="enterprise.avatar"
     />
     <n-form
         ref="formRef"
@@ -60,7 +60,7 @@ import {getEnterpriseInfo} from "../../api/enterprise.js";
 const inverted = ref(false)
 
 const enterpriseName = ref(JSON.parse(localStorage.getItem("user")).nickName)
-const enterprise = ref(null)
+const enterprise = ref({})
 getEnterpriseInfo({enterprise: enterpriseName.value}).then(res => {
   enterprise.value = res.enterprise
 })

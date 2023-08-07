@@ -41,5 +41,6 @@ export default defineConfig({
     alias: {
       'vue-router': 'vue-router/dist/vue-router.esm-bundler.js',
     }
-  }
+  },
+
 })
