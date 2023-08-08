@@ -14,25 +14,31 @@ import CarbonCertificate from "../view/Inquire/CarbonCertificate.vue";
 import QueryCarbonHistory from "../view/Inquire/QueryCarbonHistory.vue";
 import QueryTransaction from "../view/Inquire/QueryTransaction.vue";
 import Leader from "../view/Leader/Leader.vue";
-import {getToken, getUserKey, removeUserKey} from "../utils/auth.js";
-import useUserStore from "../store/modules/user.js";
+
 
 const routes = [
-    {path: '/', component: LoginHome },
+    {
+        path: '/',
+        name: '数字碳链',
+        meta: {title: "数字碳链"},
+        component: LoginHome
+    },
     {
         path: '/404',
         name: 'NotFound',
+        meta: {title: "没有找到页面"},
         component: component => import("/src/view/Error/404.vue")
     },
     {
         path: '/401',
         name: 'NotAuth',
+        meta: {title: "没有权限"},
         component: component => import("/src/view/Error/401.vue")
     },
     {
         path: '/Login',
         name: 'Login',
-        meta: {title: "登录"},
+        meta: {title: "登录/注册"},
         component: Login
     },
     {
