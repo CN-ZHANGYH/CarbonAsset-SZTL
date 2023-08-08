@@ -42,24 +42,63 @@ const routes = [
         children:[
             {
                 path:'/MasterConsole',
-                meta: {title: "登录"},
+                meta: {title: "主控台"},
                 component:MasterConsole
             },
             {
                 path:'/WorkConsole',
-                meta: {title: "登录"},
+                meta: {title: "工作台"},
                 component:WorkConsole
             },
-            {path:'/UploadQualification',component:UploadQualification},
-            {path:'/InquireQualification',component:InquireQualification},
-            {path:'/ApplicationCarbon',component:ApplicationCarbon},
-            {path:'/GenerateCarbon',component:GenerateCarbon},
-            {path:'/SellingCarbon',component:SellingCarbon},
-            {path:'/BuyCarbon',component:BuyCarbon},
-            {path:'/CarbonCertificate',component:CarbonCertificate},
-            {path: '/QueryCarbonHistory',component:QueryCarbonHistory},
-            {path: '/QueryTransaction',component:QueryTransaction},
-            {path: '/Leader',component:Leader}
+            {
+                path:'/UploadQualification',
+                meta: {title: "企业上传资质"},
+                component:UploadQualification
+            },
+            {
+                path:'/InquireQualification',
+                meta: {title: "企业基本信息"},
+                component:InquireQualification
+            },
+            {
+                path:'/ApplicationCarbon',
+                meta: {title: "申请碳排放额度"},
+                component:ApplicationCarbon
+            },
+            {
+                path:'/GenerateCarbon',
+                meta: {title: "碳排放报告"},
+                component:GenerateCarbon
+            },
+            {
+                path:'/SellingCarbon',
+                meta: {title: "出售碳资产"},
+                component:SellingCarbon
+            },
+            {
+                path:'/BuyCarbon',
+                meta: {title: "购买碳资产"},
+                component:BuyCarbon
+            },
+            {
+                path:'/CarbonCertificate',
+                meta: {title: "碳证书"},
+                component:CarbonCertificate
+            },
+            {
+                path: '/QueryCarbonHistory',
+                meta: {title: "碳排放记录"},
+                component:QueryCarbonHistory
+            },
+            {
+                path: '/QueryTransaction',
+                meta: {title: "碳交易记录"},
+                component:QueryTransaction
+            },
+            {
+                path: '/排行榜',
+                component:Leader
+            }
         ]
     },
 ];
