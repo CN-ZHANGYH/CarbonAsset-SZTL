@@ -1,22 +1,12 @@
 <template>
   <n-card title="碳排放记录">
-    <CarbonSchedule/>
+    <CarbonEmissionHistory/>
   </n-card>
 </template>
 
-<script lang="ts">
-import CarbonSchedule from "../../components/Work/CarbonSchedule.vue"
-import {defineComponent, ref} from "vue";
-export default defineComponent({
-  components: {
-    CarbonSchedule,
-  },
-  setup() {
-    return {
-      inverted: ref(false),
-    }
-  }
-})
+<script setup>
+import CarbonEmissionHistory from "../../components/Work/CarbonEmissionHistory.vue"
+
 </script>
 
 <style scoped lang='less'>
@@ -24,4 +14,6 @@ export default defineComponent({
   height: 100vh;
   margin-bottom: 80px;
 }
+
+
 </style>

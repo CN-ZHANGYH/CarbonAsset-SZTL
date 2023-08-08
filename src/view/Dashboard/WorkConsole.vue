@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import Icon from "../../components/Nav/Icon.vue"
-import CarbonSchedule from "../../components/Work/CarbonSchedule.vue"
+import CarbonSchedule from "../../components/Work/CarbonTransaction.vue"
 import CarbonTrading from "../../components/Work/CarbonTrading.vue";
 import CarbonPicture from "../../components/Work/CarbonPicture.vue";
 import {defineComponent, ref} from "vue";

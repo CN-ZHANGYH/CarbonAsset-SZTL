@@ -108,12 +108,11 @@ const createData = (): RowData[] => [
 
 export default defineComponent({
   setup() {
-    const message = useMessage()
     return {
       data: createData(),
       columns: createColumns({
         sendMail(rowData) {
-          message.info('send mail to ' + rowData.name)
+
         }
       })
     }

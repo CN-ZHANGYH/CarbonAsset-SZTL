@@ -12,31 +12,16 @@
 </template>
 
 
-<script lang="ts">
-import {defineComponent, ref} from "vue";
-import { useMessage } from 'naive-ui'
+<script setup>
 import { useRouter } from 'vue-router';
 import {RibbonOutline} from '@vicons/ionicons5'
-export default defineComponent({
-  components: {
-    RibbonOutline
-  },
-  setup() {
-    const message = useMessage();
-    const router = useRouter();
-    const handleGridItemClick = () => {
-      message.loading('正在前往排行榜');
-      setTimeout(() => {
+const router = useRouter();
+const handleGridItemClick = () => {
+    window.$message.loading('正在前往排行榜');
+    setTimeout(() => {
         router.push({ path: '/InquireQualification' });
-      }, 5000);
-    };
-    return {
-      inverted: ref(false),
-      RibbonOutline,
-      handleGridItemClick
-    }
-  }
-})
+    }, 5000);
+};
 </script>
 
 <style scoped lang='less'>

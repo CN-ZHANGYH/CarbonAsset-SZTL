@@ -12,31 +12,17 @@
 </template>
 
 
-<script lang="ts">
-import {defineComponent, ref} from "vue";
+<script setup>
 import { useMessage } from 'naive-ui'
 import { useRouter } from 'vue-router';
 import {NewspaperOutline} from '@vicons/ionicons5'
-export default defineComponent({
-  components: {
-    NewspaperOutline
-  },
-  setup() {
-    const message = useMessage();
-    const router = useRouter();
-    const handleGridItemClick = () => {
-      message.loading('正在前往企业资质信息');
-      setTimeout(() => {
+const router = useRouter();
+const handleGridItemClick = () => {
+    window.$message.loading('正在前往企业资质信息');
+    setTimeout(() => {
         router.push({ path: '/InquireQualification' });
-      }, 5000);
-    };
-    return {
-      inverted: ref(false),
-      NewspaperOutline,
-      handleGridItemClick
-    }
-  }
-})
+    }, 5000);
+};
 </script>
 
 <style scoped lang='less'>

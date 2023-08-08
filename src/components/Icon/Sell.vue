@@ -12,31 +12,16 @@
 </template>
 
 
-<script lang="ts">
-import {defineComponent, ref} from "vue";
-import { useMessage } from 'naive-ui'
+<script setup>
 import { useRouter } from 'vue-router';
 import {ServerSharp} from '@vicons/ionicons5'
-export default defineComponent({
-  components: {
-    ServerSharp
-  },
-  setup() {
-    const message = useMessage();
-    const router = useRouter();
-    const handleGridItemClick = () => {
-      message.loading('正在前往出售碳额度场景');
-      setTimeout(() => {
+const router = useRouter();
+const handleGridItemClick = () => {
+    window.$message.loading('正在前往出售碳额度场景');
+    setTimeout(() => {
         router.push({ path: '/SellingCarbon' });
-      }, 5000);
-    };
-    return {
-      inverted: ref(false),
-      ServerSharp,
-      handleGridItemClick
-    }
-  }
-})
+    }, 5000);
+};
 </script>
 
 <style scoped lang='less'>

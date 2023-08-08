@@ -2,19 +2,21 @@
   <div class="container" :class="{ 'sign-up-mode': isSignUpMode }">
     <div class="forms-container">
       <div class="sign-in-signup">
-        <n-form class="sign-in-form" :model="form">
+        <n-form class="sign-in-form" :model="form" autocomplete="on">
           <h2 class="title">登录</h2>
           <div class="input-field">
             <svg class="fas fa-username" aria-hidden="true">
               <use xlink:href="#v-icon-yonghu"></use>
             </svg>
-            <input type="text" placeholder="用户名" v-model="form.username">
+            <input type="text" placeholder="用户名" v-model="form.username"/>
           </div>
           <div class="input-field">
             <svg class="fas fa-password" aria-hidden="true">
               <use xlink:href="#v-icon-mima"></use>
             </svg>
-            <input type="password" placeholder="密码" v-model="form.password">
+            <input placeholder="密码" v-model="form.password" :type="showPassword ? 'text' : 'password'">
+            <img src="../../assets/img/show.png" class="eyes" v-if="!showPassword" @click="toggleShowPassword">
+            <img src="../../assets/img/hide.png" class="eyes" v-else @click="toggleShowPassword">
           </div>
           <div class="input-field code" style="background: #fff">
             <div class="box left_box">
@@ -27,46 +29,46 @@
           <input type="submit" value="登录" class="btn solid" @click="handleLoginSubmit">
         </n-form>
 
-<!--    注册    -->
-        <form action="" class="sign-up-form">
+        <!--    注册    -->
+        <n-form  class="sign-up-form" :model="registerForm">
           <h2 class="title">注册</h2>
 
           <div class="input-field">
             <svg class="fas fa-username" aria-hidden="true">
               <use xlink:href="#v-icon-yonghu"></use>
             </svg>
-            <input type="text" placeholder="公司" v-model="company">
+            <input type="text" placeholder="公司" v-model="registerForm.company">
           </div>
 
           <div class="input-field">
             <svg class="fas fa-password" aria-hidden="true">
               <use xlink:href="#v-icon-yonghu"></use>
             </svg>
-            <input type="text" placeholder="用户" v-model="username">
+            <input type="text" placeholder="用户" v-model="registerForm.username">
           </div>
 
           <div class="input-field">
             <svg class="fas fa-email" aria-hidden="true">
               <use xlink:href="#v-icon-mail"></use>
             </svg>
-            <input type="text" placeholder="邮箱" v-model="email">
+            <input type="text" placeholder="邮箱" v-model="registerForm.email">
           </div>
 
           <div class="input-field">
             <svg class="fas fa-password" aria-hidden="true">
               <use xlink:href="#v-icon-mima"></use>
             </svg>
-            <input type="password" placeholder="密码" v-model="password">
+            <input type="password" placeholder="密码" v-model="registerForm.password">
           </div>
 
           <div class="input-field code" style="background: #fff">
             <div class="box left_box">
-              <input type="text" placeholder="验证码" style="height: 55px;padding-left: 30px">
+              <input type="text" placeholder="验证码" style="height: 55px;padding-left: 30px" v-model="registerForm.code">
             </div>
-            <div class="box right_box"></div>
+              <n-button style="margin-top: 3px;height: 50px" round type="success" strong secondary @click="sendCode" size="large">发送验证码</n-button>
           </div>
           <input type="submit" value="注册" class="btn solid" @click="handleRegisterSubmit">
-        </form>
+        </n-form>
       </div>
     </div>
 
@@ -97,13 +99,12 @@
 <script setup>
 import { ref } from 'vue';
 import router from "../../router/router.js";
-import { useMessage } from 'naive-ui';
-import {getCodeImg} from "/src/api/login";
+import {getCodeImg, sendEmailCode,register} from "/src/api/login";
 import useUserStore from "/src/store/modules/user";
+import {getEnterpriseInfoToLogin} from "../../api/enterprise.js";
 const userStore = useUserStore()
 
 const isSignUpMode = ref(false);
-const message = useMessage();
 
 const codeUrl = ref(null)
 const formRef = ref(null);
@@ -117,16 +118,33 @@ const form = ref({
 });
 
 
+const registerForm = ref({
+    username: "",
+    company: "",
+    password: "",
+    email: "",
+    code: ""
+})
+
+
 const toggleSignUpMode = () => {
   isSignUpMode.value = !isSignUpMode.value;
 };
 
-const success =  () => {
-  message.success(
-      "'登录成功"
-  )
-}
-// 登录
+// 显示隐藏
+const showPassword = ref(false);
+
+const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+  const passwordInput = document.querySelector('input[type="password"]');
+  if (passwordInput) {
+    if (showPassword.value) {
+      passwordInput.setAttribute('type', 'text');
+    } else {
+      passwordInput.setAttribute('type', 'password');
+    }
+  }
+};
 
 function getCode() {
   getCodeImg().then(res => {
@@ -140,15 +158,36 @@ function getCode() {
 function handleLoginSubmit() {
   // 调用action的登录方法
   userStore.login(form.value).then(res => {
-    message.success("登录成功")
+    getEnterpriseInfoToLogin({username: form.value.username}).then(res => {
+      localStorage.setItem("user",JSON.stringify(res.data))
+    })
+    window.$message.success("登录成功")
     router.push("/MasterConsole")
   }).catch(err => {
-    console.log(err)
-    // 重新获取验证码
-    if (captchaEnabled.value) {
-      getCode();
-    }
+      // 重新获取验证码
+      if (captchaEnabled.value) {
+          getCode();
+      }
   });
+}
+
+function sendCode(){
+    if (registerForm.value.email == ""){
+        return window.$message.error("邮箱不能为空")
+    }
+    sendEmailCode({email: registerForm.value.email}).then(res => {
+        window.$message.success(res.msg)
+    }).catch(() => {
+        window.$message.error("发送验证码失败")
+    })
+}
+
+function handleRegisterSubmit(){
+    register(registerForm.value).then(() => {
+        window.$message.success("注册成功")
+    }).catch(() => {
+        window.$message.error("注册失败")
+    })
 }
 
 getCode()
@@ -167,4 +206,28 @@ getCode()
     vertical-align: middle;
   }
 }
+.input-field {
+  position: relative;
+  .eyes {
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    height: 30px;
+  }
+
+}
+
+.login-code-img {
+  margin-top: 5px;
+  height: 40px;
+  padding-left: 12px;
+
+}
+
+
+
+
 </style>
+

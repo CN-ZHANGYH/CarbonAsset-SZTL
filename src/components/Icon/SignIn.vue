@@ -12,29 +12,17 @@
 </template>
 
 
-<script lang="ts">
+<script setup>
 import {defineComponent, ref} from "vue";
-import { useMessage } from 'naive-ui'
-import {RocketOutline
-} from '@vicons/ionicons5'
-export default defineComponent({
-  components: {
-    RocketOutline
-  },
-  setup() {
-    const message = useMessage();
-    const handleGridItemClick = () => {
-      message.success('签到成功！');
-      message.success('当前积分为：999！');
-      message.warning('签到已成功，请勿再次点击');
-    };
-    return {
-      inverted: ref(false),
-      RocketOutline,
-      handleGridItemClick
-    }
-  }
-})
+import {RocketOutline} from '@vicons/ionicons5'
+
+const inverted = ref(false)
+
+const handleGridItemClick = () => {
+    window.$message.success('签到成功！');
+    window.$message.success('当前积分为：999！');
+    window.$message.warning('签到已成功，请勿再次点击');
+};
 </script>
 
 <style scoped lang='less'>

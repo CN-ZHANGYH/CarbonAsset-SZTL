@@ -9,11 +9,10 @@
           :options="options"
           placement="bottom-start"
           trigger="click"
-          :render-label="renderDropdownLabel"
-          :render-icon="renderDropdownIcon"
+          @select="handleSelect"
       >
         <n-button>
-          <n-avatar round size="small" src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" />
+          <n-avatar round size="small" :src="imageUrl" />
           企业资料
         </n-button>
       </n-dropdown>
@@ -21,48 +20,61 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import { NIcon, NMenu  } from 'naive-ui';
 import { h, defineComponent } from 'vue'
-import type { VNodeChild } from 'vue'
-import type { DropdownOption } from 'naive-ui'
-import {LogOutOutline as LogoutIcon} from '@vicons/ionicons5'
-import {RouterLink} from "vue-router";
+import {
+    PersonCircleOutline as UserIcon,
+    Pencil as EditIcon,
+    LogOutOutline as LogoutIcon
+} from "@vicons/ionicons5";
+import router from "../../router/router.js";
+import useUserStore from "../../store/modules/user.js";
+const imageUrl = ref("")
 
+const renderIcon = (icon) => {
+    return () => {
+        return h(NIcon, null, {
+            default: () => h(icon)
+        });
+    };
+};
 
 // 下拉菜单
 const options = [
-  {
-    label: '退出账户',
-    key: 'logout',
-    route: '/login'
-  }
+    {
+        label: "用户资料",
+        key: "profile",
+        icon: renderIcon(UserIcon)
+    },
+    {
+        label: "编辑用户资料",
+        key: "editProfile",
+        icon: renderIcon(EditIcon)
+    },
+    {
+        label: "退出登录",
+        key: "logout",
+        icon: renderIcon(LogoutIcon)
+    }
 ]
 
-export default defineComponent({
-  components: {
-    NMenu
-  },
-  setup () {
-    return {
-      options,
-      renderDropdownLabel (option: DropdownOption) {
-        if (option.type === 'group') {
-          return option.label as VNodeChild
-        }
-        return h(RouterLink, { to: '/login' },
-            {
-              default: () => option.label as VNodeChild
-            }
-        )
-      },
-      renderDropdownIcon () {
-        return h(NIcon, null, {
-          default: () => h(LogoutIcon)
+
+
+function handleSelect(key){
+    if (key === 'logout'){
+        useUserStore().logOut().then(() => {
+            router.push("/Login")
+            window.$message.success("退出登录")
         })
-      }
+    }else if (key === 'profile'){
+        router.push("/InquireQualification")
     }
-  }
+}
+
+
+onMounted(() => {
+    imageUrl.value = JSON.parse(localStorage.getItem("user")).avatar
 })
 </script>
 
