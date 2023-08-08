@@ -15,3 +15,23 @@ export function getEnterpriseInfoToLogin(query){
         params: query
     })
 }
+
+
+export function uploadAvatar(data) {
+    return request({
+        url: '/enterprise/uploadAvatar',
+        method: 'post',
+        data: data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
+
+export function updateAvatar(data){
+    return request({
+        url: `/enterprise/updateAvatar?enterprise=${data.enterprise}&avatar=${data.avatar}`,
+        method: 'post'
+    })
+}

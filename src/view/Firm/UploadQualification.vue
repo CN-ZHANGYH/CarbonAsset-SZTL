@@ -30,7 +30,7 @@ export default defineComponent({
   margin-bottom: 25px;
 }
 .write {
-  height: 450px;
+  height: auto;
   margin-bottom: 80px;
 }
 </style>

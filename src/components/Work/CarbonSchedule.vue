@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { h, defineComponent } from 'vue'
-import { NTag, useMessage } from 'naive-ui'
+import { NTag } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
 
 type RowData = {
@@ -114,12 +114,11 @@ const createData = (): RowData[] => [
 
 export default defineComponent({
   setup() {
-    const message = useMessage()
     return {
       data: createData(),
       columns: createColumns({
         sendMail(rowData) {
-          message.info('send mail to ' + rowData.name)
+
         }
       })
     }
