@@ -1,11 +1,14 @@
 <template>
   <n-card title="企业上传资质流程图">
-    <Stepts1/>
+      <Stepts1 :nowStep="nowStep"/>
   </n-card>
 
   <n-card title="填写企业信息" class="write">
-      <EnterpriseInformation v-if="showUploadQua"/>
-      <QualificationInfo :qualification="qualification" v-if="showQueryQua"/>
+      <n-spin :show="show">
+          <EnterpriseInformation v-if="showUploadQua"/>
+          <QualificationInfo :qualification="qualification" v-if="showQueryQua"/>
+      </n-spin>
+
   </n-card>
 </template>
 
@@ -16,25 +19,36 @@ import QualificationInfo from "../../components/Info/QualificationInfo.vue";
 import {getQualificationInfo} from "../../api/qualification.js";
 import {getEnterpriseInfo} from "../../api/enterprise.js";
 
-const showUploadQua = ref(true)
+const showUploadQua = ref(false)
 const showQueryQua = ref(false)
 const qualification = ref({})
+const show = ref(false)
+const nowStep = ref(1)
 
 onMounted(() => {
-    const nickName = JSON.parse(localStorage.getItem("user")).nickName
-    getEnterpriseInfo({enterprise: nickName}).then(res => {
-        if (res.enterprise.enterprise_verified == 1){
-            showUploadQua.value = false
-            showQueryQua.value = true
-
-            getQualificationInfo({enterprise: nickName}).then(res => {
-                qualification.value = res.data
-            })
-        }
-    })
+    refQuaStatus()
 })
 
+function refQuaStatus(){
+    const nickName = JSON.parse(localStorage.getItem("user")).nickName
+    getEnterpriseInfo({enterprise: nickName}).then(res => {
+        show.value = true
+        if (res.enterprise.enterprise_verified == 1){
+            getQualificationInfo({enterprise: nickName}).then(res => {
+                qualification.value = res.data
+                showUploadQua.value = false
+                showQueryQua.value = true
+                nowStep.value = 3
+            })
+        }else {
+            showUploadQua.value = true
+            showQueryQua.value = false
+        }
+        show.value = false
+    })
+}
 
+refQuaStatus()
 
 </script>
 

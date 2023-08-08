@@ -1,15 +1,15 @@
 <template>
   <n-card title="碳交易记录">
-    <CarbonSchedule/>
+    <CarbonTransaction/>
   </n-card>
 </template>
 
 <script lang="ts">
-import CarbonSchedule from "../../components/Work/CarbonSchedule.vue"
+import CarbonTransaction from "../../components/Work/CarbonTransaction.vue"
 import {defineComponent, ref} from "vue";
 export default defineComponent({
   components: {
-    CarbonSchedule,
+      CarbonTransaction,
   },
   setup() {
     return {

@@ -14,6 +14,7 @@ import CarbonCertificate from "../view/Inquire/CarbonCertificate.vue";
 import QueryCarbonHistory from "../view/Inquire/QueryCarbonHistory.vue";
 import QueryTransaction from "../view/Inquire/QueryTransaction.vue";
 import Leader from "../view/Leader/Leader.vue";
+import {getUserKey} from "../utils/auth.js";
 
 
 const routes = [
@@ -117,6 +118,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title
+
+    var user_key = getUserKey();
+    if (user_key != undefined && to.name == '/'){
+        router.push('/MasterConsole')
+    }
 
     // 检查目标路由是否存在
     const foundRoute = router.getRoutes().find(route => route.path === to.path)
