@@ -29,15 +29,13 @@
         </n-form-item-gi>
 
         <n-form-item-gi :span="24" label="企业地址:" path="address">
-          <span>{{enterprise.enterprise_address}}</span>
+          <n-tag strong type="success">
+              <span>{{enterprise.enterprise_address}}</span>
+          </n-tag>
         </n-form-item-gi>
 
         <n-form-item-gi :span="24" label="注册时间" path="datetimeValue">
           <span>{{enterprise.create_time}}</span>
-        </n-form-item-gi>
-
-        <n-form-item-gi :span="6" label="联系人" path="PeopleName">
-          <span>丁总</span>
         </n-form-item-gi>
 
         <n-form-item-gi :span="6" label="联系人手机号" path="PeoplePhone">
@@ -49,15 +47,46 @@
         </n-form-item-gi>
 
         <n-form-item-gi :span="8" label="企业认证状态" path="PeopleEmail">
-          <n-tag type="success">成功</n-tag>
+          <n-tag type="success" v-if="enterprise.enterprise_verified == 1">已认证</n-tag>
+          <n-tag type="error" v-else>未认证</n-tag>
         </n-form-item-gi>
       </n-grid>
+
+        <n-button  type="info" @click="showModal = true">
+            更新信息
+        </n-button>
+        <n-modal
+                v-model:show="showModal"
+                class="custom-card"
+                preset="card"
+                style="width: 600px"
+                title="更新信息"
+                size="huge"
+                :bordered="false"
+                :segmented="segmented"
+        >
+            <n-form :model="enterprise" label-placement="left" label-width="80px" :rules="rules">
+                <n-form-item label="企业名称">
+                    <n-input v-model:value="enterprise.enterprise_name" disabled/>
+                </n-form-item>
+                <n-form-item label="企业地址">
+                    <n-input v-model:value="enterprise.enterprise_address" disabled/>
+                </n-form-item>
+                <n-form-item label="手机号" path="phonenumber">
+                    <n-input v-model:value="enterprise.phonenumber" placeholder="请输入手机号"/>
+                </n-form-item>
+                <n-form-item label="邮箱" path="email">
+                    <n-input v-model:value="enterprise.email" placeholder="请输入邮箱"/>
+                </n-form-item>
+                <div style="text-align: center;">
+                    <n-button type="error" strong secondary size="large" style="margin-right: 20px" @click="showModal = false">取消</n-button>
+                    <n-button type="success" strong secondary size="large" @click="updateUserProfile">更新</n-button>
+                </div>
+            </n-form>
+        </n-modal>
     </n-form>
-
-    <n-divider />
-
-    <ResetPassword/>
-
+    <n-divider/>
+    <ResetPassword :enterprise="enterprise"/>
   </n-card>
 </template>
 
@@ -66,10 +95,10 @@
 import {Add} from "@vicons/ionicons5"
 import ResetPassword from "../../components/Form/ResetPassword.vue"
 import {ref} from "vue";
-import {getEnterpriseInfo, updateAvatar, uploadAvatar} from "../../api/enterprise.js";
+import {getEnterpriseInfo, updateAvatar, updateEnterpriseInfo, uploadAvatar} from "../../api/enterprise.js";
 const inverted = ref(false)
 const imageUrl = ref("")
-
+const showModal = ref(false)
 const enterpriseName = ref(JSON.parse(localStorage.getItem("user")).nickName)
 const enterprise = ref({})
 getEnterpriseInfo({enterprise: enterpriseName.value}).then(res => {
@@ -77,6 +106,18 @@ getEnterpriseInfo({enterprise: enterpriseName.value}).then(res => {
     imageUrl.value = enterprise.value.avatar
 })
 
+const rules = reactive({
+    phonenumber: {
+        min: 11,
+        max: 11,
+        trigger: ["blur", "input"],
+        message: "请输入正确的手机号"
+    }
+})
+const segmented = reactive({
+    content: "soft",
+    footer: "soft"
+})
 function beforeUpload(data){
     // 允许的图片格式
     // const allowedFormats = ['jpeg', 'jpg', 'png', 'gif'];
@@ -105,9 +146,15 @@ function upload(file){
             window.$message.success(res.msg)
         })
     })
-
 }
 
+
+function updateUserProfile(){
+    console.log(enterprise.value)
+    updateEnterpriseInfo(enterprise.value).then(res => {
+        window.$message.success(res.msg)
+    })
+}
 
 </script>
 

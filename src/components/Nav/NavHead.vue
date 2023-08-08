@@ -12,7 +12,7 @@
           @select="handleSelect"
       >
         <n-button>
-          <n-avatar round size="small" src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" />
+          <n-avatar round size="small" :src="imageUrl" />
           企业资料
         </n-button>
       </n-dropdown>
@@ -30,7 +30,7 @@ import {
 } from "@vicons/ionicons5";
 import router from "../../router/router.js";
 import useUserStore from "../../store/modules/user.js";
-
+const imageUrl = ref("")
 
 const renderIcon = (icon) => {
     return () => {
@@ -60,6 +60,7 @@ const options = [
 ]
 
 
+
 function handleSelect(key){
     if (key === 'logout'){
         useUserStore().logOut().then(() => {
@@ -70,6 +71,11 @@ function handleSelect(key){
         router.push("/InquireQualification")
     }
 }
+
+
+onMounted(() => {
+    imageUrl.value = JSON.parse(localStorage.getItem("user")).avatar
+})
 </script>
 
 <style lang="less" scoped>

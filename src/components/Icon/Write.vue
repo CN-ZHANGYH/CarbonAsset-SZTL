@@ -12,31 +12,19 @@
 </template>
 
 
-<script lang="ts">
+<script setup>
 import {defineComponent, ref} from "vue";
-import { useMessage } from 'naive-ui'
 import { useRouter } from 'vue-router';
 import { ReceiptOutline } from '@vicons/ionicons5'
-export default defineComponent({
-  components: {
-    ReceiptOutline
-  },
-  setup() {
-    const message = useMessage();
-    const router = useRouter();
-    const handleGridItemClick = () => {
-      message.loading('前往查看碳报告');
-      setTimeout(() => {
+
+const router = useRouter();
+const handleGridItemClick = () => {
+    window.$message.loading('前往查看碳报告');
+    setTimeout(() => {
         router.push({ path: '/GenerateCarbon' });
-      }, 5000);
-    };
-    return {
-      inverted: ref(false),
-      ReceiptOutline,
-      handleGridItemClick
-    }
-  }
-})
+    }, 5000);
+};
+
 </script>
 
 <style scoped lang='less'>
