@@ -1,4 +1,5 @@
 <template>
+    <!-- 使用全局挂载消息组件-->
     <Message/>
     <RouterView></RouterView>
 </template>
