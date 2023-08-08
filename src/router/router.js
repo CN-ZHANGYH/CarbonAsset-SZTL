@@ -14,8 +14,8 @@ import CarbonCertificate from "../view/Inquire/CarbonCertificate.vue";
 import QueryCarbonHistory from "../view/Inquire/QueryCarbonHistory.vue";
 import QueryTransaction from "../view/Inquire/QueryTransaction.vue";
 import Leader from "../view/Leader/Leader.vue";
-import {login} from "../api/login.js";
-
+import {getToken, getUserKey, removeUserKey} from "../utils/auth.js";
+import useUserStore from "../store/modules/user.js";
 
 const routes = [
     {path: '/', component: LoginHome },
@@ -30,8 +30,8 @@ const routes = [
         component: component => import("/src/view/Error/401.vue")
     },
     {
-        path: '/login',
-        name: 'login',
+        path: '/Login',
+        name: 'Login',
         meta: {title: "登录"},
         component: Login
     },
@@ -119,9 +119,9 @@ router.beforeEach((to, from, next) => {
     }
     // 添加路由守卫
     const user = JSON.parse(localStorage.getItem('user'))
-    if (to.name != 'login' && user == null) {
+    if (to.name != 'Login' && user == null) {
         // 如果不是登录页面且没有认证信息，则跳转到登录页面
-        next({ name: 'login' })
+        next({ name: 'Login' })
     }
     next()
 })

@@ -1,12 +1,10 @@
 <template>
-  <n-message-provider>
+    <Message/>
     <RouterView></RouterView>
-  </n-message-provider>
-
 </template>
 
 <script setup>
-
+import Message from "./components/Util/Message.vue";
 </script>
 
 <style lang="less">

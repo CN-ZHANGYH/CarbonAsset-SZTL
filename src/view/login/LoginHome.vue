@@ -6,7 +6,7 @@
         <div class="header-content">
           <img src="../../assets/logo.png" alt="">
           <div class="button-container">
-            <router-link to="/login">
+            <router-link to="/Login">
               <n-button type="success">
                 前往登录/注册
               </n-button>

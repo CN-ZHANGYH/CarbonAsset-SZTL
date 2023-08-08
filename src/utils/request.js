@@ -3,10 +3,9 @@ import { getToken } from '/src/utils/auth'
 import errorCode from '/src/utils/errorCode'
 import { tansParams } from '/src/utils/ruoyi'
 import cache from '/src/plugins/cache'
-import {useMessage} from 'naive-ui'
-// 是否显示重新登录
-const message = useMessage()
+import useUserStore from "../store/modules/user.js";
 
+// 是否显示重新登录
 export let isRelogin = { show: false };
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
@@ -65,6 +64,7 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {
+
     // 未设置状态码则默认成功状态
     const code = res.data.code || 200;
     // 获取错误信息
@@ -76,17 +76,20 @@ service.interceptors.response.use(res => {
     if (code === 401) {
       if (!isRelogin.show) {
         isRelogin.show = true;
-        message.error("登录状态已过期，您可以继续留在该页面，或者重新登录")
+        useUserStore().logOut().then(() => {
+          location.href = '/Login';
+          window.$message.error("登录状态已过期，您可以继续留在该页面，或者重新登录")
+        })
     }
       return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
     } else if (code === 500) {
-      console.log(msg)
+      window.$message.error(msg)
       return Promise.reject(new Error(msg))
     } else if (code === 601) {
-      console.log(msg)
+      window.$message.error(msg)
       return Promise.reject(new Error(msg))
     } else if (code !== 200) {
-      console.log(msg)
+      window.$message.error(msg)
       return Promise.reject('error')
     } else {
       return  Promise.resolve(res.data)
@@ -102,7 +105,7 @@ service.interceptors.response.use(res => {
     } else if (errmsg.includes("Request failed with status code")) {
       errmsg = "系统接口" + errmsg.substr(errmsg.length - 3) + "异常";
     }
-    console.log(errmsg)
+    window.$message.error(errmsg)
     return Promise.reject(error)
   }
 )

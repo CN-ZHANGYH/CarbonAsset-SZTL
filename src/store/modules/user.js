@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '/src/api/login'
-import { getToken, setToken, removeToken } from '/src/utils/auth'
+import {getToken, setToken, removeToken, setUserKey, removeUserKey} from '/src/utils/auth'
 import defAva from '/src/assets/logo.png'
 import {defineStore} from "pinia";
 const useUserStore = defineStore(
@@ -22,6 +22,7 @@ const useUserStore = defineStore(
                 return new Promise((resolve, reject) => {
                     login(username, password, code, uuid).then(res => {
                         setToken(res.token)
+                        setUserKey(res.userKey)
                         this.token = res.token
                         resolve()
                     }).catch(error => {
@@ -58,6 +59,7 @@ const useUserStore = defineStore(
                         this.roles = []
                         this.permissions = []
                         removeToken()
+                        removeUserKey()
                         resolve()
                     }).catch(error => {
                         reject(error)

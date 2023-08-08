@@ -58,3 +58,24 @@ export function getCodeImg() {
   })
 }
 
+export function getTokenTimeout(query){
+  return request({
+    url: '/getTokenIsTimeout',
+    headers: {
+      isToken: false
+    },
+    method: 'GET',
+    params: query
+  })
+}
+
+
+
+export function sendEmailCode(query){
+  return request({
+    url: '/sendCode',
+    method: 'GET',
+    params: query
+  })
+}
+
