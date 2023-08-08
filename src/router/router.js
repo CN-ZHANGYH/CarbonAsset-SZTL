@@ -96,7 +96,8 @@ const routes = [
                 component:QueryTransaction
             },
             {
-                path: '/排行榜',
+                path: '/Leader',
+                meta: {title: "排行榜"},
                 component:Leader
             }
         ]
