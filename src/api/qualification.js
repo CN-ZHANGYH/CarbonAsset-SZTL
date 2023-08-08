@@ -10,3 +10,12 @@ export function uploadQualification(data){
         }
     });
 }
+
+
+export function getQualificationInfo(query){
+    return request({
+        url: '/query/qualificationInfo',
+        method: 'post',
+        params: query
+    });
+}
