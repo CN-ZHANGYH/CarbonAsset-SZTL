@@ -19,3 +19,20 @@ export function getQualificationInfo(query){
         params: query
     });
 }
+
+
+export function getIndustryList(){
+    return request({
+        url: '/industrys',
+        method: 'get',
+    });
+}
+
+
+export function uploadQualificationInfo(data){
+    return request({
+        url: '/carbon/qualification',
+        method: 'post',
+        data: data
+    })
+}
