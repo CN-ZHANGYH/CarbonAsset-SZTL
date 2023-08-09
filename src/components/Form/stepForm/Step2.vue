@@ -29,11 +29,9 @@
   </n-form>
 </template>
 
-<script lang="ts" setup>
+<script  setup>
   import { ref, defineEmits } from 'vue';
-  import { useMessage } from 'naive-ui';
-  const form2Ref: any = ref(null);
-  const message = useMessage();
+  const form2Ref = ref(null);
   const loading = ref(false);
 
   const formValue = ref({
@@ -62,7 +60,7 @@
           emit('nextStep');
         }, 1500);
       } else {
-        message.error('验证失败，请填写完整信息');
+        window.$message.error('验证失败，请填写完整信息');
       }
     });
   }

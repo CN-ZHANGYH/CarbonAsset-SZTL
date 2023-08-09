@@ -32,36 +32,38 @@
   </n-form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
   import { ref, defineEmits } from 'vue';
-  import { useMessage } from 'naive-ui';
 
-  const myAccountList = [
-    {
-      label: '珠海市区块链有限公司',
-      value: 1,
-    },
-    {
-      label: '珠海市区块链有限公司分区',
-      value: 2,
-    },
-  ];
+  const myAccountList = reactive(
+      [
+          {
+              label: '珠海市区块链有限公司',
+              value: 1,
+          },
+          {
+              label: '珠海市区块链有限公司分区',
+              value: 2,
+          },
+      ]
+  )
 
-  const accountTypeList = [
-    {
-      label: '微信',
-      value: 1,
-    },
-    {
-      label: '支付宝',
-      value: 2,
-    },
-  ];
+  const accountTypeList = reactive(
+      [
+          {
+              label: '微信',
+              value: 1,
+          },
+          {
+              label: '支付宝',
+              value: 2,
+          },
+      ]
+  )
 
   const emit = defineEmits(['nextStep']);
 
-  const form1Ref: any = ref(null);
-  const message = useMessage();
+  const form1Ref = ref(null);
 
   const formValue = ref({
     accountType: 1,
@@ -99,7 +101,6 @@
       if (!errors) {
         emit('nextStep');
       } else {
-        message.error('验证失败，请填写完整信息');
       }
     });
   }
