@@ -13,6 +13,7 @@
             :bordered="false"
             :columns="columns"
             :data="txData"
+            :pagination="pagination"
         />
     </n-space>
 </template>
@@ -62,6 +63,20 @@ getEnterpriseTxList({enterprise: enterprise}).then(res => {
 })
 
 
+const pagination = reactive({
+    page: 2,
+    pageSize: 5,
+    showSizePicker: true,
+    pageSizes: [3, 5, 7]
+})
+
+const onChange = (page) => {
+    pagination.page = page
+}
+const onUpdatePageSize =(pageSize) => {
+    pagination.pageSize = pageSize;
+    pagination.page = 1;
+}
 function search(){
 
 }

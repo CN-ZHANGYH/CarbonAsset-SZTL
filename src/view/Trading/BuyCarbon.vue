@@ -32,19 +32,25 @@
             >
         </n-carousel-item>
     </n-carousel>
-    <n-grid :x-gap="12" :y-gap="8" :cols="4">
-        <n-grid-item>
-            <n-card class="card-container" hoverable>
-                <img src="../../assets/img/city.png" alt="" style="width: 135px;">
-                <div class="text">
-                    <h1>冰箱</h1>
-                    <h3>出售价格：¥50</h3>
-                    <p>描述xxxxxxxxxxxx</p>
+    <n-grid :x-gap="12" :cols="4">
+        <n-grid-item v-for="(item,index) in productList">
+            <div class="card-container" hoverable  >
+                <div class="image-container">
+                    <img :src="item.image" alt="">
+
                 </div>
-                <div class="button">
-                    <n-button>购买</n-button>
+                <div>
+                    <div class="text">
+                        <h2>{{item.title}}</h2>
+                        <h4>出售价格：<n-tag type="info">{{item.assetAmount}}</n-tag></h4>
+                        <p>{{item.description}}</p>
+                    </div>
+                    <div class="button">
+                        <span>数量：<n-tag type="success">{{item.assetQuantity}}</n-tag></span>
+                        <n-button>购买</n-button>
+                    </div>
                 </div>
-            </n-card>
+            </div>
         </n-grid-item>
     </n-grid>
 
@@ -57,28 +63,31 @@ import {getAllSellerAssetList} from "../../api/asset.js";
 const effectRef = ref("card");
 const isCardRef = computed(() => effectRef.value === "card");
 const isCard = isCardRef
+const productList = ref([])
 const effects = reactive(
     ["slide", "fade", "card"]
 )
 
-
-
 getAllSellerAssetList().then(res => {
-    console.log(res)
+    productList.value = res.rows
+    console.log(productList.value)
 })
 </script>
 
 <style scoped lang="less">
+
 .n-grid {
-  height: 100vh;
+  height: 70vh;
 }
 .card-container {
+  background-color: #fdfdfd;
+  width: auto;
   border-radius: 20px;
   height: 200px;
   img {
-    width: 100px;
-    height: 100px;
-    float: right;
+    width: 200px;
+    height: 200px;
+    float: left;
   }
   .text {
     line-height: 40px;
@@ -95,4 +104,5 @@ getAllSellerAssetList().then(res => {
   height: 100%;
   object-fit: cover;
 }
+
 </style>

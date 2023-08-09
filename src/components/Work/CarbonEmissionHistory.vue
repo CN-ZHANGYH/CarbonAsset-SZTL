@@ -43,6 +43,21 @@ getEnterpriseEmissionList({enterprise: nickName}).then(res => {
 function search(){
 
 }
+
+const pagination = reactive({
+    page: 2,
+    pageSize: 5,
+    showSizePicker: true,
+    pageSizes: [3, 5, 7],
+    onChange: (page) => {
+        pagination.page = page;
+    },
+    onUpdatePageSize: (pageSize) => {
+        pagination.pageSize = pageSize;
+        pagination.page = 1;
+    }
+})
+
 </script>
 
 <template>
@@ -60,6 +75,7 @@ function search(){
                 :bordered="false"
                 :columns="columns"
                 :data="EmData"
+                :pagination="pagination"
         />
     </n-space>
 </template>
@@ -71,5 +87,6 @@ function search(){
     align-items: center;
     margin-bottom: 10px;
 }
+
 
 </style>
