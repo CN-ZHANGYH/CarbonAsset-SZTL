@@ -22,3 +22,11 @@ export function getTypes(){
         method: 'get'
     })
 }
+
+export function applyEmissionResource(data){
+    return request({
+        url: '/emissions/upload',
+        method: 'post',
+        data: data
+    })
+}

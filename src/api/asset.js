@@ -1,10 +1,11 @@
 import request from "../utils/request.js";
 
 
-export function getAllSellerAssetList(){
+export function getAllSellerAssetList(query){
     return request({
         url: '/carbon/asset/list',
-        method: 'get'
+        method: 'get',
+        params: query
     })
 }
 

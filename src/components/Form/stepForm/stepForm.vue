@@ -8,22 +8,11 @@
               <img :src="qualification.qualificationUrl" alt=""  class="img">
               <div class="image-overlay"></div>
             </div>
-            <div class="text">
-              <div>
-                <h3>{{}}</h3>
-                <p style="color:#878B96">{{}}</p>
-              </div>
-            </div>
             <div class="footer" style="display: flex; align-items: center;">
               <img class="tou" style="margin-left: 20px" :src="avatar"/>
               <div class="name" style="margin-left: 10px;">
-                <n-popover trigger="hover">
-                  <template #trigger>
-                    <h4 style="color:#5752ED;">{{  }}</h4>
-                  </template>
-                  <span><n-button type="error" strong secondary>{{  }}</n-button></span>
-                </n-popover>
-                <h5 style="color: #8B93A1">{{  }}</h5>
+                <h4 style="color:#5752ED;">{{ qualification.qualificationName }}</h4>
+                <h5>{{qualification.qualificationVerifiedRegulator}}</h5>
               </div>
             </div>
           </div>
@@ -33,9 +22,9 @@
         <n-card :bordered="false" class="mt-4 proCard">
           <n-space vertical class="steps" justify="center">
             <n-steps :current="currentTab" :status="currentStatus">
-              <n-step title="填写转账信息" description="确保填写正确" />
-              <n-step title="确认转账信息" description="确认转账信息" />
-              <n-step title="完成转账" description="恭喜您，转账成功" />
+              <n-step title="填写申请信息" description="确保填写正确" />
+              <n-step title="确认申请信息" description="确认信息正确" />
+              <n-step title="提交申请信息" description="等待机构审核，申请上链" />
             </n-steps>
             <div v-if="currentTab === 1">
               <n-form
@@ -77,19 +66,22 @@
                     <n-input-number placeholder="请输入排放数量" v-model:value="form.emissionEmission"/>
                   </n-form-item-gi>
                 </n-grid>
-
-                <div style="margin-left: 80px">
-                  <n-space>
-                    <n-button type="primary" @click="formSubmit">下一步</n-button>
-                  </n-space>
-                </div>
               </n-form>
             </div>
 
-            <step2 v-if="currentTab === 2" @nextStep="nextStep" @prevStep="prevStep" />
-            <step3 v-if="currentTab === 3" @prevStep="prevStep" @finish="finish" />
+            <step2 :emissionresource="form" v-if="currentTab === 2"/>
+            <step3 :enterprise="enterprise" :enterpriseAddress="enterpriseAddress" v-if="currentTab == 3"/>
           </n-space>
 
+          <div style="margin-left: 30%">
+            <n-space>
+              <n-button type="primary" v-if="currentTab == 1" @click="formSubmit">下一步</n-button>
+              <n-spin :show="show">
+                <n-button type="info" v-if="currentTab == 2" @click="uploadEmission">提交</n-button>
+              </n-spin>
+              <n-button type="warning" v-if="currentTab == 2" @click="currentTab--">上一步</n-button>
+            </n-space>
+          </div>
         </n-card>
       </n-grid-item>
     </n-grid>
@@ -104,7 +96,7 @@
   import step3 from './Step3.vue';
   import Flash16Regular from "@vicons/fluent/Flash16Regular";
   import FlashCheckmark16Regular from "@vicons/fluent/FlashCheckmark16Regular";
-  import {getEmissionMethods, getTypes} from "../../../api/emissionresource.js";
+  import {applyEmissionResource, getEmissionMethods, getTypes} from "../../../api/emissionresource.js";
   import {getEnterpriseInfo} from "../../../api/enterprise.js";
   import {getQualificationInfo} from "../../../api/qualification.js";
 
@@ -113,12 +105,14 @@
   const currentStatus = ref('process');
   const form = ref({})
   const avatar = JSON.parse(localStorage.getItem("user")).avatar
-
+  const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  const enterpriseAddress = ref("")
   const show1 = ref(false)
   const show2 = ref(false)
   const methodsOpt = ref([])
   const typesOpt = ref([])
   const qualification = ref({})
+  const show = ref(false)
 
   const rules = reactive({
     enterpriseAddress:{
@@ -155,16 +149,6 @@
     }
   }
 
-  function prevStep() {
-    if (currentTab.value > 1) {
-      currentTab.value -= 1;
-    }
-  }
-
-  function finish() {
-    currentTab.value = 1;
-  }
-
   function formSubmit() {
     formRef.value.validate((errors) => {
       if (!errors) {
@@ -175,9 +159,16 @@
     });
   }
 
+  function uploadEmission(){
+    applyEmissionResource(form.value).then(res => {
+      window.$message.success(res.msg)
+    })
+    nextStep()
+  }
 
   getEnterpriseInfo({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
     form.value.enterpriseAddress = res.enterprise.enterprise_address
+    enterpriseAddress.value = res.enterprise.enterprise_address
   })
   getEmissionMethods().then(res => {
     methodsOpt.value = res.data
@@ -187,8 +178,12 @@
   })
   getQualificationInfo({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
     qualification.value = res.data
+    console.log(qualification.value)
   })
 
+  function truncatedString(val){
+    return val.substring(0, 15) + '...';
+  }
 </script>
 
 <style lang="less" scoped>
@@ -223,6 +218,7 @@
     width: auto;
     height: 500px;
     margin-top: 10%;
+    margin-left: 20%;
   }
 
   .box {
@@ -242,7 +238,7 @@
     padding: 0 30px;
   }
   .footer {
-    height: 5px;
+    height: 30%;
     display: flex;
     //background: #ffffff;
     align-items: center;
@@ -262,14 +258,14 @@
   .image-container {
     position: relative;
     width: 300px; /* 调整为实际大小 */
-    height: 200px; /* 调整为实际大小 */
+    height: 300px; /* 调整为实际大小 */
     overflow: hidden;
     border-radius: 20px; /* 添加圆角 */
   }
 
   .image-container img {
     width: 300px;
-    height: 200px;
+    height: 300px;
     border-bottom: 1px solid;
     border-radius: inherit; /* 继承圆角 */
     transition: transform 0.3s ease;

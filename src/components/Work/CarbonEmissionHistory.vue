@@ -1,5 +1,6 @@
 <script setup>
 import {getEnterpriseEmissionList} from "../../api/emissionresource.js";
+import {NTag} from "naive-ui";
 const enterprise = JSON.parse(localStorage.getItem("user")).nickName
 const searchValue = ref("")
 const EmData = ref([])
@@ -27,7 +28,20 @@ const columns = reactive(
         },
         {
             title: "状态",
-            key: "isApprove"
+            key: "isApprove",
+            render(row){
+                return h(
+                    NTag,
+                    {
+                      type: row.isApprove == 0 ? 'error' : 'info',
+                      bordered: false
+                    },
+                    {
+                      default: () => row.isApprove == 0 ? '审核中' : '审核通过'
+                    }
+                )
+            }
+
         },
         {
             title: "排放时间",
@@ -35,9 +49,8 @@ const columns = reactive(
         }
     ]
 )
-const nickName = JSON.parse(localStorage.getItem("user")).nickName
-getEnterpriseEmissionList({enterprise: nickName}).then(res => {
-    EmData.value = res.data
+onMounted(() => {
+
 })
 
 

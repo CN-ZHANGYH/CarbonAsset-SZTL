@@ -1,43 +1,29 @@
 <template>
   <div>
-    <n-result status="success" title="操作成功" description="预计一天审核结果出来" class="step-result">
+    <n-result status="success" title="发送申请通过" description="等待监管机构进行审核" class="step-result">
       <template #default>
         <div class="information">
-          <n-grid cols="2 s:2 m:3 l:3 xl:3 2xl:3" responsive="screen" class="my-1">
-            <n-gi>企业名称：</n-gi>
-            <n-gi>珠海市区块链有限公司</n-gi>
-          </n-grid>
-          <n-grid cols="2 s:2 m:3 l:3 xl:3 2xl:3" responsive="screen" class="my-1">
-            <n-gi>地址id：</n-gi>
-            <n-gi>0x7cf53f4db904ef5b8b21c940af7b5a335a134892</n-gi>
-          </n-grid>
-          <n-grid cols="2 s:2 m:3 l:3 xl:3 2xl:3" responsive="screen" class="my-1">
-            <n-gi>申请碳排放额度：</n-gi>
-            <n-gi><span class="money">98</span></n-gi>
-          </n-grid>
-        </div>
-      </template>
-      <template #footer>
-        <div class="flex justify-center">
-          <n-button type="primary" @click="finish" class="mr-4">再转一笔</n-button>
-<!--          <n-button @click="prevStep">查看账单</n-button>-->
+          <n-descriptions label-placement="left" column="1">
+            <n-descriptions-item label="企业名称">
+              {{enterprise}}
+            </n-descriptions-item>
+            <n-descriptions-item label="申请数量">
+              {{enterpriseAddress}}
+            </n-descriptions-item>
+          </n-descriptions>
         </div>
       </template>
     </n-result>
   </div>
 </template>
 
-<script lang="ts" setup>
-  import { defineEmits } from 'vue';
+<script  setup>
+const props = defineProps({
+  enterprise: String,
+  enterpriseAddress: Number
+})
 
-  const emit = defineEmits(['finish', 'prevStep']);
-  function prevStep() {
-    emit('prevStep');
-  }
-
-  function finish() {
-    emit('finish');
-  }
+const {enterprise,enterpriseAddress} = toRefs(props)
 </script>
 
 <style lang="less" scoped>

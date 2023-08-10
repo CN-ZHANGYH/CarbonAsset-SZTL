@@ -1,5 +1,5 @@
 <template>
-    <n-card title="购买碳额度" style="height: 100%">
+    <n-card title="购买碳额度" style="height: auto">
         <n-grid :x-gap="10" :cols="5">
             <n-grid-item :span="13" :offset="0">
                 <div style="text-align: center;">
@@ -38,6 +38,17 @@
                     </n-carousel>
                 </div>
             </n-grid-item>
+          <n-grid-item :span="10" :offset="2">
+            <n-pagination
+                v-model:page="queryParam.page"
+                v-model:page-size="queryParam.pageSize"
+                show-size-picker
+                :page-count="(total + queryParam.pageSize - 1) / queryParam.pageSize"
+                :page-sizes="pageSizes"
+                :on-change="onChange"
+                :on-update-page-size="onUpdatePageSize"
+            />
+          </n-grid-item>
             <n-grid-item v-for="(item,index) in productList">
                 <div class="hello">
                     <div class="box">
@@ -73,6 +84,7 @@
                 </div>
             </n-grid-item>
         </n-grid>
+
     </n-card>
 </template>
 
@@ -84,12 +96,49 @@ const effectRef = ref("card");
 const isCardRef = computed(() => effectRef.value === "card");
 const isCard = isCardRef
 const productList = ref([])
-
-
-getAllSellerAssetList().then(res => {
-    productList.value = res.rows
-    console.log(productList.value)
+const total = ref()
+const data = reactive({
+  queryParam: {
+    page: 1,
+    pageSize: 10
+  }
 })
+const {queryParam} = toRefs(data)
+
+const pageSizes = [
+  {
+    label: "10 每页",
+    value: 10
+  },
+  {
+    label: "20 每页",
+    value: 20
+  },
+  {
+    label: "30 每页",
+    value: 30
+  }
+];
+
+const onChange = (page) => {
+  queryParam.value.page = page
+  getList()
+}
+const onUpdatePageSize = (pageSize) => {
+  queryParam.value.pageSize = pageSize
+  queryParam.value.page = 1
+  getList()
+}
+
+function getList(){
+  getAllSellerAssetList(queryParam.value).then(res => {
+    productList.value = res.rows
+    total.value = res.total
+  })
+}
+
+getList()
+
 
 function truncatedString(val){
     return val.substring(0, 15) + '...';
@@ -104,8 +153,6 @@ function truncatedString(val){
 .hello {
     width: auto;
     height: 500px;
-    //background: #ffffff;
-    //padding: 10px;
 }
 
 .box {
