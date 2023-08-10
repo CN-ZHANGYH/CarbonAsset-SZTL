@@ -4,120 +4,80 @@
         :bordered="false"
         :columns="columns"
         :data="data"
+        :pagination="paginationReactive"
     />
   </n-space>
 </template>
 
-<script lang="ts">
-import { h, defineComponent } from 'vue'
-import { NTag, NButton, useMessage } from 'naive-ui'
-import type { DataTableColumns } from 'naive-ui'
+<script setup>
+import {getEnterpriseIsNotApplyEmission} from "../../api/emissionresource.js";
+import {NTag} from "naive-ui";
 
-type RowData = {
-  key: number
-  name: string
-  time: string
-  tags: string[]
-}
-
-const createColumns = ({
-                         sendMail
-                       }: {
-  sendMail: (rowData: RowData) => void
-}): DataTableColumns<RowData> => {
-  return [
+const data = ref([])
+const paginationReactive = reactive({
+    page: 1,
+    pageSize: 10,
+    showSizePicker: true,
+    pageSizes: [10, 20, 30],
+    onChange: (page) => {
+        paginationReactive.page = page;
+    },
+    onUpdatePageSize: (pageSize) => {
+        paginationReactive.pageSize = pageSize;
+        paginationReactive.page = 1;
+    }
+});
+const columns = reactive([
     {
-      title: '名称',
-      key: 'name'
+        title: 'ID',
+        key: 'emissionId'
     },
     {
-      title: '时间',
-      key: 'time'
+        title: '资源类型',
+        key: 'resourceType'
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      render(row) {
-        const tags = row.tags.map((tagKey) => {
-          let tagType = ''
-          if (tagKey === '成功') {
-            tagType = 'success'
-          } else if (tagKey === '失败') {
-            tagType = 'error'
-          } else if (tagKey === '审核中') {
-            tagType = 'warning'
-          }
-          return h(
-              NTag,
-              {
-                style: {
-                  marginRight: '6px'
+        title: '排放方式',
+        key: 'emissionWay'
+    },
+    {
+        title: '描述',
+        key: 'description'
+    },
+    {
+        title: '状态',
+        key: 'isApprove',
+        render(row){
+            return h(
+                NTag,
+                {
+                    bordered: false,
+                    type: 'error'
                 },
-                type: tagType,
-                bordered: false
-              },
-              {
-                default: () => tagKey
-              }
-          )
-        })
-        return tags
-      }
-    }
-  ]
-}
-
-const createData = (): RowData[] => [
-  {
-    key: 0,
-    name: '电冰箱碳排放申请表',
-    time: '2023-7-19',
-    tags: ['审核中']
-  },
-  {
-    key: 1,
-    name: '电风扇碳排放申请表',
-    time: '2023-7-20',
-    tags: ['审核中']
-  },
-  {
-    key: 2,
-    name: '电热水器碳排放申请表',
-    time: '2023-7-23',
-    tags: ['审核中']
-  },
-  {
-    key: 3,
-    name: '电视机碳排放申请表',
-    time: '2023-7-22',
-    tags: ['审核中']
-  },
-  {
-    key: 4,
-    name: '洗衣机碳排放申请表',
-    time: '2023-7-25',
-    tags: ['审核中']
-  },
-  {
-    key: 5,
-    name: '电脑碳排放申请表',
-    time: '2023-7-24',
-    tags: ['审核中']
-  }
-]
-
-export default defineComponent({
-  setup() {
-    return {
-      data: createData(),
-      columns: createColumns({
-        sendMail(rowData) {
-
+                {
+                    default: () => '审核中'
+                }
+            )
         }
-      })
     }
-  }
+
+])
+const enterpriseName = JSON.parse(localStorage.getItem("user")).nickName
+
+getEnterpriseIsNotApplyEmission({
+    page: paginationReactive.page,
+    pageSize: paginationReactive.pageSize,
+    enterprise: enterpriseName
+}).then(res => {
+    if (res.total != 0){
+        data.value = res.rows
+    }
+    window.$message.success(res.msg)
 })
+
+
+
+
 </script>
 
 <style lang="less" scoped>

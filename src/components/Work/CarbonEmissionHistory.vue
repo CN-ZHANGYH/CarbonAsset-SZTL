@@ -49,10 +49,6 @@ const columns = reactive(
         }
     ]
 )
-onMounted(() => {
-
-})
-
 
 function search(){
 
@@ -113,6 +109,4 @@ getEnterpriseEmissionList({
     align-items: center;
     margin-bottom: 10px;
 }
-
-
 </style>

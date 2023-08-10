@@ -30,3 +30,20 @@ export function applyEmissionResource(data){
         data: data
     })
 }
+
+
+export function getEnterpriseIsNotApplyEmission(query){
+    return request({
+        url: '/query/enterpriseIsNotApplyEmission',
+        method: 'get',
+        params: query
+    })
+}
+
+export function getEnterpriseIsApplyEmission(query){
+    return request({
+        url: '/query/enterpriseIsApplyEmission',
+        method: 'get',
+        params: query
+    })
+}

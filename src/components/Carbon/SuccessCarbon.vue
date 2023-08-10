@@ -4,68 +4,80 @@
         :bordered="false"
         :columns="columns"
         :data="data"
+        :pagination="paginationReactive"
     />
   </n-space>
 </template>
 
 <script setup>
+import {
+    getEnterpriseIsApplyEmission,
+} from "../../api/emissionresource.js";
+import {NTag} from "naive-ui";
 
-const data = reactive( [
-  {
-    key: 0,
-    name: '电冰箱碳排放申请表',
-    time: '2023-7-19',
-    tags: ['成功'],
-    details: {
-      // 添加详细信息数据
+const data = ref([])
+const paginationReactive = reactive({
+    page: 1,
+    pageSize: 10,
+    showSizePicker: true,
+    pageSizes: [10, 20, 30],
+    onChange: (page) => {
+        paginationReactive.page = page;
+    },
+    onUpdatePageSize: (pageSize) => {
+        paginationReactive.pageSize = pageSize;
+        paginationReactive.page = 1;
     }
-  },
-  {
-    key: 1,
-    name: '电风扇碳排放申请表',
-    time: '2023-7-20',
-    tags: ['失败'],
-    details: {
-      // 添加详细信息数据
+});
+const columns = reactive([
+    {
+        title: 'ID',
+        key: 'emissionId'
+    },
+    {
+        title: '资源类型',
+        key: 'resourceType'
+    },
+    {
+        title: '排放方式',
+        key: 'emissionWay'
+    },
+    {
+        title: '描述',
+        key: 'description'
+    },
+    {
+        title: '状态',
+        key: 'isApprove',
+        render(row){
+            return h(
+                NTag,
+                {
+                    bordered: false,
+                    type: 'success'
+                },
+                {
+                    default: () => '审核完成'
+                }
+            )
+        }
     }
-  },
-  {
-    key: 2,
-    name: '电热水器碳排放申请表',
-    time: '2023-7-23',
-    tags: ['失败'],
-    details: {
-      // 添加详细信息数据
-    }
-  },
-  {
-    key: 3,
-    name: '电视机碳排放申请表',
-    time: '2023-7-22',
-    tags: ['失败'],
-    details: {
-      // 添加详细信息数据
-    }
-  },
-  {
-    key: 4,
-    name: '洗衣机碳排放申请表',
-    time: '2023-7-25',
-    tags: ['失败'],
-    details: {
-      // 添加详细信息数据
-    }
-  },
-  {
-    key: 5,
-    name: '电脑碳排放申请表',
-    time: '2023-7-24',
-    tags: ['失败'],
-    details: {
-      // 添加详细信息数据
-    }
-  }
+
 ])
+const enterpriseName = JSON.parse(localStorage.getItem("user")).nickName
+
+getEnterpriseIsApplyEmission({
+    page: paginationReactive.page,
+    pageSize: paginationReactive.pageSize,
+    enterprise: enterpriseName
+}).then(res => {
+    if (res.total != 0){
+        data.value = res.rows
+    }
+    window.$message.success(res.msg)
+})
+
+
 </script>
 
 <style lang="less" scoped>
