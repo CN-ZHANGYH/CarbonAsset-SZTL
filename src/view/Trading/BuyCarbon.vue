@@ -99,7 +99,7 @@ function truncatedString(val){
 <style scoped lang="less">
 
 .n-grid {
-  height: 90vh;
+  height: auto;
 }
 .hello {
     width: auto;
