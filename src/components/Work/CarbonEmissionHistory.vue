@@ -1,5 +1,6 @@
 <script setup>
 import {getEnterpriseEmissionList} from "../../api/emissionresource.js";
+const enterprise = JSON.parse(localStorage.getItem("user")).nickName
 const searchValue = ref("")
 const EmData = ref([])
 const columns = reactive(
@@ -44,18 +45,30 @@ function search(){
 
 }
 
-const pagination = reactive({
-    page: 2,
-    pageSize: 5,
-    showSizePicker: true,
-    pageSizes: [3, 5, 7],
-    onChange: (page) => {
-        pagination.page = page;
-    },
-    onUpdatePageSize: (pageSize) => {
-        pagination.pageSize = pageSize;
-        pagination.page = 1;
-    }
+const paginationReactive = reactive({
+  page: 1,
+  pageSize: 10,
+  showSizePicker: true,
+  pageSizes: [10, 20, 30],
+  onChange: (page) => {
+    paginationReactive.page = page;
+  },
+  onUpdatePageSize: (pageSize) => {
+    paginationReactive.pageSize = pageSize;
+    paginationReactive.page = 1;
+  }
+});
+
+
+getEnterpriseEmissionList({
+  page: paginationReactive.page,
+  pageSize: paginationReactive.pageSize,
+  enterprise: enterprise
+}).then(res => {
+  if (res.total != 0){
+    EmData.value = res.rows
+  }
+  window.$message.success(res.msg)
 })
 
 </script>
@@ -75,7 +88,7 @@ const pagination = reactive({
                 :bordered="false"
                 :columns="columns"
                 :data="EmData"
-                :pagination="pagination"
+                :pagination="paginationReactive"
         />
     </n-space>
 </template>

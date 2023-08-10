@@ -25,4 +25,5 @@ export default defineComponent({
   height: 600px;
   margin-bottom: 25px;
 }
+
 </style>

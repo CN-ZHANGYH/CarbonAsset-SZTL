@@ -36,3 +36,12 @@ export function getEnterpriseNewSellerHistory(query){
         params: query
     })
 }
+
+
+export function getEnterpriseSellerHistory(query){
+    return request({
+        url: '/query/enterpriseAList',
+        method: 'get',
+        params: query
+    })
+}

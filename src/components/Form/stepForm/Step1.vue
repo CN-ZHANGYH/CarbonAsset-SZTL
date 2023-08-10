@@ -1,35 +1,5 @@
 <template>
-  <n-form
-    :label-width="90"
-    :model="formValue"
-    :rules="rules"
-    label-placement="left"
-    ref="form1Ref"
-    style="max-width: 500px; margin: 40px auto 0 80px"
-  >
-    <n-form-item label="企业名称" path="myAccount">
-      <n-select
-        placeholder="请选择付款账户"
-        :options="myAccountList"
-        v-model:value="formValue.myAccount"
-      />
-    </n-form-item>
-    <n-form-item label="地址" path="name">
-      <n-input placeholder="请输入地址id" v-model:value="formValue.name" />
-    </n-form-item>
-    <n-form-item label="申请碳排放额度" path="money">
-      <n-input placeholder="请输入申请碳排放额度" v-model:value="formValue.money">
-        <template #prefix>
-          <span class="text-gray-400">￥</span>
-        </template>
-      </n-input>
-    </n-form-item>
-    <div style="margin-left: 80px">
-      <n-space>
-        <n-button type="primary" @click="formSubmit">下一步</n-button>
-      </n-space>
-    </div>
-  </n-form>
+
 </template>
 
 <script setup>
@@ -63,7 +33,6 @@
 
   const emit = defineEmits(['nextStep']);
 
-  const form1Ref = ref(null);
 
   const formValue = ref({
     accountType: 1,
@@ -96,12 +65,5 @@
     },
   };
 
-  function formSubmit() {
-    form1Ref.value.validate((errors) => {
-      if (!errors) {
-        emit('nextStep');
-      } else {
-      }
-    });
-  }
+
 </script>

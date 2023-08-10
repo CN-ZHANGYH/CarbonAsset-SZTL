@@ -8,3 +8,17 @@ export function getEnterpriseEmissionList(query){
         params: query
     })
 }
+
+export function getEmissionMethods(){
+    return request({
+        url: '/emissionMethods',
+        method: 'get'
+    })
+}
+
+export function getTypes(){
+    return request({
+        url: '/types',
+        method: 'get'
+    })
+}

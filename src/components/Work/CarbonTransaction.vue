@@ -13,7 +13,7 @@
             :bordered="false"
             :columns="columns"
             :data="txData"
-            :pagination="pagination"
+            :pagination="paginationReactive"
         />
     </n-space>
 </template>
@@ -58,25 +58,35 @@ const columns = reactive(
 )
 
 const enterprise = JSON.parse(localStorage.getItem("user")).nickName
-getEnterpriseTxList({enterprise: enterprise}).then(res => {
-    txData.value = res.data
+
+
+
+const paginationReactive = reactive({
+  page: 1,
+  pageSize: 10,
+  showSizePicker: true,
+  pageSizes: [10, 20, 30],
+  onChange: (page) => {
+    paginationReactive.page = page;
+  },
+  onUpdatePageSize: (pageSize) => {
+    paginationReactive.pageSize = pageSize;
+    paginationReactive.page = 1;
+  }
+});
+
+
+getEnterpriseTxList({
+  page: paginationReactive.page,
+  pageSize: paginationReactive.pageSize,
+  enterprise: enterprise
+}).then(res => {
+  if (res.total != 0) {
+    txData.value = res.rows
+  }
+  window.$message.success(res.msg)
 })
 
-
-const pagination = reactive({
-    page: 2,
-    pageSize: 5,
-    showSizePicker: true,
-    pageSizes: [3, 5, 7]
-})
-
-const onChange = (page) => {
-    pagination.page = page
-}
-const onUpdatePageSize =(pageSize) => {
-    pagination.pageSize = pageSize;
-    pagination.page = 1;
-}
 function search(){
 
 }
