@@ -172,11 +172,12 @@ const rules  = reactive({
     message: "请输入购买数量,最小为1"
   }
 })
-
+// 获取企业信息
 getEnterpriseInfo({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
   enterpriseAddress.value = res.enterprise.enterprise_address
 })
 
+// 分页数据改变
 const onChange = (page) => {
   queryParam.value.page = page
   getList()
@@ -187,6 +188,7 @@ const onUpdatePageSize = (pageSize) => {
   getList()
 }
 
+// 分页数据刷新并获取
 function getList(){
   window.$loadingBar.start()
   getAllSellerAssetList(queryParam.value).then(res => {
