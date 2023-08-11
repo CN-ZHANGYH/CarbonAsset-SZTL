@@ -6,6 +6,7 @@ const props = defineProps({
 const {qualification} = toRefs(props)
 </script>
 
+<!--资质详细组件-->
 <template>
     <n-descriptions label-placement="left" bordered column="1">
         <n-descriptions-item label="企业名称">
@@ -34,9 +35,11 @@ const {qualification} = toRefs(props)
         </n-descriptions-item>
         <n-descriptions-item label="审核时间">
             {{qualification.qualificationAuditTime}}
+            <n-tag v-if='qualification.qualificationAuditTime == null' type="error">暂未审核</n-tag>
         </n-descriptions-item>
         <n-descriptions-item label="监管机构地址">
-            <n-tag type="success" strong>{{qualification.qualificationVerifiedRegulator}}</n-tag>
+            <n-tag type="success" strong v-if="qualification.qualificationVerifiedRegulator != '暂未认证'">{{qualification.qualificationVerifiedRegulator}}</n-tag>
+            <n-tag type="error" strong v-if="qualification.qualificationVerifiedRegulator === '暂未认证'">{{qualification.qualificationVerifiedRegulator}}</n-tag>
         </n-descriptions-item>
         <n-descriptions-item label="资质图片">
             <img :src="qualification.qualificationUrl" alt="" style="width: 100px;height: 100px;">

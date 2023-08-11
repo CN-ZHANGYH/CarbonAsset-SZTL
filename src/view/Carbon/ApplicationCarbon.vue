@@ -4,7 +4,7 @@
   </n-card>
 </template>
 
-<script lang="ts">
+<script >
 import Step1 from "../../components/Form/stepForm/Step1.vue"
 import StepFrom from "../../components/Form/stepForm/stepForm.vue"
 import {defineComponent, ref} from "vue";
@@ -25,4 +25,5 @@ export default defineComponent({
   height: 600px;
   margin-bottom: 25px;
 }
+
 </style>

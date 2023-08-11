@@ -14,6 +14,7 @@ import CarbonCertificate from "../view/Inquire/CarbonCertificate.vue";
 import QueryCarbonHistory from "../view/Inquire/QueryCarbonHistory.vue";
 import QueryTransaction from "../view/Inquire/QueryTransaction.vue";
 import Leader from "../view/Leader/Leader.vue";
+import QuerySellerHistory from '../view/Inquire/QuerySellerHistory.vue'
 import {getUserKey} from "../utils/auth.js";
 
 
@@ -101,6 +102,11 @@ const routes = [
                 path: '/QueryTransaction',
                 meta: {title: "碳交易记录"},
                 component:QueryTransaction
+            },
+            {
+                path: '/QuerySellerHistory',
+                meta: {title: "出售记录"},
+                component: QuerySellerHistory
             },
             {
                 path: '/Leader',

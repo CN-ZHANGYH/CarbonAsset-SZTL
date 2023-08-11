@@ -102,9 +102,13 @@ const menuOptions: MenuOption[] =  [
         key: 'QueryTransaction',
       },
       {
+        label: '出售记录',
+        key: 'QuerySellerHistory',
+      },
+      {
         label: '碳证书',
         key: 'CarbonCertificate',
-      }
+      },
     ],
   },
   {

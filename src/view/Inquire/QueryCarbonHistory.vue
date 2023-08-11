@@ -7,6 +7,7 @@
 <script setup>
 import CarbonEmissionHistory from "../../components/Work/CarbonEmissionHistory.vue"
 
+
 </script>
 
 <style scoped lang='less'>

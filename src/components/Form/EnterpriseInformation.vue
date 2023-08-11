@@ -8,7 +8,7 @@
   >
     <n-grid :cols="24" :x-gap="24">
       <n-form-item-gi :span="8" label="企业名称" path="qualificationName">
-        <n-input v-model:value="form.qualificationName" placeholder="请输入企业名称" />
+        <n-input v-model:value="form.qualificationName" placeholder="请输入企业名称" disabled/>
       </n-form-item-gi>
 
       <n-form-item-gi :span="8" label="社会信用代码" path="qualificationContent">
@@ -24,7 +24,7 @@
       </n-form-item-gi>
 
       <n-form-item-gi :span="8" label="所属行业" path="qualificationIndustry">
-        <n-input v-model:value="form.qualificationIndustry" placeholder="请选择所属行业" />
+          <n-select :options="options" v-model:value="form.qualificationIndustry" placeholder="请选择所属行业"></n-select>
       </n-form-item-gi>
 
       <n-form-item-gi :span="8" label="联系人姓名" path="qualificationUserName">
@@ -38,7 +38,7 @@
         <n-form-item-gi :span="24" label="资质图片" path="qualificationUrl">
             <n-upload class="avatar-uploader"
                       style="width: 150px;height: 150px;border: dashed 2px gray;border-radius: 10px"
-                      action="#"
+                      action=""
                       :custom-request="upload"
                       @before-upload="beforeUpload"
                       :show-file-list="false">
@@ -51,7 +51,7 @@
 
       <n-gi :span="24">
         <div style="display: flex; justify-content: flex-end">
-          <n-button round type="primary" @click="handleValidateButtonClick">
+          <n-button round type="primary" size="large" @click="handleValidateButtonClick">
             验证
           </n-button>
         </div>
@@ -64,13 +64,13 @@
 
 
 import {CloudUpload} from "@vicons/ionicons5";
-import {uploadQualification} from "../../api/qualification.js";
-import {updateAvatar, uploadAvatar} from "../../api/enterprise.js";
+import {getIndustryList, uploadQualification, uploadQualificationInfo} from "../../api/qualification.js";
 const imageUrl = ref("")
 const data = reactive({
-    form: {}
+    form: {},
+    options: []
 })
-const {form} = toRefs(data)
+const {form,options} = toRefs(data)
 const rules = reactive(
     {
         qualificationName: {
@@ -124,5 +124,24 @@ function upload(file){
     })
 
 }
+
+function setEnterpriseName(){
+    form.value.qualificationName  = JSON.parse(localStorage.getItem("user")).nickName
+}
+
+const getIndustry = () => {
+    getIndustryList().then(res => {
+        options.value = res.data
+    })
+}
+
+
+function handleValidateButtonClick(){
+    uploadQualificationInfo(form.value).then(res => {
+        window.$message.success(res.msg)
+    })
+}
+getIndustry()
+setEnterpriseName()
 
 </script>

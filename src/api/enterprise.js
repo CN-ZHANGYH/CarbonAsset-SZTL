@@ -54,3 +54,12 @@ export function updateEnterpriseInfo(data){
         data: data
     })
 }
+
+
+export function buyProduct(data){
+    return request({
+        url: '/enterprise/buy',
+        method: 'post',
+        data: data
+    })
+}

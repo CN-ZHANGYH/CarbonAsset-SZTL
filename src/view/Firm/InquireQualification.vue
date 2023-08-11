@@ -8,7 +8,7 @@
         ref="formRef"
         :model="enterprise"
         size="medium"
-        label-placement="left"
+        label-placement=left
     >
       <n-grid :cols="24" :x-gap="24">
           <n-form-item-gi :span="24" label="用户头像">
@@ -28,7 +28,7 @@
           <span>{{enterprise.enterprise_name}}</span>
         </n-form-item-gi>
 
-        <n-form-item-gi :span="24" label="企业地址:" path="address">
+        <n-form-item-gi :span="24" label="企业地址" path="address">
           <n-tag strong type="success">
               <span>{{enterprise.enterprise_address}}</span>
           </n-tag>
@@ -38,7 +38,7 @@
           <span>{{enterprise.create_time}}</span>
         </n-form-item-gi>
 
-        <n-form-item-gi :span="6" label="联系人手机号" path="PeoplePhone">
+        <n-form-item-gi :span="6" label="手机号码" path="PeoplePhone">
           <span>{{enterprise.phonenumber}}</span>
         </n-form-item-gi>
 
