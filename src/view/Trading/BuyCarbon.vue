@@ -40,49 +40,49 @@
             </n-grid-item>
           <n-grid-item :span="10" :offset="2">
             <n-pagination
-                v-model:page="queryParam.page"
+                v-model:page="queryParam.pageNum"
                 v-model:page-size="queryParam.pageSize"
                 show-size-picker
-                :page-count="(total + queryParam.pageSize - 1) / queryParam.pageSize"
+                :item-count="total"
                 :page-sizes="pageSizes"
-                :on-change="onChange"
+                :on-update-page="onChange"
                 :on-update-page-size="onUpdatePageSize"
             />
           </n-grid-item>
-            <n-grid-item v-for="(item,index) in productList">
+              <n-grid-item  v-for="(item,index) in productList">
                 <div class="hello">
-                    <div class="box">
-                        <div class="image-container">
-                            <img :src="item.image" alt=""  class="img">
-                            <div class="image-overlay"></div>
-                        </div>
-                        <div class="text">
-                            <div>
-                                <h3>{{item.title}}</h3>
-                                <p style="color:#878B96">{{item.description}}</p>
-                            </div>
-                            <div style="margin-top: 10px">
-                                <n-tag type="info" bordered="true">数量：{{item.assetQuantity}}</n-tag>
-                                <n-tag type="info">单价：{{item.assetAmount}}</n-tag>
-                            </div>
-                        </div>
-                        <div class="footer" style="display: flex; align-items: center;">
-                            <img class="tou" style="margin-left: 20px" :src="item.image"/>
-                            <div class="name" style="margin-left: 10px;">
-                                <n-popover trigger="hover">
-                                    <template #trigger>
-                                        <h4 style="color:#5752ED;">{{ truncatedString(item.enterpriseAddress) }}</h4>
-                                    </template>
-                                    <span><n-button type="error" strong secondary>{{ item.enterpriseAddress }}</n-button></span>
-                                </n-popover>
-
-                                <h5 style="color: #8B93A1">{{ item.time }}</h5>
-                            </div>
-                            <n-button type="success" strong  style="margin-left: 30px;">购买</n-button>
-                        </div>
+                  <div class="box">
+                    <div class="image-container">
+                      <img :src="item.image" alt=""  class="img">
+                      <div class="image-overlay"></div>
                     </div>
+                    <div class="text">
+                      <div>
+                        <h3>{{item.title}}</h3>
+                        <p style="color:#878B96">{{item.description}}</p>
+                      </div>
+                      <div style="margin-top: 10px">
+                        <n-tag type="info" bordered="true">数量：{{item.assetQuantity}}</n-tag>
+                        <n-tag type="info">单价：{{item.assetAmount}}</n-tag>
+                      </div>
+                    </div>
+                    <div class="footer" style="display: flex; align-items: center;">
+                      <img class="tou" style="margin-left: 20px" :src="item.image"/>
+                      <div class="name" style="margin-left: 10px;">
+                        <n-popover trigger="hover">
+                          <template #trigger>
+                            <h4 style="color:#5752ED;">{{ truncatedString(item.enterpriseAddress) }}</h4>
+                          </template>
+                          <span><n-button type="error" strong secondary>{{ item.enterpriseAddress }}</n-button></span>
+                        </n-popover>
+
+                        <h5 style="color: #8B93A1">{{ item.time }}</h5>
+                      </div>
+                      <n-button type="success" strong  style="margin-left: 30px;">购买</n-button>
+                    </div>
+                  </div>
                 </div>
-            </n-grid-item>
+              </n-grid-item>
         </n-grid>
 
     </n-card>
@@ -95,13 +95,23 @@ import {getAllSellerAssetList} from "../../api/asset.js";
 const effectRef = ref("card");
 const isCardRef = computed(() => effectRef.value === "card");
 const isCard = isCardRef
+const show = ref(true)
 const productList = ref([])
 const total = ref()
 const data = reactive({
   queryParam: {
-    page: 1,
-    pageSize: 10
-  }
+    pageNum: 1,
+    pageSize: 10,
+    enterpriseId: null,
+    enterpriseAddress: null,
+    assetQuantity: null,
+    assetAmount: null,
+    time: null,
+    status: null,
+    title: null,
+    description: null,
+    image: null
+  },
 })
 const {queryParam} = toRefs(data)
 
@@ -131,9 +141,11 @@ const onUpdatePageSize = (pageSize) => {
 }
 
 function getList(){
+  window.$loadingBar.start()
   getAllSellerAssetList(queryParam.value).then(res => {
     productList.value = res.rows
     total.value = res.total
+    window.$loadingBar.finish()
   })
 }
 
