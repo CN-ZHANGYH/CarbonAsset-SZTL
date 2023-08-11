@@ -78,27 +78,56 @@
 
                         <h5 style="color: #8B93A1">{{ item.time }}</h5>
                       </div>
-                      <n-button type="success" strong  style="margin-left: 30px;">购买</n-button>
+                      <n-button type="success" strong  style="margin-left: 30px;" @click="buySubmit(item)">购买</n-button>
                     </div>
                   </div>
                 </div>
               </n-grid-item>
         </n-grid>
-
+      <n-modal
+          v-model:show="showModal"
+          class="custom-card"
+          preset="card"
+          style="width: 600px"
+          title="购买商品"
+          size="huge"
+          :bordered="false"
+          :segmented="segmented"
+      >
+        <n-form :model="buyForm" label-placement="left" label-width="120px" :rules="rules">
+          <n-form-item label="卖家账户地址">
+            {{buyForm.sellerAddress}}
+          </n-form-item>
+          <n-form-item label="当前账户地址">
+            {{buyForm.ownerAddress}}
+          </n-form-item>
+          <n-form-item label="购买数量" path="quality">
+            <n-input-number v-model:value="buyForm.quality"  placeholder="请输入购买的数量"/>
+          </n-form-item>
+        </n-form>
+        <div style="text-align: center">
+          <n-button style="margin-right: 30px" type="success" size="large" strong secondary @click="handlerBuy">购买</n-button>
+          <n-button type="error" size="large"  strong secondary @click="showModal = !showModal">取消</n-button>
+        </div>
+      </n-modal>
     </n-card>
 </template>
 
 
 <script setup>
 import {getAllSellerAssetList} from "../../api/asset.js";
+import {buyProduct, getEnterpriseInfo} from "../../api/enterprise.js";
 
 const effectRef = ref("card");
 const isCardRef = computed(() => effectRef.value === "card");
 const isCard = isCardRef
+const maxValue = ref(0)
+const enterpriseAddress = ref("")
 const show = ref(true)
 const productList = ref([])
 const total = ref()
 const data = reactive({
+  buyForm: {},
   queryParam: {
     pageNum: 1,
     pageSize: 10,
@@ -113,7 +142,7 @@ const data = reactive({
     image: null
   },
 })
-const {queryParam} = toRefs(data)
+const {queryParam,buyForm} = toRefs(data)
 
 const pageSizes = [
   {
@@ -129,6 +158,24 @@ const pageSizes = [
     value: 30
   }
 ];
+const segmented = reactive({
+  content: "soft",
+  footer: "soft"
+})
+const showModal = ref(false)
+const rules  = reactive({
+  quality: {
+    required: true,
+    trigger: ['blur','change'],
+    min: 1,
+    type: 'number',
+    message: "请输入购买数量,最小为1"
+  }
+})
+
+getEnterpriseInfo({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+  enterpriseAddress.value = res.enterprise.enterprise_address
+})
 
 const onChange = (page) => {
   queryParam.value.page = page
@@ -154,6 +201,33 @@ getList()
 
 function truncatedString(val){
     return val.substring(0, 15) + '...';
+}
+
+function buySubmit(item){
+  showModal.value  = true
+  buyForm.value.sellerAddress = item.enterpriseAddress
+  buyForm.value.ownerAddress = enterpriseAddress.value
+  maxValue.value = item.assetQuantity
+  buyForm.value.assetId = item.assetId
+}
+
+function handlerBuy(){
+  if (buyForm.value.quality > maxValue.value){
+    window.$message.error("当前库存不足")
+    showModal.value = false
+    return
+  }
+  if (buyForm.value.sellerAddress == buyForm.value.ownerAddress){
+    window.$message.error("当前不能购买自己的商品")
+    showModal.value = false
+    return
+
+  }
+  // 调用购买的操作
+  buyProduct(buyForm.value).then(res => {
+    window.$message.success(res.msg)
+  })
+
 }
 </script>
 
