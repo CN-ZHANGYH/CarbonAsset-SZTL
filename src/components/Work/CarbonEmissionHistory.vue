@@ -1,3 +1,24 @@
+<template>
+  <n-row :gutter="12">
+    <n-col :span="6" :offset="17">
+      <div class="container">
+        <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
+        <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
+      </div>
+
+    </n-col>
+  </n-row>
+  <n-space vertical :size="12">
+    <n-data-table
+        :bordered="false"
+        :columns="columns"
+        :data="EmData"
+        :pagination="paginationReactive"
+        style="height:800px"
+    />
+  </n-space>
+</template>
+
 <script setup>
 import {getEnterpriseEmissionList} from "../../api/emissionresource.js";
 import {NTag} from "naive-ui";
@@ -56,8 +77,8 @@ function search(){
 
 const paginationReactive = reactive({
   page: 1,
-  pageSize: 10,
-  showSizePicker: true,
+  pageSize: 13,
+  showSizePicker: false,
   pageSizes: [10, 20, 30],
   onChange: (page) => {
     paginationReactive.page = page;
@@ -81,26 +102,6 @@ getEnterpriseEmissionList({
 })
 
 </script>
-
-<template>
-    <n-row :gutter="12">
-        <n-col :span="6" :offset="17">
-            <div class="container">
-                <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
-                <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
-            </div>
-
-        </n-col>
-    </n-row>
-    <n-space vertical :size="12">
-        <n-data-table
-                :bordered="false"
-                :columns="columns"
-                :data="EmData"
-                :pagination="paginationReactive"
-        />
-    </n-space>
-</template>
 
 <style scoped lang="less">
 .container {

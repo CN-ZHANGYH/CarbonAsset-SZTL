@@ -5,6 +5,7 @@
         :columns="columns"
         :data="data"
         :pagination="paginationReactive"
+        style="height:680px"
     />
   </n-space>
 </template>
@@ -18,8 +19,8 @@ import {NTag} from "naive-ui";
 const data = ref([])
 const paginationReactive = reactive({
     page: 1,
-    pageSize: 10,
-    showSizePicker: true,
+    pageSize: 11,
+    showSizePicker: false,
     pageSizes: [10, 20, 30],
     onChange: (page) => {
         paginationReactive.page = page;

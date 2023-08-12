@@ -5,13 +5,16 @@
         <div class="hello">
           <div class="box">
             <div class="image-container">
-              <img :src="qualification.qualificationUrl" alt=""  class="img">
+              <img :src="qualification.qualificationUrl || defaultImage" class="img">
               <div class="image-overlay"></div>
             </div>
             <div class="footer" style="display: flex; align-items: center;">
-              <img class="tou" style="margin-left: 20px" :src="avatar"/>
+              <img class="tou" style="margin-left: 20px" :src="avatar ? avatar : defaultAvatar"/>
               <div class="name" style="margin-left: 10px;">
-                <h4 style="color:#5752ED;">{{ qualification.qualificationName }}</h4>
+                <h4 style="color:#5752ED;">
+                  <span v-if="qualification.qualificationName">{{ qualification.qualificationName }}</span>
+                  <span v-else>请尽快填写企业资质信息<br/>进行碳排放申请</span>
+                </h4>
                 <h5>{{qualification.qualificationVerifiedRegulator}}</h5>
               </div>
             </div>
@@ -85,15 +88,11 @@
         </n-card>
       </n-grid-item>
     </n-grid>
-
-
   </div>
 </template>
 
 <script setup>
   import { defineComponent, ref } from 'vue';
-  import step2 from './Step2.vue';
-  import step3 from './Step3.vue';
   import Flash16Regular from "@vicons/fluent/Flash16Regular";
   import FlashCheckmark16Regular from "@vicons/fluent/FlashCheckmark16Regular";
   import {applyEmissionResource, getEmissionMethods, getTypes} from "../../../api/emissionresource.js";
@@ -113,6 +112,10 @@
   const typesOpt = ref([])
   const qualification = ref({})
   const show = ref(false)
+  // 默认图片
+  const defaultImage = 'https://blog-1304715799.cos.ap-nanjing.myqcloud.com/imgs/96741691601422758.jpg';
+  // 默认头像
+  const defaultAvatar = "/src/assets/avatar.png";
 
   const rules = reactive({
     enterpriseAddress:{
@@ -211,14 +214,11 @@
     transform: translateX(10px);
   }
 
-
-
-
   .hello {
     width: auto;
     height: 500px;
     margin-top: 10%;
-    margin-left: 20%;
+    margin-left: 17%;
   }
 
   .box {
@@ -228,9 +228,8 @@
     border: 2px solid #EDEDF0;
     /* 添加其他样式属性 */
     transition: box-shadow 0.3s ease; /* 添加过渡效果 */
-    background-color: #00DBDE;
-    background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-
+    background-color: #79E56F;
+    //background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
   }
   .text {
     height:150px;

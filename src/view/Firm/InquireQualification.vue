@@ -11,19 +11,19 @@
         label-placement=left
     >
       <n-grid :cols="24" :x-gap="24">
-          <n-form-item-gi :span="24" label="用户头像">
-              <n-upload class="avatar-uploader"
-                        style="width: 100px;height: 100px;border: dashed 2px gray;border-radius: 10px"
-                         action="#"
-                         :custom-request="upload"
-                         @before-upload="beforeUpload"
-                         :show-file-list="false">
-                  <img v-if="imageUrl" :src="enterprise.avatar" class="avatar" />
-                  <n-icon v-else class="avatar-uploader-icon">
-                      <Add style="width: 100px;height: 100px"/>
-                  </n-icon>
-              </n-upload>
-          </n-form-item-gi>
+        <n-form-item-gi :span="24" label="用户头像">
+          <n-upload class="avatar-uploader"
+                    style="width: 100px;height: 100px;border: dashed 2px gray;border-radius: 10px"
+                    action="#"
+                    :custom-request="upload"
+                    @before-upload="beforeUpload"
+                    :show-file-list="false">
+            <img v-if="imageUrl" :src="enterprise.avatar" class="avatar" />
+            <n-icon v-else class="avatar-uploader-icon">
+              <Add style="width: 100px;height: 100px"/>
+            </n-icon>
+          </n-upload>
+        </n-form-item-gi>
         <n-form-item-gi :span="24" label="企业名称" path="name">
           <span>{{enterprise.enterprise_name}}</span>
         </n-form-item-gi>
@@ -118,6 +118,7 @@ const segmented = reactive({
     content: "soft",
     footer: "soft"
 })
+
 function beforeUpload(data){
     // 允许的图片格式
     // const allowedFormats = ['jpeg', 'jpg', 'png', 'gif'];
@@ -159,8 +160,10 @@ function updateUserProfile(){
 </script>
 
 <style scoped lang='less'>
+.template {
+  height: 100%;
+}
 .n-card {
-  height: 100vh;
   margin-bottom: 80px;
 }
 
