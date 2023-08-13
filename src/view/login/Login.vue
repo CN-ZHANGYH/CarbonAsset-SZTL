@@ -69,7 +69,7 @@
             </div>
               <n-button style="margin-top: 3px;height: 50px" round type="success" strong  @click="sendCode" size="large"  :disabled="closeBtn">{{ buttonText }}</n-button>
           </div>
-            <n-button type="submit" class="btn solid custom-animation" strong @click="handleRegisterSubmit"><h3>注册</h3></n-button>
+            <n-button class="btn solid custom-animation" strong @click="handleRegisterSubmit"><h3>注册</h3></n-button>
         </n-form>
       </div>
     </div>
