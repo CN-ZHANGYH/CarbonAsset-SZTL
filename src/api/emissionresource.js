@@ -1,4 +1,4 @@
-import request from "../utils/request.js";
+import request from "/src/utils/request";
 
 
 export function getEnterpriseEmissionList(query){
@@ -43,6 +43,24 @@ export function getEnterpriseIsNotApplyEmission(query){
 export function getEnterpriseIsApplyEmission(query){
     return request({
         url: '/query/enterpriseIsApplyEmission',
+        method: 'get',
+        params: query
+    })
+}
+
+
+export function getEnterpriseEmissionRanking(query){
+    return request({
+        url: '/emissions/getResourceRanking',
+        method: 'get',
+        params: query
+    })
+}
+
+
+export function getRankingByEmission(query){
+    return request({
+        url: '/emissions/rankingByEmission',
         method: 'get',
         params: query
     })

@@ -38,17 +38,6 @@
                     </n-carousel>
                 </div>
             </n-grid-item>
-          <n-grid-item :span="10" :offset="2">
-            <n-pagination
-                v-model:page="queryParam.pageNum"
-                v-model:page-size="queryParam.pageSize"
-                show-size-picker
-                :item-count="total"
-                :page-sizes="pageSizes"
-                :on-update-page="onChange"
-                :on-update-page-size="onUpdatePageSize"
-            />
-          </n-grid-item>
               <n-grid-item  v-for="(item,index) in productList">
                 <div class="hello">
                   <div class="box">
@@ -83,6 +72,17 @@
                   </div>
                 </div>
               </n-grid-item>
+            <n-grid-item :span="10" :offset="2">
+                <n-pagination
+                        v-model:page="queryParam.pageNum"
+                        v-model:page-size="queryParam.pageSize"
+                        show-size-picker
+                        :item-count="total"
+                        :page-sizes="pageSizes"
+                        :on-update-page="onChange"
+                        :on-update-page-size="onUpdatePageSize"
+                />
+            </n-grid-item>
         </n-grid>
       <n-modal
           v-model:show="showModal"

@@ -14,7 +14,6 @@
           :columns="columns"
           :data="data"
           :pagination="paginationReactive"
-          style="height:800px"
       />
     </n-space>
 </template>

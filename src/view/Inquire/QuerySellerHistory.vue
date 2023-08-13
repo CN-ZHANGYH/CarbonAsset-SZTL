@@ -10,7 +10,7 @@ import CarbonSellerHistory from "../../components/Work/CarbonSellerHistory.vue";
 
 <style scoped lang="less">
 .n-card {
-  height: 88vh;
+  height: auto;
   margin-bottom: 80px;
 }
 </style>

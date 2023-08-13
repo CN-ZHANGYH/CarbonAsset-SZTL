@@ -1,5 +1,5 @@
 <template>
-  <n-card>您所在的碳排放排名：2</n-card>
+  <n-card>您所在的碳排放排名：{{ resourceRanking }}</n-card>
   <n-data-table
       :columns="columns"
       :data="data"
@@ -8,63 +8,64 @@
   />
 </template>
 
-<script lang="ts">
-import { h, defineComponent } from 'vue'
-import { NButton, useMessage } from 'naive-ui'
-import type { DataTableColumns } from 'naive-ui'
-import StepForm from "../Form/stepForm/stepForm.vue";
-
-type Song = {
-  no: number
-  title: string
-  length: string
-}
-
-const createColumns = ({
-                         play
-                       }: {
-  play: (row: Song) => void
-}): DataTableColumns<Song> => {
-  return [
+<script setup>
+import {getEnterpriseEmissionRanking, getRankingByEmission} from "../../api/emissionresource.js";
+import {NAvatar} from "naive-ui";
+const resourceRanking = ref(0)
+const enterpriseName = JSON.parse(localStorage.getItem("user")).nickName
+const columns = reactive([
     {
-      title: '排名',
-      key: 'number'
-    },
-    {
-      title: '企业名称',
-      key: 'name'
-    },
-    {
-      title: '企业地址',
-      key: 'address'
-    },
-    {
-      title:'碳排放量',
-      key: 'carbon'
-    },
-  ]
-}
-
-const data: Song[] = [
-  { number: 1, name: '企业名称xxx', address: '00xxxxxxaasdasdadaskl1111',carbon:'100' },
-  { number: 2, name: "企业名称xxx", address: '00xxxxxxaasdasdadaskl1111',carbon:'88' },
-  { number: 3, name: '企业名称xxx', address: '00xxxxxxaasdasdadaskl1111',carbon:'77' }
-]
-
-export default defineComponent({
-  components: {StepForm},
-  setup () {
-    const message = useMessage()
-    return {
-      data,
-      columns: createColumns({
-        play (row: Song) {
-          // message.info(`Play ${row.title}`)
+        title: '头像',
+        key: 'avatar',
+        render(row){
+            return h(
+                NAvatar,
+                {
+                    bordered: true,
+                    round: true,
+                    src: row.avatar
+                }
+            )
         }
-      }),
+    },
+    {
+        title: '企业名称',
+        key: 'enterprise_name',
+    },
+    {
+        title: '企业地址',
+        key: 'enterprise_address',
+    },
+    {
+        title: '积分',
+        key: 'enterprise_carbon_credits',
+    },
+    {
+        title: '总需排放量',
+        key: 'enterprise_total_emission',
+    },
+    {
+        title: '总排放量',
+        key: 'total_emissions',
     }
-  }
+])
+const data = ref([])
+
+getEnterpriseEmissionRanking({enterprise: enterpriseName}).then(res => {
+    resourceRanking.value = res.rRanking
 })
+
+function getRanking(){
+    getRankingByEmission({
+        page: 0,
+        pageSize: 10
+    }).then(res => {
+        console.log(res.data)
+        data.value = res.data
+    })
+}
+
+getRanking()
 </script>
 
 <style lang="less" scoped>

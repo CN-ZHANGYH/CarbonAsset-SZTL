@@ -12,7 +12,7 @@ import CarbonEmissionHistory from "../../components/Work/CarbonEmissionHistory.v
 
 <style scoped lang='less'>
 .n-card {
-  height: 88vh;
+  height: auto;
   margin-bottom: 80px;
 }
 </style>

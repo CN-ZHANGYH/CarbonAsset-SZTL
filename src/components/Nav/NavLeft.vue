@@ -6,6 +6,7 @@
       :options="transformedMenuOptions"
       :default-expanded-keys="defaultExpandedKeys"
       accordion
+      style="height: 100%"
   />
 </template>
 
@@ -147,7 +148,6 @@ function transformMenuOptions(options) {
 const transformedMenuOptions = transformMenuOptions(menuOptions);
 
 export default defineComponent({
-
   setup() {
     return {
       inverted: ref(false),

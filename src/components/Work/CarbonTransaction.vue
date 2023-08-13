@@ -16,7 +16,6 @@
         :columns="columns"
         :data="txData"
         :pagination="paginationReactive"
-        style="height:800px"
     >
     </n-data-table>
   </n-space>

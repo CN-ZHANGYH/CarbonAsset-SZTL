@@ -14,7 +14,6 @@
         :columns="columns"
         :data="EmData"
         :pagination="paginationReactive"
-        style="height:800px"
     />
   </n-space>
 </template>
@@ -77,7 +76,7 @@ function search(){
 
 const paginationReactive = reactive({
   page: 1,
-  pageSize: 13,
+  pageSize: 10,
   showSizePicker: false,
   pageSizes: [10, 20, 30],
   onChange: (page) => {

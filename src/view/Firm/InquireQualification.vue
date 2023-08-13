@@ -2,8 +2,8 @@
   <n-card title="企业基本信息" :segmented="{
       content: true,
       footer: 'soft'
-    }">
-
+    }"
+  >
     <n-form
         ref="formRef"
         :model="enterprise"
@@ -96,7 +96,6 @@ import {Add} from "@vicons/ionicons5"
 import ResetPassword from "../../components/Form/ResetPassword.vue"
 import {ref} from "vue";
 import {getEnterpriseInfo, updateAvatar, updateEnterpriseInfo, uploadAvatar} from "../../api/enterprise.js";
-const inverted = ref(false)
 const imageUrl = ref("")
 const showModal = ref(false)
 const enterpriseName = ref(JSON.parse(localStorage.getItem("user")).nickName)
@@ -163,8 +162,9 @@ function updateUserProfile(){
 .template {
   height: 100%;
 }
+
 .n-card {
-  margin-bottom: 80px;
+  height: auto;
 }
 
 .avatar {

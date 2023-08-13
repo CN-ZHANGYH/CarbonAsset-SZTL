@@ -16,7 +16,7 @@
         >
           <NavLeft/>
         </n-layout-sider>
-        <n-layout content-style="padding: 24px;background: #F2F5F8;height:100%" :native-scrollbar="false">
+        <n-layout content-style="padding: 24px;background: #F2F5F8;height:auto" :native-scrollbar="false">
           <router-view></router-view>
         </n-layout>
       </n-layout>
@@ -45,6 +45,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .n-layout .n-layout--absolute-positioned {
-  height: 100%;
+  height: auto;
 }
 </style>

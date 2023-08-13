@@ -126,7 +126,7 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
 
     var user_key = getUserKey();
-    if (user_key != undefined && to.name == '/'){
+    if (user_key != undefined && to.name == 'Login' || to.path == '/'){
         router.push('/MasterConsole')
     }
 
