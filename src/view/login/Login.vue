@@ -26,7 +26,9 @@
               <img :src="codeUrl" @click="getCode" class="login-code-img"/>
             </div>
           </div>
-          <input type="submit" value="登录" class="btn solid" @click="handleLoginSubmit">
+            <transition name="fade">
+                <n-button type="success" class="btn solid custom-animation" strong  @click="handleLoginSubmit"><h3>登录</h3></n-button>
+            </transition>
         </n-form>
 
         <!--    注册    -->
@@ -65,9 +67,9 @@
             <div class="box left_box">
               <input type="text" placeholder="验证码" style="height: 55px;padding-left: 30px" v-model="registerForm.code">
             </div>
-              <n-button style="margin-top: 3px;height: 50px" round type="success" strong secondary @click="sendCode" size="large">发送验证码</n-button>
+              <n-button style="margin-top: 3px;height: 50px" round type="success" strong  @click="sendCode" size="large"  :disabled="closeBtn">{{ buttonText }}</n-button>
           </div>
-          <input type="submit" value="注册" class="btn solid" @click="handleRegisterSubmit">
+            <n-button type="submit" class="btn solid custom-animation" strong @click="handleRegisterSubmit"><h3>注册</h3></n-button>
         </n-form>
       </div>
     </div>
@@ -103,11 +105,12 @@ import {getCodeImg, sendEmailCode,register} from "/src/api/login";
 import useUserStore from "/src/store/modules/user";
 import {getEnterpriseInfoToLogin} from "../../api/enterprise.js";
 const userStore = useUserStore()
-
+const buttonText = ref('发送验证码');
+const countdown = ref(60);
 const isSignUpMode = ref(false);
 
 const codeUrl = ref(null)
-const formRef = ref(null);
+const closeBtn = ref(false)
 const captchaEnabled = ref(true)
 const form = ref({
   username: "",
@@ -180,6 +183,22 @@ function sendCode(){
     }).catch(() => {
         window.$message.error("发送验证码失败")
     })
+    // 开始倒计时
+    let timer = setInterval(() => {
+        closeBtn.value = true
+        countdown.value--;
+
+        // 更新按钮显示的文本
+        buttonText.value = `${countdown.value}s`;
+
+        // 倒计时结束时恢复按钮状态
+        if (countdown.value === 0) {
+            clearInterval(timer);
+            buttonText.value = '发送验证码';
+            countdown.value = 60;
+            closeBtn.value = false
+        }
+    }, 1000);
 }
 
 function handleRegisterSubmit(){
@@ -226,8 +245,24 @@ getCode()
 
 }
 
+.custom-animation {
+  background-color: #35855a;
+  color: #f5f5f5;
+  font-size: 20px;
+  /* 添加过渡效果 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 
+.fade-leave,
+.fade-enter-to {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
 
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="HeadNav">
     <div class="logo">
-      <img src="../../assets/logo.png" alt="">
+      <img src="../../assets/logo.png" alt="" style="width: 150px;height: 60px">
     </div>
 
     <div class="user">
