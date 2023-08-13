@@ -96,6 +96,7 @@ getEnterpriseEmissionList({
 }).then(res => {
   if (res.total != 0){
     EmData.value = res.rows
+      console.log(res.rows)
   }
   window.$message.success(res.msg)
 })

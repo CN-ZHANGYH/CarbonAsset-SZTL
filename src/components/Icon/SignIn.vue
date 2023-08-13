@@ -13,16 +13,17 @@
 
 
 <script setup>
-import {defineComponent, ref} from "vue";
 import {RocketOutline} from '@vicons/ionicons5'
+import {addSign} from "../../api/enterprise.js";
 
-const inverted = ref(false)
-
+const enterprise = JSON.parse(localStorage.getItem("user")).nickName
 const handleGridItemClick = () => {
-    window.$message.success('签到成功！');
-    window.$message.success('当前积分为：999！');
-    window.$message.warning('签到已成功，请勿再次点击');
+    addSign({enterprise: enterprise}).then(res => {
+        window.$message.success(res.msg)
+    })
 };
+
+
 </script>
 
 <style scoped lang='less'>

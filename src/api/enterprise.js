@@ -63,3 +63,22 @@ export function buyProduct(data){
         data: data
     })
 }
+
+
+export function addSign(query){
+    return request({
+        url: '/addSign',
+        method: 'post',
+        params: query
+
+    })
+}
+
+
+export function getNoticeInfo(query){
+    return  request({
+        url: '/getNoticeInfo',
+        method: 'get',
+        params: query
+    })
+}

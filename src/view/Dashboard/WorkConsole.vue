@@ -14,7 +14,11 @@
         <n-card
             title="申请碳排放量数据报告进度"
         >
-          <CarbonSchedule/>
+            <n-data-table
+            :data="nsData"
+            :columns="columns"
+            >
+            </n-data-table>
         </n-card>
 
       </n-gi>
@@ -26,22 +30,38 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import Icon from "../../components/Nav/Icon.vue"
 import CarbonSchedule from "../../components/Work/CarbonTransaction.vue"
 import CarbonTrading from "../../components/Work/CarbonTrading.vue";
 import CarbonPicture from "../../components/Work/CarbonPicture.vue";
-import {defineComponent, ref} from "vue";
-export default defineComponent({
-  components: {
-    Icon,CarbonSchedule,CarbonTrading,CarbonPicture
-  },
-  setup() {
-    return {
-      inverted: ref(false),
-      Icon
+import {getEnterpriseInfo, getNoticeInfo} from "../../api/enterprise.js";
+
+
+const nsData = ref([])
+const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+const columns = reactive([
+    {
+        title: '事件',
+        key: 'title'
+    },
+    {
+        title: '执行记录',
+        key: 'description'
+    },
+    {
+        title: '消息',
+        key: 'msg'
+    },
+    {
+        title: '时间',
+        key: 'noticeTime'
     }
-  }
+])
+getEnterpriseInfo({enterprise: enterprise}).then(res => {
+    getNoticeInfo({id: res.enterprise.enterprise_id}).then(res => {
+        nsData.value = res.nsData
+    })
 })
 </script>
 
