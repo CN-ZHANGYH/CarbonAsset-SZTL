@@ -4,7 +4,21 @@
         <div class="box_container">
             <div class="box_title">
                 <h1 style="color: #121212">Featured NFTs</h1>
-                <h4 style="color:#848484;">View all</h4>
+                <n-popover :overlap="overlap" placement="right" trigger="click">
+                    <template #trigger>
+                        <h4 style="color:#848484;" @click="">View all</h4>
+                    </template>
+                    <div>
+                        <n-descriptions column="1" label-placement="left">
+                            <n-descriptions-item label="卡片名称">
+                                xxxxx
+                            </n-descriptions-item>
+                            <n-descriptions-item label="卡片寄语">
+                                xxxx
+                            </n-descriptions-item>
+                        </n-descriptions>
+                    </div>
+                </n-popover>
             </div>
             <div class="box">
                 <div class="image-container">
@@ -12,8 +26,8 @@
                     <div class="image-overlay"></div>
                 </div>
                 <div class="box_text text_back">
-                    <h4>Meka #3139</h4>
-                    <h4>10 ETH</h4>
+                    <n-rate readonly :default-value="3" />
+                    <h4>500 积分</h4>
                 </div>
             </div>
             <div class="box_button">
@@ -28,7 +42,7 @@
 </template>
 
 <script setup>
-
+const overlap = ref(false)
 </script>
 
 <style scoped lang="less">
@@ -71,6 +85,7 @@
   top: 76%;
   h4 {
     color:#121212;
+    margin-left: 10px;
   }
   h4:first-child {
     margin-right: 40px;
@@ -156,4 +171,13 @@
   animation: your-animation 1s infinite;
 
 }
+
+.popover-grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>
