@@ -8,3 +8,10 @@ export function getEnterpriseTxList(query){
         params: query
     })
 }
+
+export function getNewTxList(){
+    return request({
+        url: '/carbon/data/newTxListLimitFive',
+        method: 'get'
+    })
+}

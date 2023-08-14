@@ -24,3 +24,10 @@ export function getTotalTxAndEmission(){
         method: 'get'
     })
 }
+
+export function getResourceTypeList(){
+    return request({
+        url: '/carbon/data/rtList',
+        method: 'get'
+    })
+}

@@ -1,80 +1,148 @@
 <template>
-  <div ref="main" style="width: 95%; height: 350px"></div>
+  <n-grid :x-gap="30">
+    <n-grid-item :span="16">
+      <n-data-table
+          :columns="columns"
+          :data="data"
+          :bordered="false"
+      />
+    </n-grid-item>
+    <n-grid-item :span="7">
+      <div ref="resourceType" id="resourceType" style="width: 100%;height: 100%"></div>
+    </n-grid-item>
+  </n-grid>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted } from "vue";
-//  按需引入 echarts
+<script  setup>
+import {getNewTxList} from "../../../api/transaction.js";
+import {getResourceTypeList} from "../../../api/data.js";
+import {NTag} from 'naive-ui'
 import * as echarts from "echarts";
-const main = ref() // 使用ref创建虚拟DOM引用，使用时用main.value
-onMounted(
-    () => {
-      init()
+const data = ref([])
+const columns = ref([
+  {
+    title: "交易名称",
+    key: "transactionOrderName"
+  },
+  {
+    title: "交易Hash",
+    key: "txHash",
+    render(row){
+      return h(
+          NTag,
+          {
+            type: 'success',
+            bordered: false
+          },
+          {
+            default: () => ellipsisText(row.txHash)
+          }
+      )
     }
-)
-function init() {
-  // 基于准备好的dom，初始化echarts实例
-  var myChart = echarts.init(main.value);
-  // 指定图表的配置项和数据
-  var option = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-        label: {
-          backgroundColor: '#6a7985'
-        }
-      }
+  },
+  {
+    title: "买家地址",
+    key: "buyAddress",
+    render(row){
+      return h(
+          NTag,
+          {
+            type: 'error',
+            bordered: false
+          },
+          {
+            default: () => ellipsisText(row.buyAddress)
+          }
+      )}
+  },
+  {
+    title: "卖家地址",
+    key: "sellerAddress",
+    render(row){
+      return h(
+          NTag,
+          {
+            type: 'error',
+            bordered: false
+          },
+          {
+            default: () => ellipsisText(row.sellerAddress)
+          }
+      )}  },
+  {
+    title: "交易数量",
+    key: "transactionQuantity"
+  },
+  {
+    title: "交易时间",
+    key: "transactionTime"
+  }
+])
+const resourceState = reactive({
+  option: {
+    title: {
+      text: '排放资源占比'
     },
     legend: {
-      data: ['购买', '出售']
+      top: 'bottom'
     },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        dataView: { show: true, readOnly: false },
+        restore: { show: true },
+        saveAsImage: { show: true }
+      }
     },
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
     series: [
       {
-        name: '购买',
-        type: 'line',
-        stack: 'Total',
-        areaStyle: {},
-        smooth: true,
-        emphasis: {
-          focus: 'series'
+        name: 'Nightingale Chart',
+        type: 'pie',
+        radius: [20, 100],
+        center: ['50%', '50%'],
+        roseType: 'area',
+        itemStyle: {
+          borderRadius: 8
         },
-        data: [120, 590, 101, 134, 90, 230, 210,0,0,0,0,0]
-      },
-      {
-        name: '出售',
-        type: 'line',
-        stack: 'Total',
-        smooth: true,
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [220, 0, 191, 234, 290, 330, 310,0,0,0,0,0]
+        data: []
       }
     ]
-  };
-  // 使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
+  }
+})
+const {option} = toRefs(resourceState)
+const timer = ref([])
+getNewTxList().then(res => {
+  console.log(res)
+  data.value = res.data
+})
+
+function ellipsisText(val){
+  return val.substring(0,15) + '...'
 }
+
+const init = () => {
+  // 初始化饼状图
+  getResourceTypeList().then(res => {
+    option.value.series[0].data = res.data
+
+    var resourceChart = echarts.init(document.getElementById("resourceType"))
+    // 指定图表的配置项
+    resourceChart.setOption(option.value)
+  })
+}
+onMounted(() => {
+  init()
+  timer.value.push(setInterval(init,1000))
+})
+
+onUnmounted(() => {
+  for (const timerElement of timer.value) {
+    clearInterval(timerElement)
+  }
+  timer.value=[]
+})
+
 </script>
 
 <style scoped>
