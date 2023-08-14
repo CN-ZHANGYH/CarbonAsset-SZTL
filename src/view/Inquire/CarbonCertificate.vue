@@ -17,10 +17,10 @@
                 </div>
             </div>
             <div class="box_button">
-                <button class="back">Place Bid</button>
-                <button class="heart">
+                <n-button :bordered="false" type="success" class="back">Place Bid</n-button>
+                <n-button class="heart" :bordered="false" type="info">
                     <img src="../../assets/aixing.png" alt="">
-                </button>
+                </n-button>
             </div>
         </div>
     </n-gi>
@@ -94,7 +94,7 @@
 
   .heart {
     position: relative;
-    border: 0px;
+    border: none;
     width: 40px;
     height: 40px;
     border-radius: 15px;
@@ -102,9 +102,15 @@
     img {
       position: absolute;
       left: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%,0%);
       height: 15px;
       width: 15px;
+      transition: box-shadow 0.1s ease; /* 添加过渡效果 */
+
+    }
+    img:hover {
+      height: 16px;
+      width: 16px;
     }
   }
 }
