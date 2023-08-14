@@ -42,7 +42,17 @@
 </template>
 
 <script setup>
+import {getCardList} from "../../api/souvenir.js";
+
 const overlap = ref(false)
+const form = ref({
+    pageNum: 1,
+    pageSize: 10
+})
+getCardList(form.value).then(res => {
+    console.log(res)
+})
+
 </script>
 
 <style scoped lang="less">
