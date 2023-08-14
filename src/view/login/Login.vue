@@ -165,7 +165,7 @@ function handleLoginSubmit() {
       localStorage.setItem("user",JSON.stringify(res.data))
     })
     window.$message.success("登录成功")
-    router.push("/MasterConsole")
+    router.push("/PersonalHome/MasterConsole")
   }).catch(err => {
       // 重新获取验证码
       if (captchaEnabled.value) {
