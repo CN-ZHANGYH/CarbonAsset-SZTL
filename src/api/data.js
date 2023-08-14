@@ -8,3 +8,11 @@ export function getOwnerTxAndSellerList(query){
         params: query
     })
 }
+
+export function getOwnerWorkProgress(query){
+    return request({
+        url: '/carbon/data/ownerWorkProgress',
+        method: 'get',
+        params: query
+    })
+}

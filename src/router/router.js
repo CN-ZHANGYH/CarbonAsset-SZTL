@@ -49,67 +49,67 @@ const routes = [
         // redirect:'/PersonalHome',
         children:[
             {
-                path:'/MasterConsole',
+                path:'MasterConsole',
                 meta: {title: "主控台"},
                 component:MasterConsole
             },
             {
-                path:'/WorkConsole',
+                path:'WorkConsole',
                 meta: {title: "工作台"},
                 component:WorkConsole
             },
             {
-                path:'/UploadQualification',
+                path:'UploadQualification',
                 meta: {title: "企业上传资质"},
                 component:UploadQualification
             },
             {
-                path:'/InquireQualification',
+                path:'InquireQualification',
                 meta: {title: "企业基本信息"},
                 component:InquireQualification
             },
             {
-                path:'/ApplicationCarbon',
+                path:'ApplicationCarbon',
                 meta: {title: "申请碳排放额度"},
                 component:ApplicationCarbon
             },
             {
-                path:'/GenerateCarbon',
+                path:'GenerateCarbon',
                 meta: {title: "碳排放报告"},
                 component:GenerateCarbon
             },
             {
-                path:'/SellingCarbon',
+                path:'SellingCarbon',
                 meta: {title: "出售碳资产"},
                 component:SellingCarbon
             },
             {
-                path:'/BuyCarbon',
+                path:'BuyCarbon',
                 meta: {title: "购买碳资产"},
                 component:BuyCarbon
             },
             {
-                path:'/CarbonCertificate',
+                path:'CarbonCertificate',
                 meta: {title: "碳证书"},
                 component:CarbonCertificate
             },
             {
-                path: '/QueryCarbonHistory',
+                path: 'QueryCarbonHistory',
                 meta: {title: "碳排放记录"},
                 component:QueryCarbonHistory
             },
             {
-                path: '/QueryTransaction',
+                path: 'QueryTransaction',
                 meta: {title: "碳交易记录"},
                 component:QueryTransaction
             },
             {
-                path: '/QuerySellerHistory',
+                path: 'QuerySellerHistory',
                 meta: {title: "出售记录"},
                 component: QuerySellerHistory
             },
             {
-                path: '/Leader',
+                path: 'Leader',
                 meta: {title: "排行榜"},
                 component:Leader
             }
@@ -127,7 +127,7 @@ router.beforeEach((to, from, next) => {
 
     var user_key = getUserKey();
     if (user_key != undefined && to.name == 'Login' || to.path == '/'){
-        router.push('/MasterConsole')
+        router.push('/PersonalHome/MasterConsole')
     }
 
     // 检查目标路由是否存在

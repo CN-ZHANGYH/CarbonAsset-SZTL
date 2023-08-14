@@ -132,7 +132,7 @@ function transformMenuOptions(options) {
         return {
           ...option,
           icon: option.icon,
-          label: () => h(RouterLink, { to: `/${option.key}`, onClick: () => console.log(option) }, [
+          label: () => h(RouterLink, { to: `/PersonalHome/${option.key}`, onClick: () => console.log(option) }, [
             option.label
           ])
         };

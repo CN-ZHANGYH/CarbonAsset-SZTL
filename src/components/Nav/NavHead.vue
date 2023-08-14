@@ -69,7 +69,7 @@ function handleSelect(key){
       window.$message.success("退出登录")
     })
   }else if (key === 'profile'){
-    router.push("/InquireQualification")
+    router.push("/PersonalHome/InquireQualification")
   }
 }
 
