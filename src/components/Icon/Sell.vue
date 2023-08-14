@@ -19,8 +19,8 @@ const router = useRouter();
 const handleGridItemClick = () => {
     window.$message.loading('正在前往出售碳额度场景');
     setTimeout(() => {
-        router.push({ path: '/SellingCarbon' });
-    }, 5000);
+        router.push({ path: '/PersonalHome/SellingCarbon' });
+    }, 2000);
 };
 </script>
 

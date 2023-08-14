@@ -19,8 +19,8 @@ const router = useRouter();
 const handleGridItemClick = () => {
     window.$message.loading('正在前往排行榜');
     setTimeout(() => {
-        router.push({ path: '/InquireQualification' });
-    }, 5000);
+        router.push({ path: '/PersonalHome/Leader' });
+    }, 2000);
 };
 </script>
 

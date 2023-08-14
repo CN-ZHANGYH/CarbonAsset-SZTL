@@ -19,8 +19,8 @@ const router = useRouter();
 const handleGridItemClick = () => {
     window.$message.loading('正在前往碳排放记录表');
     setTimeout(() => {
-        router.push({ path: '/SellingCarbon' });
-    }, 5000);
+        router.push({ path: '/PersonalHome/QueryCarbonHistory' });
+    }, 2000);
 };
 </script>
 
