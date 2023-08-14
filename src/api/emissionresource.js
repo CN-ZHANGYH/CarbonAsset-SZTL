@@ -31,6 +31,14 @@ export function applyEmissionResource(data){
     })
 }
 
+export function emissionExchange(data){
+    return request({
+        url: '/emissions/executed',
+        method: 'post',
+        data: data
+    })
+}
+
 
 export function getEnterpriseIsNotApplyEmission(query){
     return request({

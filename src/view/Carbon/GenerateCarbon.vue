@@ -46,6 +46,6 @@ export default defineComponent({
 <style scoped lang="less">
 .n-card {
   height: 800px;
-  margin-bottom: 100px;
+  //margin-bottom: 100px;
 }
 </style>

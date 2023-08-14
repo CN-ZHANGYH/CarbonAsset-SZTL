@@ -64,8 +64,20 @@ const columns = reactive(
 
         },
         {
-            title: "排放时间",
-            key: "emissionTime"
+          title: "排放时间",
+          key: "emissionTime",
+          render(row) {
+            return h(
+                NTag,
+                {
+                  type: row.emissionTime == null ? 'error' : 'success',
+                  bordered: false
+                },
+                {
+                  default: () => row.emissionTime == null ? '暂无排放时间' : row.emissionTime
+                }
+            );
+          }
         }
     ]
 )

@@ -82,3 +82,12 @@ export function getNoticeInfo(query){
         params: query
     })
 }
+
+
+export function updateEnterpriseTotalEmission(query){
+    return request({
+        url: '/enterprise/updateTotalEmission',
+        method: 'post',
+        params: query
+    })
+}
