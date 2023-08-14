@@ -16,3 +16,12 @@ export function getRankingByCredit(query){
         params: query
     })
 }
+
+
+export function creditExchange(data){
+    return request({
+        url: '/credit/exchange',
+        method: 'post',
+        data: data
+    })
+}
