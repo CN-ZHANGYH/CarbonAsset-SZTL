@@ -16,3 +16,11 @@ export function getOwnerWorkProgress(query){
         params: query
     })
 }
+
+
+export function getTotalTxAndEmission(){
+    return request({
+        url: '/carbon/data/getTotalTxAndEmission',
+        method: 'get'
+    })
+}

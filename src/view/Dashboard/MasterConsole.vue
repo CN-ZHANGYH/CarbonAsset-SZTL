@@ -109,6 +109,7 @@ import VisitTab from "./Chart/VisitTab.vue"
 import {getEnterpriseInfo, updateEnterpriseTotalEmission} from "../../api/enterprise.js";
 import {getQualificationInfo} from "../../api/qualification.js";
 import {useRouter} from "vue-router";
+import {getTotalTxAndEmission} from "../../api/data.js";
 
 const updateEmissionShow = ref(false)
 const form = ref({})
@@ -131,6 +132,8 @@ const rules = reactive({
     message: "请输总需排放数量"
   }
 })
+
+
 
 onMounted(() => {
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
@@ -167,6 +170,9 @@ function updateEmissions(){
 }
 
 
+getTotalTxAndEmission().then(res => {
+  console.log(res)
+})
 function toSign(){
   router.push("/PersonalHome/WorkConsole")
 }
