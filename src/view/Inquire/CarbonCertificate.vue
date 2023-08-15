@@ -25,12 +25,12 @@
         <div class="box_container">
             <div class="box_title">
                 <h1 style="color: #121212">{{item.name}}</h1>
-                <n-popover :overlap="overlap" placement="right" trigger="click">
+                <n-popover :overlap="overlap" placement="right-start" trigger="click">
                     <template #trigger>
-                        <h4 style="color:#848484;" @click="toItem(item)">View all</h4>
+                        <h4 style="color:#848484;" @click="">View all</h4>
                     </template>
                     <div>
-                        <n-descriptions column="1" label-placement="left">
+                        <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
                             <n-descriptions-item label="卡片名称">
                               {{item.name}}
                             </n-descriptions-item>
@@ -38,16 +38,13 @@
                                 {{item.description}}
                             </n-descriptions-item>
                             <n-descriptions-item label="卡片等级">
-                              {{item.level}}
+                              <n-rate readonly :default-value="item.level" />
                             </n-descriptions-item>
                             <n-descriptions-item label="积分">
                               {{item.credit}}
                             </n-descriptions-item>
                             <n-descriptions-item label="卡片寄语">
                               {{item.description}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片">
-                              <img :src="item.url" style="width: 200px;height: 200px;border-radius: 10px"/>
                             </n-descriptions-item>
                         </n-descriptions>
                     </div>
@@ -64,7 +61,7 @@
                 </div>
             </div>
             <div class="box_button">
-                <n-button :bordered="false" type="success" class="back">兑换</n-button>
+                <n-button :bordered="false" type="success" class="back" @click="openEchange(item)">兑换</n-button>
                 <n-button class="heart" :bordered="false" type="info">
                     <img src="../../assets/aixing.png" alt="添加收藏">
                 </n-button>
@@ -83,11 +80,34 @@
       />
     </n-gi>
   </n-grid>
+  <n-modal
+      v-model:show="showModal"
+      type="success"
+      preset="dialog"
+      title="确认"
+      positive-text="兑换"
+      negative-text="取消"
+      @positive-click="submitCallback"
+      @negative-click="showModal = false"
+  >
+    <n-alert type="info" :bordered="false">
+      请确认当前的积分是否足够兑换
+    </n-alert>
+    <n-descriptions column="1" label-placement="left" style="margin-top: 5%;margin-left: 10%">
+      <n-descriptions-item label="企业名称">
+        {{creditForm.userName}}
+      </n-descriptions-item>
+      <n-descriptions-item label="纪念卡名称">
+        {{creditForm.cardName}}
+      </n-descriptions-item>
+    </n-descriptions>
+  </n-modal>
 </template>
 
 <script setup>
 import {getCardList} from "../../api/souvenir.js";
-
+import {creditExchange} from "../../api/credit.js";
+const showModal = ref(false)
 const overlap = ref(false)
 const data = ref([])
 const item = ref({})
@@ -96,7 +116,7 @@ const form = ref({
     pageNum: 1,
     pageSize: 8
 })
-
+const creditForm = ref({})
 function getList(){
   window.$loadingBar.start()
   getCardList(form.value).then(res => {
@@ -133,12 +153,19 @@ const onUpdatePageSize = (pageSize) => {
 
 }
 
-function toItem(item){
-
-}
-
 getList()
 
+
+function openEchange(item){
+  creditForm.value.cardName = item.name
+  creditForm.value.userName = JSON.parse(localStorage.getItem("user")).nickName
+  showModal.value = true
+}
+function submitCallback(){
+  creditExchange(creditForm.value).then(res => {
+    window.$message.success(res.msg)
+  })
+}
 </script>
 
 <style scoped lang="less">
