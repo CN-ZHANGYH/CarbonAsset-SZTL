@@ -1,20 +1,53 @@
 <template>
   <n-grid x-gap="12" :cols="4">
-    <n-gi>
+    <n-gi :span="12">
+      <n-card style="height: 80px;border-radius: 20px" hoverable>
+        <n-descriptions column="4">
+          <n-descriptions-item label="拥有卡片">
+            {{10}}
+          </n-descriptions-item>
+          <n-descriptions-item label="我的收藏">
+            {{10}}
+          </n-descriptions-item>
+          <n-descriptions-item label="我的积分">
+            {{10}}
+          </n-descriptions-item>
+          <n-descriptions-item label="更多">
+            {{10}}
+          </n-descriptions-item>
+        </n-descriptions>
+      </n-card>
+    </n-gi>
+    <n-card>
+
+    </n-card>
+    <n-gi v-for="item in data">
         <div class="box_container">
             <div class="box_title">
-                <h1 style="color: #121212">Featured NFTs</h1>
+                <h1 style="color: #121212">{{item.name}}</h1>
                 <n-popover :overlap="overlap" placement="right" trigger="click">
                     <template #trigger>
-                        <h4 style="color:#848484;" @click="">View all</h4>
+                        <h4 style="color:#848484;" @click="toItem(item)">View all</h4>
                     </template>
                     <div>
                         <n-descriptions column="1" label-placement="left">
                             <n-descriptions-item label="卡片名称">
-                                xxxxx
+                              {{item.name}}
                             </n-descriptions-item>
                             <n-descriptions-item label="卡片寄语">
-                                xxxx
+                                {{item.description}}
+                            </n-descriptions-item>
+                            <n-descriptions-item label="卡片等级">
+                              {{item.level}}
+                            </n-descriptions-item>
+                            <n-descriptions-item label="积分">
+                              {{item.credit}}
+                            </n-descriptions-item>
+                            <n-descriptions-item label="卡片寄语">
+                              {{item.description}}
+                            </n-descriptions-item>
+                            <n-descriptions-item label="卡片">
+                              <img :src="item.url" style="width: 200px;height: 200px;border-radius: 10px"/>
                             </n-descriptions-item>
                         </n-descriptions>
                     </div>
@@ -22,21 +55,32 @@
             </div>
             <div class="box">
                 <div class="image-container">
-                    <img src="../../assets/img.png" class="img">
+                    <img :src="item.url" class="img">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="box_text text_back">
-                    <n-rate readonly :default-value="3" />
-                    <h4>500 积分</h4>
+                    <n-rate readonly :default-value="item.level" />
+                    <h4>{{item.credit}} 积分</h4>
                 </div>
             </div>
             <div class="box_button">
-                <n-button :bordered="false" type="success" class="back">Place Bid</n-button>
+                <n-button :bordered="false" type="success" class="back">兑换</n-button>
                 <n-button class="heart" :bordered="false" type="info">
-                    <img src="../../assets/aixing.png" alt="">
+                    <img src="../../assets/aixing.png" alt="添加收藏">
                 </n-button>
             </div>
         </div>
+    </n-gi>
+    <n-gi :span="12" :offset="1.5" style="margin-top: 5%">
+      <n-pagination
+          v-model:page="form.pageNum"
+          v-model:page-size="form.pageSize"
+          show-size-picker
+          :item-count="total"
+          :page-sizes="pageSizes"
+          :on-update-page="onChange"
+          :on-update-page-size="onUpdatePageSize"
+      />
     </n-gi>
   </n-grid>
 </template>
@@ -45,13 +89,55 @@
 import {getCardList} from "../../api/souvenir.js";
 
 const overlap = ref(false)
+const data = ref([])
+const item = ref({})
+const total = ref(0)
 const form = ref({
     pageNum: 1,
-    pageSize: 10
+    pageSize: 8
 })
-getCardList(form.value).then(res => {
+
+function getList(){
+  window.$loadingBar.start()
+  getCardList(form.value).then(res => {
     console.log(res)
-})
+    data.value = res.rows
+    total.value = res.total
+    window.$loadingBar.finish()
+  })
+}
+
+const pageSizes = [
+  {
+    label: "8 每页",
+    value: 8
+  },
+  {
+    label: "16 每页",
+    value: 16
+  },
+  {
+    label: "24 每页",
+    value: 24
+  }
+];
+// 分页数据改变
+const onChange = (page) => {
+  form.value.page = page
+  getList()
+}
+const onUpdatePageSize = (pageSize) => {
+  form.value.pageSize = pageSize
+  form.value.page = 1
+  getList()
+
+}
+
+function toItem(item){
+
+}
+
+getList()
 
 </script>
 
@@ -60,6 +146,7 @@ getCardList(form.value).then(res => {
   position: relative;
   width: 250px;
   height: 320px;
+  margin-top:7%;
   background: #fff;
   padding: 25px;
   border-radius: 30px;

@@ -244,7 +244,7 @@ function handlerBuy(){
 }
 
 .box {
-    width: 85%;
+    width: 100%;
     height: 85%;
     border-radius: 20px;
     border: 2px solid #EDEDF0;
