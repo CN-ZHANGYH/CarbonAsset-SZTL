@@ -2,14 +2,18 @@
   <n-grid x-gap="12" :cols="4">
     <n-gi :span="12">
       <n-card style="height: 80px;border-radius: 20px" hoverable>
-        <n-descriptions column="4">
+        <n-descriptions column="3">
           <n-descriptions-item label="拥有卡片">
             {{10}}
           </n-descriptions-item>
           <n-descriptions-item label="我的收藏">
             {{0}}
           </n-descriptions-item>
+          <n-descriptions-item label="积分">
+            {{enterprise.enterprise_carbon_credits}}
+          </n-descriptions-item>
         </n-descriptions>
+
       </n-card>
     </n-gi>
     <n-card>
@@ -72,6 +76,16 @@
       />
     </n-gi>
   </n-grid>
+  <n-tooltip trigger="hover">
+    <template #trigger>
+      <div class="float" id="favorite-btn" @click="toggleFavorite">
+        <div class="text">
+          {{ isFavorite ? '已 拥 有' : '已 收 藏' }}
+        </div>
+      </div>
+    </template>
+    点击可以显示您已经拥有或者收藏的纪念卡
+  </n-tooltip>
   <n-modal
       v-model:show="showModal"
       type="success"
@@ -99,6 +113,7 @@
 <script setup>
 import {getCardList} from "../../api/souvenir.js";
 import {creditExchange} from "../../api/credit.js";
+import {getEnterpriseInfo} from "../../api/enterprise.js";
 const showModal = ref(false)
 const overlap = ref(false)
 const data = ref([])
@@ -109,6 +124,8 @@ const form = ref({
   pageSize: 8
 })
 const creditForm = ref({})
+const enterprise = ref({})
+const isFavorite = ref(false);
 function getList() {
   window.$loadingBar.start()
   getCardList(form.value).then(res => {
@@ -157,6 +174,26 @@ function submitCallback(){
   creditExchange(creditForm.value).then(res => {
     window.$message.success(res.msg)
   })
+}
+
+onMounted(() => {
+  getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+    enterprise.value = res.enterprise
+  })
+})
+
+function toggleFavorite() {
+  isFavorite.value = !isFavorite.value;
+}
+function openEchangeFloat(item) {
+  if (isFavorite.value) {
+    creditForm.value.cardName = "已拥有";
+  } else {
+    creditForm.value.cardName = item.name;
+  }
+
+  creditForm.value.userName = JSON.parse(localStorage.getItem("user")).nickName;
+  showModal.value = true;
 }
 </script>
 
@@ -246,7 +283,6 @@ function submitCallback(){
   }
 }
 
-
 .image-container {
   position: relative;
   width: 200px; /* 调整为实际大小 */
@@ -296,4 +332,26 @@ function submitCallback(){
   align-items: center;
 }
 
+.float {
+  position:fixed;
+  left: 95%;
+  top: 20%;
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px #ddd;
+  .text {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+  }
+}
+#favorite-btn:active {
+  background-color: #19AAA9;
+  color: white;
+}
 </style>
