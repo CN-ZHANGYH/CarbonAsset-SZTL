@@ -2,7 +2,7 @@
   <n-grid x-gap="12" :cols="4">
     <n-gi :span="12">
       <n-card style="height: 80px;border-radius: 20px" hoverable>
-        <n-descriptions column="3">
+        <n-descriptions column="4">
           <n-descriptions-item label="拥有卡片">
             {{10}}
           </n-descriptions-item>
@@ -11,6 +11,9 @@
           </n-descriptions-item>
           <n-descriptions-item label="积分">
             {{enterprise.enterprise_carbon_credits}}
+          </n-descriptions-item>
+          <n-descriptions-item label="已拥有/已收藏">
+            <n-space><n-switch v-model:value="showPath" /></n-space>
           </n-descriptions-item>
         </n-descriptions>
 
@@ -22,7 +25,7 @@
     <n-gi v-for="item in data">
       <div class="box_container">
         <div class="box_title">
-          <h1 style="color: #121212">{{item.name}}</h1>
+          <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
           <n-popover :overlap="overlap" placement="right-start" trigger="click">
             <template #trigger>
               <h4 style="color:#848484;" @click="">View all</h4>
@@ -84,7 +87,7 @@
         </div>
       </div>
     </template>
-    点击可以显示您已经拥有或者收藏的纪念卡
+    点击切换已拥有或收藏纪念卡
   </n-tooltip>
   <n-modal
       v-model:show="showModal"
@@ -336,8 +339,8 @@ function openEchangeFloat(item) {
   position:fixed;
   left: 95%;
   top: 20%;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background: #fff;
   border-radius: 50%;
   display: flex;
@@ -346,7 +349,7 @@ function openEchangeFloat(item) {
   box-shadow: 0 0 10px #ddd;
   .text {
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 800;
   }
 }
