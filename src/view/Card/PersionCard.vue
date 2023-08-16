@@ -31,6 +31,7 @@
               <h4 style="color:#848484;" @click="">View all</h4>
             </template>
             <div>
+
               <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
                 <n-descriptions-item label="卡片名称">
                   {{item.name}}
