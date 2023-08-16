@@ -10,11 +10,12 @@ import ApplicationCarbon from "../view/Carbon/ApplicationCarbon.vue";
 import GenerateCarbon from "../view/Carbon/GenerateCarbon.vue";
 import SellingCarbon from "../view/Trading/SellingCarbon.vue";
 import BuyCarbon from "../view/Trading/BuyCarbon.vue";
-import CarbonCertificate from "../view/Inquire/CarbonCertificate.vue";
+import CarbonCertificate from "../view/Card/CarbonCertificate.vue";
 import QueryCarbonHistory from "../view/Inquire/QueryCarbonHistory.vue";
 import QueryTransaction from "../view/Inquire/QueryTransaction.vue";
 import Leader from "../view/Leader/Leader.vue";
 import QuerySellerHistory from '../view/Inquire/QuerySellerHistory.vue'
+import PersionCard from "../view/Card/PersionCard.vue"
 import {getUserKey} from "../utils/auth.js";
 
 
@@ -107,6 +108,11 @@ const routes = [
                 path: 'QuerySellerHistory',
                 meta: {title: "出售记录"},
                 component: QuerySellerHistory
+            },
+            {
+                path: 'PersionCard',
+                meta: {title: "个人纪念卡"},
+                component: PersionCard
             },
             {
                 path: 'Leader',

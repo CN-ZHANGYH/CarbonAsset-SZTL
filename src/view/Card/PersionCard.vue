@@ -9,12 +9,6 @@
           <n-descriptions-item label="我的收藏">
             {{10}}
           </n-descriptions-item>
-          <n-descriptions-item label="我的积分">
-            {{10}}
-          </n-descriptions-item>
-          <n-descriptions-item label="更多">
-            {{10}}
-          </n-descriptions-item>
         </n-descriptions>
       </n-card>
     </n-gi>
@@ -22,51 +16,49 @@
 
     </n-card>
     <n-gi v-for="item in data">
-        <div class="box_container">
-            <div class="box_title">
-                <h1 style="color: #121212">{{item.name}}</h1>
-                <n-popover :overlap="overlap" placement="right-start" trigger="click">
-                    <template #trigger>
-                        <h4 style="color:#848484;" @click="">View all</h4>
-                    </template>
-                    <div>
-                        <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
-                            <n-descriptions-item label="卡片名称">
-                              {{item.name}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片寄语">
-                                {{item.description}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片等级">
-                              <n-rate readonly :default-value="item.level" />
-                            </n-descriptions-item>
-                            <n-descriptions-item label="积分">
-                              {{item.credit}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片寄语">
-                              {{item.description}}
-                            </n-descriptions-item>
-                        </n-descriptions>
-                    </div>
-                </n-popover>
+      <div class="box_container">
+        <div class="box_title">
+          <h1 style="color: #121212">{{item.name}}</h1>
+          <n-popover :overlap="overlap" placement="right-start" trigger="click">
+            <template #trigger>
+              <h4 style="color:#848484;" @click="">View all</h4>
+            </template>
+            <div>
+              <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
+                <n-descriptions-item label="卡片名称">
+                  {{item.name}}
+                </n-descriptions-item>
+                <n-descriptions-item label="卡片寄语">
+                  {{item.description}}
+                </n-descriptions-item>
+                <n-descriptions-item label="卡片等级">
+                  <n-rate readonly :default-value="item.level" />
+                </n-descriptions-item>
+                <n-descriptions-item label="积分">
+                  {{item.credit}}
+                </n-descriptions-item>
+                <n-descriptions-item label="卡片寄语">
+                  {{item.description}}
+                </n-descriptions-item>
+              </n-descriptions>
             </div>
-            <div class="box">
-                <div class="image-container">
-                    <img :src="item.url" class="img">
-                    <div class="image-overlay"></div>
-                </div>
-                <div class="box_text text_back">
-                    <n-rate readonly :default-value="item.level" />
-                    <h4>{{item.credit}} 积分</h4>
-                </div>
-            </div>
-            <div class="box_button">
-                <n-button :bordered="false" type="success" class="back" @click="openEchange(item)">兑换</n-button>
-                <n-button class="heart" :bordered="false" type="info">
-                    <img src="../../assets/aixing.png" alt="添加收藏">
-                </n-button>
-            </div>
+          </n-popover>
         </div>
+        <div class="box">
+          <div class="image-container">
+            <img :src="item.url" class="img">
+            <div class="image-overlay"></div>
+          </div>
+          <div class="box_text text_back">
+            <n-rate readonly :default-value="item.level" />
+          </div>
+        </div>
+        <div class="box_button">
+          <n-button class="heart" :bordered="false" type="info" @click="isActive = !isActive" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+            <img src="../../assets/aixing.png" alt="添加收藏">
+          </n-button>
+        </div>
+      </div>
     </n-gi>
     <n-gi :span="12" :offset="1.5" style="margin-top: 5%">
       <n-pagination
@@ -113,8 +105,8 @@ const data = ref([])
 const item = ref({})
 const total = ref(0)
 const form = ref({
-    pageNum: 1,
-    pageSize: 8
+  pageNum: 1,
+  pageSize: 8
 })
 const creditForm = ref({})
 function getList(){
@@ -153,6 +145,7 @@ const onUpdatePageSize = (pageSize) => {
 
 }
 
+const isActive = ref(false)
 getList()
 
 
@@ -260,9 +253,9 @@ function submitCallback(){
   width: 200px; /* 调整为实际大小 */
   height: 180px; /* 调整为实际大小 */
   overflow: hidden;
-  border-radius: 20px; /* 添加圆角 */
-
+  border-radius: 25px; /* 添加圆角 */
 }
+
 .box:hover {
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
 }

@@ -8,7 +8,7 @@
       />
     </n-grid-item>
     <n-grid-item :span="7">
-      <div ref="resourceType" id="resourceType" style="width: 100%;height: 100%"></div>
+      <div ref="resourceType" id="resourceType" style="width: 100%;height: 400px"></div>
     </n-grid-item>
   </n-grid>
 </template>

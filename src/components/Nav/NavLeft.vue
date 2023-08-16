@@ -22,6 +22,7 @@ import {
   WalletOutline as WalletIcon,
   SearchOutline as SearchIcon,
   RibbonOutline as RibbonIcon,
+  BagHandleOutline as BagHandleIcon
 } from '@vicons/ionicons5'
 
 function renderIcon(icon: Component) {
@@ -90,6 +91,21 @@ const menuOptions: MenuOption[] =  [
     ],
   },
   {
+    label: '纪念卡',
+    key: 'Card',
+    icon: renderIcon(BagHandleIcon),
+    children: [
+      {
+        label: '纪念卡商店',
+        key: 'CarbonCertificate',
+      },
+      {
+        label: '个人纪念卡',
+        key: 'PersionCard',
+      }
+    ],
+  },
+  {
     label: '个人查询',
     key: 'Inquire',
     icon: renderIcon(SearchIcon),
@@ -105,10 +121,6 @@ const menuOptions: MenuOption[] =  [
       {
         label: '出售记录',
         key: 'QuerySellerHistory',
-      },
-      {
-        label: '碳证书',
-        key: 'CarbonCertificate',
       },
     ],
   },
