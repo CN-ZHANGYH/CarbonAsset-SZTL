@@ -4,13 +4,13 @@
       <n-card style="height: 80px;border-radius: 20px" hoverable>
         <n-descriptions column="4">
           <n-descriptions-item label="拥有卡片">
-            {{10}}
+            {{total}}
           </n-descriptions-item>
           <n-descriptions-item label="我的收藏">
-            {{10}}
+            {{0}}
           </n-descriptions-item>
           <n-descriptions-item label="我的积分">
-            {{10}}
+            {{enterprise.enterprise_carbon_credits}}
           </n-descriptions-item>
           <n-descriptions-item label="更多">
             {{10}}
@@ -107,11 +107,14 @@
 <script setup>
 import {getCardList} from "../../api/souvenir.js";
 import {creditExchange} from "../../api/credit.js";
+import {getEnterpriseInfo} from "../../api/enterprise.js";
+import {getEnterpriseNewSellerHistory} from "../../api/asset.js";
 const showModal = ref(false)
 const overlap = ref(false)
 const data = ref([])
 const item = ref({})
 const total = ref(0)
+const enterprise = ref({})
 const form = ref({
     pageNum: 1,
     pageSize: 8
@@ -166,6 +169,12 @@ function submitCallback(){
     window.$message.success(res.msg)
   })
 }
+
+onMounted(() => {
+  getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+    enterprise.value = res.enterprise
+  })
+})
 </script>
 
 <style scoped lang="less">
@@ -253,7 +262,6 @@ function submitCallback(){
     }
   }
 }
-
 
 .image-container {
   position: relative;

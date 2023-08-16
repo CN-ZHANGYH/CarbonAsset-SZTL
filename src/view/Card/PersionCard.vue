@@ -7,7 +7,7 @@
             {{10}}
           </n-descriptions-item>
           <n-descriptions-item label="我的收藏">
-            {{10}}
+            {{0}}
           </n-descriptions-item>
         </n-descriptions>
       </n-card>
@@ -109,7 +109,7 @@ const form = ref({
   pageSize: 8
 })
 const creditForm = ref({})
-function getList(){
+function getList() {
   window.$loadingBar.start()
   getCardList(form.value).then(res => {
     console.log(res)
@@ -119,6 +119,7 @@ function getList(){
   })
 }
 
+// 页数
 const pageSizes = [
   {
     label: "8 每页",
@@ -142,12 +143,10 @@ const onUpdatePageSize = (pageSize) => {
   form.value.pageSize = pageSize
   form.value.page = 1
   getList()
-
 }
 
 const isActive = ref(false)
 getList()
-
 
 function openEchange(item){
   creditForm.value.cardName = item.name
