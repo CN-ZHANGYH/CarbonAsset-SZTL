@@ -51,11 +51,6 @@ const options = [
     icon: renderIcon(UserIcon)
   },
   {
-    label: "编辑用户资料",
-    key: "editProfile",
-    icon: renderIcon(EditIcon)
-  },
-  {
     label: "退出登录",
     key: "logout",
     icon: renderIcon(LogoutIcon)

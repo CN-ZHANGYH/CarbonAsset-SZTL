@@ -34,17 +34,10 @@
       <n-grid-item>
         <Leaderboard/>
       </n-grid-item>
+<!--  个人设置    -->
       <n-grid-item>
-        <div class="light-green" @click="handleGridItemClick">
-          <n-card hoverable>
-            <span>
-              <n-icon size="40" color="#817C77">
-              <settings-outline />
-            </n-icon>
-            </span>
-            <p class="text-center">个人设置</p>
-          </n-card>
-        </div>
+        <Settings/>
+
       </n-grid-item>
     </n-grid>
 </template>
@@ -57,15 +50,17 @@ import Sell from "../Icon/Sell.vue";
 import Buy from "../Icon/Buy.vue";
 import Record from "../Icon/Record.vue";
 import Leaderboard from "../Icon/Leaderboard.vue";
+import Settings from "../Icon/Settings.vue";
 
 import {defineComponent, ref} from "vue";
 import {DesktopOutline,SettingsOutline,
 } from '@vicons/ionicons5'
+
 export default defineComponent({
   components: {
     DesktopOutline,
     SettingsOutline,
-    SignIn,Firm,Write,Sell,Buy,Record,Leaderboard
+    SignIn,Firm,Write,Sell,Buy,Record,Leaderboard,Settings
   },
   setup() {
     const handleGridItemClick = () => {
