@@ -162,6 +162,7 @@ getList()
 function openEchange(item){
   creditForm.value.cardName = item.name
   creditForm.value.userName = JSON.parse(localStorage.getItem("user")).nickName
+  creditForm.value.credit = item.credit
   showModal.value = true
 }
 function submitCallback(){
