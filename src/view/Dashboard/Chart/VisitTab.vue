@@ -10,6 +10,9 @@
             <n-tab-pane name="碳交易">
               <SellChart />
             </n-tab-pane>
+            <n-tab-pane name="备用">
+              <Bei />
+            </n-tab-pane>
           </n-tabs>
         </n-card>
       </NCol>
@@ -20,9 +23,10 @@
 import { defineComponent } from 'vue';
 import EmissionChart from "./EmissionChart.vue";
 import SellChart from "./SellChart.vue";
+import Bei from "./Bei.vue";
 
 export default defineComponent({
-  components: {SellChart, EmissionChart},
+  components: {SellChart, EmissionChart,Bei},
   setup() {
     return {};
   },

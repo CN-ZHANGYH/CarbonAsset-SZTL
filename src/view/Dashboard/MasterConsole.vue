@@ -51,25 +51,25 @@
           </template>
           <h1>{{enterpriseEmissionLimit}}</h1>
           <template #footer>
-            <div class="text-sn">总购买碳额度：<span>{{enterpriseEmissionLimit}}</span></div>
+            <div class="text-sn">总购买碳额度：<span>{{enterpriseEmissionLimit}}</span><n-button type="success" strong style="margin-left: 20px">购买碳额度</n-button></div>
           </template>
         </n-card>
       </n-gi>
 
       <n-gi>
         <n-card
-            title="出售碳排放订单量"
+            title="用户余额"
             :segmented="{
               content: true,
               footer: 'soft'
             }"
         >
           <template #header-extra>
-            <n-tag type="info">周</n-tag>
+            <n-tag type="warning">年</n-tag>
           </template>
-          <h1>8</h1>
+          <h1>¥ 9999</h1>
           <template #footer>
-            <div class="text-sn">出售总碳排放订单量：<span>10</span>个</div>
+            <div class="text-sn">用户总余额：<span>¥9999</span><n-button type="success" strong style="margin-left: 20px">充值</n-button></div>
           </template>
         </n-card>
       </n-gi>
@@ -181,6 +181,7 @@ function toSign(){
 <style scoped lang='less'>
 .n-card {
   margin-bottom: 30px;
+  height: 221px;
 }
 
 </style>
