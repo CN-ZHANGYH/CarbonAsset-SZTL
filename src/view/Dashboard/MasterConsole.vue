@@ -67,10 +67,10 @@
           <template #header-extra>
             <n-tag type="warning">年</n-tag>
           </template>
-          <h1>¥ 9999</h1>
+          <h1>¥ {{enterpriseBalance}}</h1>
           <template #footer>
             <div class="text-sn">
-              <span>用户总余额：¥9999</span>
+              <span>用户总余额：{{enterpriseBalance}}</span>
               <n-button type="success" strong style="margin-left: 20px" @click="updateBalanceShow = true">充值</n-button></div>
           </template>
         </n-card>
@@ -113,12 +113,12 @@
         style="width: 500px"
         :bordered="false"
     >
-      <n-form ref="formRef" :model="form" label-width="80" label-placement="left" :rules="rules">
-        <n-form-item label="企业地址" path="address">
-          <n-input v-model:value="form.address" placeholder="请输入企业地址" disabled/>
+      <n-form ref="enterpriseFormRef" :model="enterpriseForm" label-width="80" label-placement="left" :rules="rules">
+        <n-form-item label="企业地址" path="enterpriseName">
+          <n-input v-model:value="enterpriseForm.enterpriseName" placeholder="请输入企业名称" disabled/>
         </n-form-item>
-        <n-form-item label="更新余额" path="balance">
-          <n-input-number v-model:value="form.balance" placeholder="请输入总用户余额"/>
+        <n-form-item label="更新余额" path="enterpriseBalance">
+          <n-input-number v-model:value="enterpriseForm.enterpriseBalance" placeholder="请输入总用户余额"/>
         </n-form-item>
       </n-form>
       <div style="text-align: center">
@@ -132,11 +132,9 @@
 
 <script setup>
 import VisitTab from "./Chart/VisitTab.vue"
-import {getEnterpriseInfo, updateEnterpriseTotalEmission} from "../../api/enterprise.js";
+import {getEnterpriseInfo, updateEnterpriseTotalEmission,updateBalance} from "../../api/enterprise.js";
 import {
-  getIndustryList,
-  getQualificationInfo,
-  updateBalance,
+  getQualificationInfo
 } from "../../api/qualification.js";
 import {useRouter} from "vue-router";
 import {getTotalTxAndEmission} from "../../api/data.js";
@@ -144,11 +142,14 @@ import {getTotalTxAndEmission} from "../../api/data.js";
 const updateEmissionShow = ref(false)
 const updateBalanceShow = ref(false)
 const form = ref({})
+const enterpriseForm = ref({})
 const formRef = ref()
+const enterpriseFormRef = ref()
 const enterpriseTotalEmission = ref(0)
 const enterpriseTotalCredit = ref(0)
 const enterpriseOverEmission = ref(0)
 const enterpriseEmissionLimit = ref(0)
+const enterpriseBalance = ref(0)
 const router = useRouter()
 const rules = reactive({
   address:{
@@ -162,21 +163,23 @@ const rules = reactive({
     trigger: ['blur','change'],
     message: "请输总需排放数量"
   },
-  balance: {
-    required: true,
-    type: 'number',
-    trigger: ['blur','change'],
-    message: "请输总用户余额"
-  },
+  enterpriseBalance: {
+      required: true,
+      type: 'number',
+      trigger: ['blur','change'],
+      message: "请输总用户余额"
+    }
 })
 
 onMounted(() => {
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  enterpriseForm.value.enterpriseName = enterprise
   getEnterpriseInfo({enterprise: enterprise}).then(res => {
     form.value.address = res.enterprise.enterprise_address
     enterpriseTotalEmission.value = res.enterprise.enterprise_total_emission
     enterpriseTotalCredit.value = res.enterprise.enterprise_carbon_credits
     enterpriseOverEmission.value = res.enterprise.enterprise_over_emission
+    enterpriseBalance.value = res.enterprise.enterprise_balance
 
   })
   getQualificationInfo({enterprise: enterprise}).then(res => {
@@ -201,17 +204,15 @@ function updateEmissions(){
 }
 
 function updateBalances() {
-  formRef.value?.validate((errors) => {
-    const carbonEnterprise = {
-      address: form.value.address,
-      balance: form.value.balance
-    }
-    console.log(carbonEnterprise)
+    enterpriseFormRef.value?.validate((errors) => {
     if(!errors){
-      updateBalance(carbonEnterprise).then(res => {
-        console.log(res)
+      updateBalance(enterpriseForm.value).then(res => {
+        window.$message.success(res.msg)
         updateBalanceShow.value = false
+          enterpriseForm.value.enterpriseBalance = 0
       })
+    }else {
+        window.$message.error("请输入金额")
     }
   });
 }
