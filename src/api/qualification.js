@@ -24,7 +24,7 @@ export function getQualificationInfo(query){
 export function getIndustryList(){
     return request({
         url: '/industrys',
-        method: 'get',
+        method: 'post',
     });
 }
 
@@ -35,4 +35,12 @@ export function uploadQualificationInfo(data){
         method: 'post',
         data: data
     })
+}
+
+export function updateBalance(carbonEnterprise) {
+    return request({
+        url: '/enterprise/updateBalance',
+        method: 'put',
+        data:carbonEnterprise
+    });
 }
