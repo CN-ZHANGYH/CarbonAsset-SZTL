@@ -15,7 +15,7 @@
             </template>
             <h1>{{enterpriseTotalCredit}}</h1>
             <template #footer>
-              <div class="text-sn">总积分：<span>{{enterpriseTotalCredit}}</span> <span><n-button type="success" strong style="margin-left: 60px" @click="toSign">前往签到</n-button></span></div>
+              <div class="text-sn"><span>总积分：{{enterpriseTotalCredit}}</span> <span><n-button type="success" strong style="margin-left: 60px" @click="toSign">前往签到</n-button></span></div>
             </template>
           </n-card>
       </n-gi>
@@ -33,7 +33,7 @@
           </template>
           <h1>{{enterpriseOverEmission}} tCO₂e</h1>
           <template #footer>
-            <div class="text-sn">总需碳排放量：<span>{{enterpriseTotalEmission}}</span> tCO₂e<span><n-button type="success" strong style="margin-left: 20px" @click="updateEmissionShow = true">更新</n-button></span></div>
+            <div class="text-sn"><span>总需碳排放量：{{enterpriseTotalEmission}}</span><span><n-button type="success" strong style="margin-left: 20px" @click="updateEmissionShow = true">更新</n-button></span></div>
           </template>
         </n-card>
       </n-gi>
@@ -51,7 +51,7 @@
           </template>
           <h1>{{enterpriseEmissionLimit}}</h1>
           <template #footer>
-            <div class="text-sn">总购买碳额度：<span>{{enterpriseEmissionLimit}}</span><n-button type="success" strong style="margin-left: 20px">购买碳额度</n-button></div>
+            <div class="text-sn"><span>总购买碳额度：{{enterpriseEmissionLimit}}</span><n-button type="success" strong style="margin-left: 20px">购买碳额度</n-button></div>
           </template>
         </n-card>
       </n-gi>
@@ -69,7 +69,9 @@
           </template>
           <h1>¥ 9999</h1>
           <template #footer>
-            <div class="text-sn">用户总余额：<span>¥9999</span><n-button type="success" strong style="margin-left: 20px">充值</n-button></div>
+            <div class="text-sn">
+              <span>用户总余额：¥9999</span>
+              <n-button type="success" strong style="margin-left: 20px">充值</n-button></div>
           </template>
         </n-card>
       </n-gi>
@@ -183,5 +185,9 @@ function toSign(){
   margin-bottom: 30px;
   height: 221px;
 }
-
+.text-sn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>
