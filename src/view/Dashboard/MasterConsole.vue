@@ -187,7 +187,7 @@ function toSign(){
 }
 .text-sn{
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 </style>
