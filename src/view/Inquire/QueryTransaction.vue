@@ -11,7 +11,7 @@ import CarbonTransaction from "../../components/Work/CarbonTransaction.vue"
 
 <style scoped lang='less'>
 .n-card {
-  height: 100vh;
+  height: auto;
   margin-bottom: 80px;
 }
 </style>

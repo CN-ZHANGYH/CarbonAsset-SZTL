@@ -21,8 +21,8 @@ const router = useRouter();
 const handleGridItemClick = () => {
     window.$message.loading('前往查看碳报告');
     setTimeout(() => {
-        router.push({ path: '/GenerateCarbon' });
-    }, 5000);
+        router.push({ path: '/PersonalHome/GenerateCarbon' });
+    }, 2000);
 };
 
 </script>

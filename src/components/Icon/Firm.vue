@@ -20,8 +20,8 @@ const router = useRouter();
 const handleGridItemClick = () => {
     window.$message.loading('正在前往企业资质信息');
     setTimeout(() => {
-        router.push({ path: '/InquireQualification' });
-    }, 5000);
+        router.push({ path: '/PersonalHome/UploadQualification' });
+    }, 2000);
 };
 </script>
 

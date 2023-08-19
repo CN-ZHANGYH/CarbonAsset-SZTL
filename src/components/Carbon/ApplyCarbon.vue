@@ -12,12 +12,11 @@
 <script setup>
 import {getEnterpriseIsNotApplyEmission} from "../../api/emissionresource.js";
 import {NTag} from "naive-ui";
-
 const data = ref([])
 const paginationReactive = reactive({
     page: 1,
     pageSize: 10,
-    showSizePicker: true,
+    showSizePicker: false,
     pageSizes: [10, 20, 30],
     onChange: (page) => {
         paginationReactive.page = page;
@@ -51,11 +50,11 @@ const columns = reactive([
             return h(
                 NTag,
                 {
-                    bordered: false,
-                    type: 'error'
+                  bordered: false,
+                  type: 'error',
                 },
                 {
-                    default: () => '审核中'
+                  default: () => '审核中'
                 }
             )
         }
@@ -74,7 +73,6 @@ getEnterpriseIsNotApplyEmission({
     }
     window.$message.success(res.msg)
 })
-
 
 
 

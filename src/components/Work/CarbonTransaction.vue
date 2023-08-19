@@ -1,4 +1,5 @@
 <template>
+<!--  搜索 -->
     <n-row :gutter="12">
         <n-col :span="6" :offset="17">
             <div class="container">
@@ -8,21 +9,33 @@
 
         </n-col>
     </n-row>
-    <n-space vertical :size="12">
-        <n-data-table
-            :bordered="false"
-            :columns="columns"
-            :data="txData"
-            :pagination="paginationReactive"
-        />
-    </n-space>
+<!--  表单 -->
+  <n-space vertical :size="12">
+    <n-data-table
+        :bordered="false"
+        :columns="columns"
+        :data="txData"
+        :pagination="paginationReactive"
+    >
+    </n-data-table>
+  </n-space>
 </template>
 
 <script setup>
-
 import {getEnterpriseTxList} from "../../api/transaction.js";
 const txData = ref([])
 const searchValue = ref("")
+
+// 省略
+function ellipsisText(text, maxLength) {
+  if (text.length > maxLength) {
+    const leftLength = Math.floor((maxLength - 3) / 2); // 左侧保留字符数
+    const rightLength = maxLength - 3 - leftLength; // 右侧保留字符数
+    return text.slice(0, leftLength) + "..." + text.slice(-rightLength);
+  } else {
+    return text;
+  }
+}
 
 const columns = reactive(
     [
@@ -36,15 +49,18 @@ const columns = reactive(
         },
         {
             title: "交易Hash",
-            key: "txHash"
+            key: "txHash",
+            render: (row) => ellipsisText(row.txHash, 8)
         },
         {
             title: "买家地址",
-            key: "buyAddress"
+            key: "buyAddress",
+            render: (row) => ellipsisText(row.buyAddress, 10)
         },
         {
             title: "卖家地址",
-            key: "sellerAddress"
+            key: "sellerAddress",
+            render: (row) => ellipsisText(row.sellerAddress, 10)
         },
         {
             title: "交易数量",
@@ -59,12 +75,10 @@ const columns = reactive(
 
 const enterprise = JSON.parse(localStorage.getItem("user")).nickName
 
-
-
 const paginationReactive = reactive({
   page: 1,
-  pageSize: 10,
-  showSizePicker: true,
+  pageSize: 13,
+  showSizePicker: false,
   pageSizes: [10, 20, 30],
   onChange: (page) => {
     paginationReactive.page = page;
@@ -90,8 +104,6 @@ getEnterpriseTxList({
 function search(){
 
 }
-
-
 </script>
 
 <style lang="less" scoped>
@@ -105,5 +117,4 @@ function search(){
   align-items: center;
   margin-bottom: 10px;
 }
-
 </style>

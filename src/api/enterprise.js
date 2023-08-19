@@ -63,3 +63,39 @@ export function buyProduct(data){
         data: data
     })
 }
+
+
+export function addSign(query){
+    return request({
+        url: '/addSign',
+        method: 'post',
+        params: query
+
+    })
+}
+
+
+export function getNoticeInfo(query){
+    return  request({
+        url: '/getNoticeInfo',
+        method: 'get',
+        params: query
+    })
+}
+
+
+export function updateEnterpriseTotalEmission(query){
+    return request({
+        url: '/enterprise/updateTotalEmission',
+        method: 'post',
+        params: query
+    })
+}
+export function updateBalance(data) {
+    return request({
+        url: '/enterprise/updateBalance',
+        method: 'post',
+        data:data
+    });
+}
+

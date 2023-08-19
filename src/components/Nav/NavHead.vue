@@ -1,7 +1,7 @@
 <template>
   <div class="HeadNav">
     <div class="logo">
-      <img src="../../assets/logo.png" alt="">
+      <img src="../../assets/logo.png" alt="" style="width: 150px;height: 60px">
     </div>
 
     <div class="user">
@@ -12,7 +12,7 @@
           @select="handleSelect"
       >
         <n-button>
-          <n-avatar round size="small" :src="imageUrl" />
+          <n-avatar round size="small" :src="imageUrl || defaultAvatar" />
           企业资料
         </n-button>
       </n-dropdown>
@@ -22,59 +22,54 @@
 
 <script setup>
 import { NIcon, NMenu  } from 'naive-ui';
-import { h, defineComponent } from 'vue'
+import { h, defineComponent, ref, onMounted } from 'vue'
 import {
-    PersonCircleOutline as UserIcon,
-    Pencil as EditIcon,
-    LogOutOutline as LogoutIcon
+  PersonCircleOutline as UserIcon,
+  Pencil as EditIcon,
+  LogOutOutline as LogoutIcon
 } from "@vicons/ionicons5";
 import router from "../../router/router.js";
 import useUserStore from "../../store/modules/user.js";
+
+const defaultAvatar = '/src/assets/avatar.png' // 默认头像的路径
+
 const imageUrl = ref("")
 
 const renderIcon = (icon) => {
-    return () => {
-        return h(NIcon, null, {
-            default: () => h(icon)
-        });
-    };
+  return () => {
+    return h(NIcon, null, {
+      default: () => h(icon)
+    });
+  };
 };
 
 // 下拉菜单
 const options = [
-    {
-        label: "用户资料",
-        key: "profile",
-        icon: renderIcon(UserIcon)
-    },
-    {
-        label: "编辑用户资料",
-        key: "editProfile",
-        icon: renderIcon(EditIcon)
-    },
-    {
-        label: "退出登录",
-        key: "logout",
-        icon: renderIcon(LogoutIcon)
-    }
+  {
+    label: "用户资料",
+    key: "profile",
+    icon: renderIcon(UserIcon)
+  },
+  {
+    label: "退出登录",
+    key: "logout",
+    icon: renderIcon(LogoutIcon)
+  }
 ]
 
-
-
 function handleSelect(key){
-    if (key === 'logout'){
-        useUserStore().logOut().then(() => {
-            router.push("/Login")
-            window.$message.success("退出登录")
-        })
-    }else if (key === 'profile'){
-        router.push("/InquireQualification")
-    }
+  if (key === 'logout'){
+    useUserStore().logOut().then(() => {
+      router.push("/Login")
+      window.$message.success("退出登录")
+    })
+  }else if (key === 'profile'){
+    router.push("/PersonalHome/InquireQualification")
+  }
 }
 
-
 onMounted(() => {
-    imageUrl.value = JSON.parse(localStorage.getItem("user")).avatar
+  imageUrl.value = JSON.parse(localStorage.getItem("user")).avatar
 })
 </script>
 

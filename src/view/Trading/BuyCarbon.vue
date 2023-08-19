@@ -38,17 +38,6 @@
                     </n-carousel>
                 </div>
             </n-grid-item>
-          <n-grid-item :span="10" :offset="2">
-            <n-pagination
-                v-model:page="queryParam.pageNum"
-                v-model:page-size="queryParam.pageSize"
-                show-size-picker
-                :item-count="total"
-                :page-sizes="pageSizes"
-                :on-update-page="onChange"
-                :on-update-page-size="onUpdatePageSize"
-            />
-          </n-grid-item>
               <n-grid-item  v-for="(item,index) in productList">
                 <div class="hello">
                   <div class="box">
@@ -67,7 +56,7 @@
                       </div>
                     </div>
                     <div class="footer" style="display: flex; align-items: center;">
-                      <img class="tou" style="margin-left: 20px" :src="item.image"/>
+                      <img class="tou" style="margin-left: 5%" :src="item.image"/>
                       <div class="name" style="margin-left: 10px;">
                         <n-popover trigger="hover">
                           <template #trigger>
@@ -78,11 +67,22 @@
 
                         <h5 style="color: #8B93A1">{{ item.time }}</h5>
                       </div>
-                      <n-button type="success" strong  style="margin-left: 30px;" @click="buySubmit(item)">购买</n-button>
+                      <n-button type="success" strong  style="margin-left: 5%;" @click="buySubmit(item)">购买</n-button>
                     </div>
                   </div>
                 </div>
               </n-grid-item>
+            <n-grid-item :span="10" :offset="2">
+                <n-pagination
+                        v-model:page="queryParam.pageNum"
+                        v-model:page-size="queryParam.pageSize"
+                        show-size-picker
+                        :item-count="total"
+                        :page-sizes="pageSizes"
+                        :on-update-page="onChange"
+                        :on-update-page-size="onUpdatePageSize"
+                />
+            </n-grid-item>
         </n-grid>
       <n-modal
           v-model:show="showModal"
@@ -202,7 +202,7 @@ getList()
 
 
 function truncatedString(val){
-    return val.substring(0, 15) + '...';
+    return val.substring(0, 11) + '...';
 }
 
 function buySubmit(item){
@@ -239,13 +239,13 @@ function handlerBuy(){
   height: auto;
 }
 .hello {
-    width: auto;
+    width: 100%;
     height: 500px;
 }
 
 .box {
-    width: 300px;
-    height: 400px;
+    width: 100%;
+    height: 85%;
     border-radius: 20px;
     border: 2px solid #EDEDF0;
     /* 添加其他样式属性 */
@@ -276,14 +276,14 @@ function handlerBuy(){
 
 .image-container {
     position: relative;
-    width: 300px; /* 调整为实际大小 */
+    width: 100%; /* 调整为实际大小 */
     height: 200px; /* 调整为实际大小 */
     overflow: hidden;
     border-radius: 20px; /* 添加圆角 */
 }
 
 .image-container img {
-    width: 300px;
+    width: 100%;
     height: 200px;
     border-bottom: 1px solid;
     border-radius: inherit; /* 继承圆角 */

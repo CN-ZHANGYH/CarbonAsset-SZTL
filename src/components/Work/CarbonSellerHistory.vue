@@ -1,3 +1,23 @@
+<template>
+    <n-row :gutter="12">
+      <n-col :span="6" :offset="17">
+        <div class="container">
+          <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
+          <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
+        </div>
+
+      </n-col>
+    </n-row>
+    <n-space vertical :size="12">
+      <n-data-table
+          :bordered="false"
+          :columns="columns"
+          :data="data"
+          :pagination="paginationReactive"
+      />
+    </n-space>
+</template>
+
 <script setup>
 import {getEnterpriseSellerHistory} from "../../api/asset.js";
 import {NButton, NTag} from "naive-ui";
@@ -76,7 +96,7 @@ const columns = reactive(
 const paginationReactive = reactive({
   page: 1,
   pageSize: 10,
-  showSizePicker: true,
+  showSizePicker: false,
   pageSizes: [10, 20, 30],
   onChange: (page) => {
     paginationReactive.page = page;
@@ -99,28 +119,6 @@ getEnterpriseSellerHistory({
   window.$message.success(res.msg)
 })
 </script>
-
-<template>
-  <n-card>
-    <n-row :gutter="12">
-      <n-col :span="6" :offset="17">
-        <div class="container">
-          <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
-          <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
-        </div>
-
-      </n-col>
-    </n-row>
-    <n-space vertical :size="12">
-      <n-data-table
-          :bordered="false"
-          :columns="columns"
-          :data="data"
-          :pagination="paginationReactive"
-      />
-    </n-space>
-  </n-card>
-</template>
 
 <style scoped lang="less">
 .container {

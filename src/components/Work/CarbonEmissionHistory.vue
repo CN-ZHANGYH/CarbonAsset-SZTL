@@ -1,3 +1,23 @@
+<template>
+  <n-row :gutter="12">
+    <n-col :span="6" :offset="17">
+      <div class="container">
+        <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
+        <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
+      </div>
+
+    </n-col>
+  </n-row>
+  <n-space vertical :size="12">
+    <n-data-table
+        :bordered="false"
+        :columns="columns"
+        :data="EmData"
+        :pagination="paginationReactive"
+    />
+  </n-space>
+</template>
+
 <script setup>
 import {getEnterpriseEmissionList} from "../../api/emissionresource.js";
 import {NTag} from "naive-ui";
@@ -44,8 +64,20 @@ const columns = reactive(
 
         },
         {
-            title: "排放时间",
-            key: "emissionTime"
+          title: "排放时间",
+          key: "emissionTime",
+          render(row) {
+            return h(
+                NTag,
+                {
+                  type: row.emissionTime == null ? 'error' : 'success',
+                  bordered: false
+                },
+                {
+                  default: () => row.emissionTime == null ? '暂无排放时间' : row.emissionTime
+                }
+            );
+          }
         }
     ]
 )
@@ -57,7 +89,7 @@ function search(){
 const paginationReactive = reactive({
   page: 1,
   pageSize: 10,
-  showSizePicker: true,
+  showSizePicker: false,
   pageSizes: [10, 20, 30],
   onChange: (page) => {
     paginationReactive.page = page;
@@ -76,31 +108,12 @@ getEnterpriseEmissionList({
 }).then(res => {
   if (res.total != 0){
     EmData.value = res.rows
+      console.log(res.rows)
   }
   window.$message.success(res.msg)
 })
 
 </script>
-
-<template>
-    <n-row :gutter="12">
-        <n-col :span="6" :offset="17">
-            <div class="container">
-                <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
-                <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
-            </div>
-
-        </n-col>
-    </n-row>
-    <n-space vertical :size="12">
-        <n-data-table
-                :bordered="false"
-                :columns="columns"
-                :data="EmData"
-                :pagination="paginationReactive"
-        />
-    </n-space>
-</template>
 
 <style scoped lang="less">
 .container {

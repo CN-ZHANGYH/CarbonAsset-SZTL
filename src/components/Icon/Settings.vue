@@ -1,12 +1,12 @@
 <template>
   <div class="light-green" @click="handleGridItemClick">
     <n-card hoverable>
-      <span>
-        <n-icon size="40" color="#0e7a0d">
-          <speedometer-outline />
-        </n-icon>
-      </span>
-      <p class="text-center">碳排放记录</p>
+            <span>
+              <n-icon size="40" color="#817C77">
+              <settings-outline />
+            </n-icon>
+            </span>
+      <p class="text-center">个人设置</p>
     </n-card>
   </div>
 </template>
@@ -14,13 +14,13 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import {SpeedometerOutline} from '@vicons/ionicons5'
+import {SettingsOutline} from '@vicons/ionicons5'
 const router = useRouter();
 const handleGridItemClick = () => {
-    window.$message.loading('正在前往碳排放记录表');
-    setTimeout(() => {
-        router.push({ path: '/PersonalHome/QueryCarbonHistory' });
-    }, 2000);
+  window.$message.loading('正在前往个人设置中心');
+  setTimeout(() => {
+    router.push({ path: '/PersonalHome/InquireQualification' });
+  }, 2000);
 };
 </script>
 
@@ -43,3 +43,4 @@ const handleGridItemClick = () => {
   }
 }
 </style>
+

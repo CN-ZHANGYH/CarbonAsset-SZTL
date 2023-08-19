@@ -1,5 +1,5 @@
 <template>
-  <n-card title="本周碳交易概览">
+  <n-card>
       <SellTrading style="height: 320px"/>
   </n-card>
 </template>

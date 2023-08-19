@@ -1,5 +1,5 @@
 <template>
-  <n-card>您所在的碳积分排名：2</n-card>
+  <n-card>您所在的碳积分排名：{{creditRanking}}</n-card>
   <n-data-table
       :columns="columns"
       :data="data"
@@ -8,63 +8,71 @@
   />
 </template>
 
-<script lang="ts">
-import { h, defineComponent } from 'vue'
-import { NButton, useMessage } from 'naive-ui'
-import type { DataTableColumns } from 'naive-ui'
-import StepForm from "../Form/stepForm/stepForm.vue";
-
-type Song = {
-  no: number
-  title: string
-  length: string
-}
-
-const createColumns = ({
-                         play
-                       }: {
-  play: (row: Song) => void
-}): DataTableColumns<Song> => {
-  return [
+<script setup>
+import {getEnterpriseRanking, getRankingByCredit} from "../../api/credit.js";
+import {NAvatar, NTag} from "naive-ui";
+const creditRanking = ref(0)
+const data = ref([])
+const  columns = reactive([
     {
-      title: '排名',
-      key: 'number'
-    },
-    {
-      title: '企业名称',
-      key: 'name'
-    },
-    {
-      title: '企业地址',
-      key: 'address'
-    },
-    {
-      title:'碳积分',
-      key: 'carbon'
-    },
-  ]
-}
-
-const data: Song[] = [
-  { number: 1, name: '企业名称xxx', address: '00xxxxxxaasdasdadaskl1111',carbon:'100' },
-  { number: 2, name: "企业名称xxx", address: '00xxxxxxaasdasdadaskl1111',carbon:'88' },
-  { number: 3, name: '企业名称xxx', address: '00xxxxxxaasdasdadaskl1111',carbon:'77' }
-]
-
-export default defineComponent({
-  components: {StepForm},
-  setup () {
-    const message = useMessage()
-    return {
-      data,
-      columns: createColumns({
-        play (row: Song) {
-          // message.info(`Play ${row.title}`)
+        title: '头像',
+        key: 'avatar',
+        render(row){
+            return h(
+                NAvatar,
+                {
+                    bordered: true,
+                    round: true,
+                    src: row.avatar
+                }
+            )
         }
-      }),
+    },
+    {
+        title: '企业名称',
+        key: 'enterprise_name'
+    },
+    {
+        title: '账户地址',
+        key: 'enterprise_address'
+    },
+    {
+        title: '认证状态',
+        key: 'enterprise_verified',
+        render(row){
+            return h(
+                NTag,
+                {
+                    type: row.enterprise_verified == 0 ? 'error' : 'success',
+                    bordered: true,
+                    round: true
+                },
+                {
+                    default: () => row.enterprise_verified == 0 ? '未认证' : '已认证'
+                }
+            )
+        }
+    },
+    {
+        title: '积分总量',
+        key: 'enterprise_carbon_credits'
     }
-  }
+])
+const enterpriseName = JSON.parse(localStorage.getItem("user")).nickName
+getEnterpriseRanking({enterprise: enterpriseName}).then(res => {
+    creditRanking.value = res.cRanking
 })
+
+function getRanking(){
+    getRankingByCredit({
+        page: 0,
+        pageSize: 10
+    }).then(res => {
+        data.value = res.data
+    })
+}
+
+getRanking()
 </script>
 
 <style lang="less" scoped>

@@ -6,6 +6,7 @@
       :options="transformedMenuOptions"
       :default-expanded-keys="defaultExpandedKeys"
       accordion
+      style="height: 100%"
   />
 </template>
 
@@ -21,6 +22,7 @@ import {
   WalletOutline as WalletIcon,
   SearchOutline as SearchIcon,
   RibbonOutline as RibbonIcon,
+  BagHandleOutline as BagHandleIcon
 } from '@vicons/ionicons5'
 
 function renderIcon(icon: Component) {
@@ -89,6 +91,21 @@ const menuOptions: MenuOption[] =  [
     ],
   },
   {
+    label: '纪念卡',
+    key: 'Card',
+    icon: renderIcon(BagHandleIcon),
+    children: [
+      {
+        label: '纪念卡商店',
+        key: 'CarbonCertificate',
+      },
+      {
+        label: '个人纪念卡',
+        key: 'PersionCard',
+      }
+    ],
+  },
+  {
     label: '个人查询',
     key: 'Inquire',
     icon: renderIcon(SearchIcon),
@@ -104,10 +121,6 @@ const menuOptions: MenuOption[] =  [
       {
         label: '出售记录',
         key: 'QuerySellerHistory',
-      },
-      {
-        label: '碳证书',
-        key: 'CarbonCertificate',
       },
     ],
   },
@@ -131,7 +144,7 @@ function transformMenuOptions(options) {
         return {
           ...option,
           icon: option.icon,
-          label: () => h(RouterLink, { to: `/${option.key}`, onClick: () => console.log(option) }, [
+          label: () => h(RouterLink, { to: `/PersonalHome/${option.key}`, onClick: () => console.log(option) }, [
             option.label
           ])
         };
@@ -147,7 +160,6 @@ function transformMenuOptions(options) {
 const transformedMenuOptions = transformMenuOptions(menuOptions);
 
 export default defineComponent({
-
   setup() {
     return {
       inverted: ref(false),

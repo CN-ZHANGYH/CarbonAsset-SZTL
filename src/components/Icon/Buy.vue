@@ -20,8 +20,8 @@ const router = useRouter();
 const handleGridItemClick = () => {
     window.$message.loading('正在前往购买碳额度场景');
     setTimeout(() => {
-        router.push({ path: '/SellingCarbon' });
-    }, 5000);
+        router.push({ path: '/PersonalHome/BuyCarbon' });
+    }, 2000);
 };
 </script>
 
