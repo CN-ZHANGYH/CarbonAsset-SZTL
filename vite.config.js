@@ -6,8 +6,8 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   server: {
-    host: true,
     port: 8081,
+    host: true,
     open: true,
     proxy: {
       // https://cn.vitejs.dev/config/#server-proxy
