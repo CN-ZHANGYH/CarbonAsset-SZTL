@@ -37,10 +37,3 @@ export function uploadQualificationInfo(data){
     })
 }
 
-export function updateBalance(carbonEnterprise) {
-    return request({
-        url: '/enterprise/updateBalance',
-        method: 'put',
-        data:carbonEnterprise
-    });
-}

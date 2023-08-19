@@ -91,3 +91,11 @@ export function updateEnterpriseTotalEmission(query){
         params: query
     })
 }
+export function updateBalance(data) {
+    return request({
+        url: '/enterprise/updateBalance',
+        method: 'post',
+        data:data
+    });
+}
+
