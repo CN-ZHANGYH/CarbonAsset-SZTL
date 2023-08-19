@@ -77,7 +77,7 @@ const txDataOption = reactive({
                 emphasis: {
                     focus: 'series'
                 },
-                data: []
+                data: [0,0,0,0,0,0]
             },
             {
                 name: '出售',
@@ -104,7 +104,7 @@ const txDataOption = reactive({
                 emphasis: {
                     focus: 'series'
                 },
-                data: []
+                data: [0,0,0,0,0,0,0]
             },
         ]
     }
