@@ -25,7 +25,7 @@ jobs:
           host: 119.91.212.103
           username: root
           password: 123456ok...
-          port: 22,
+          port: 22
           source: "dist/"
           target: "/var/www/carbon/"
     
