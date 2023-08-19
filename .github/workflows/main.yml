@@ -20,12 +20,13 @@ jobs:
       - name: build app
         run: npm run build 
       - name: copy dist file with scp
-        uses: appleboy/scp-action@v0.0.1
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         with: 
-          host: "119.91.212.103"
-          username: "root"
-          password: "123456ok..."
-          port: 22
-          source: "dist/"
-          target: "/var/www/carbon/"
-    
+          host: ${{ secrets.REMOTE_HOST }}
+          user: ${{ secrets.REMOTE_USER }}
+          pass: ${{ secrets.REMOTE_PASSWORD }}
+          scp: |
+            ./dist/* => /var/www/carbon
+          last_ssh: |
+            nginx -t
+            nginx -s reload
