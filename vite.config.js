@@ -6,12 +6,15 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   server: {
+    port: 8081,
+    host: true,
+    open: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:8080/', //目标url
-        changeOrigin: true, //支持跨域
-        rewrite: (path) => path.replace(/^\/api/, ""),
-        //重写路径,替换/api
+      // https://cn.vitejs.dev/config/#server-proxy
+      '/dev-api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/dev-api/, '')
       }
     }
   },
