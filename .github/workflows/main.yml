@@ -22,9 +22,9 @@ jobs:
       - name: copy dist file with scp
         uses: appleboy/scp-action@v0.0.1
         with: 
-          host: 119.91.212.103
-          username: root
-          password: 123456ok...
+          host: "119.91.212.103"
+          username: "root"
+          password: "123456ok..."
           port: 22
           source: "dist/"
           target: "/var/www/carbon/"
