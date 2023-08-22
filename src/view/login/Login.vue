@@ -163,9 +163,9 @@ function handleLoginSubmit() {
   userStore.login(form.value).then(res => {
     getEnterpriseInfoToLogin({username: form.value.username}).then(res => {
       localStorage.setItem("user",JSON.stringify(res.data))
+        router.push("/PersonalHome/MasterConsole")
+        window.$message.success("登录成功")
     })
-    window.$message.success("登录成功")
-    router.push("/PersonalHome/MasterConsole")
   }).catch(err => {
       // 重新获取验证码
       if (captchaEnabled.value) {

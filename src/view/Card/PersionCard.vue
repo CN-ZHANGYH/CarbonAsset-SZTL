@@ -117,6 +117,7 @@
 import {getCardList} from "../../api/souvenir.js";
 import {creditExchange} from "../../api/credit.js";
 import {getEnterpriseInfo} from "../../api/enterprise.js";
+import {getEnterpriseHasCardList} from "../../api/card.js";
 const showModal = ref(false)
 const overlap = ref(false)
 const data = ref([])
@@ -183,6 +184,9 @@ onMounted(() => {
   getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
     enterprise.value = res.enterprise
   })
+})
+getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+    console.log(res + "我是收藏")
 })
 
 function toggleFavorite() {
