@@ -31,7 +31,7 @@
           <template #header-extra>
             <n-tag type="info">周</n-tag>
           </template>
-          <h1>{{enterpriseOverEmission}} tCO₂e</h1>
+          <h1>{{enterpriseTotalEmission}}tCO₂e</h1>
           <template #footer>
             <div class="text-sn"><span>总需碳排放量：{{enterpriseTotalEmission}}</span><span><n-button type="success" strong style="margin-left: 20px" @click="updateEmissionShow = true">更新</n-button></span></div>
           </template>
@@ -196,6 +196,9 @@ function updateEmissions(){
       }).then(res => {
         window.$message.success(res.msg)
         updateEmissionShow.value = false
+        setTimeout(()=>{
+          window.location.reload();
+        },100)
       })
     } else {
       window.$message.error("请输入总需排放数量")
@@ -209,7 +212,10 @@ function updateBalances() {
       updateBalance(enterpriseForm.value).then(res => {
         window.$message.success(res.msg)
         updateBalanceShow.value = false
-          enterpriseForm.value.enterpriseBalance = 0
+        enterpriseForm.value.enterpriseBalance = 0
+        setTimeout(()=>{
+          window.location.reload();
+        },100)
       })
     }else {
         window.$message.error("请输入金额")

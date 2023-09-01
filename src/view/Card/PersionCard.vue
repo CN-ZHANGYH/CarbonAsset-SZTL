@@ -4,19 +4,18 @@
       <n-card style="height: 80px;border-radius: 20px" hoverable>
         <n-descriptions column="4">
           <n-descriptions-item label="拥有卡片">
-            {{10}}
+            {{total}}
           </n-descriptions-item>
           <n-descriptions-item label="我的收藏">
             {{0}}
           </n-descriptions-item>
-          <n-descriptions-item label="积分">
+          <n-descriptions-item label="我的积分">
             {{enterprise.enterprise_carbon_credits}}
           </n-descriptions-item>
           <n-descriptions-item label="已拥有/已收藏">
             <n-space><n-switch v-model:value="showPath" /></n-space>
           </n-descriptions-item>
         </n-descriptions>
-
       </n-card>
     </n-gi>
     <n-card>
