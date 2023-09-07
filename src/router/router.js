@@ -132,7 +132,7 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
 
     var user_key = getUserKey();
-    if (user_key != undefined && to.name == 'Login' || to.path == '/'){
+    if (user_key != undefined && to.name == 'Login'){
         router.push('/PersonalHome/MasterConsole')
     }
 
