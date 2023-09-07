@@ -108,7 +108,7 @@ const paginationReactive = reactive({
 });
 function search() {
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
-  getEnterpriseSellerRecordOfValue({enterprise: this.enterprise,quality: searchValue.value}).then(res => {
+  getEnterpriseSellerRecordOfValue({enterprise: enterprise,quality: searchValue.value}).then(res => {
     if (res.total != 0){
       data.value = res.rows
     }
