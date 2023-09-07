@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import {getEnterpriseSellerHistory} from "../../api/asset.js";
+import {getEnterpriseSellerHistory, getEnterpriseSellerRecordOfValue} from "../../api/asset.js";
 import {NButton, NTag} from "naive-ui";
 
 const enterprise = JSON.parse(localStorage.getItem("user")).nickName
@@ -106,7 +106,15 @@ const paginationReactive = reactive({
     paginationReactive.page = 1;
   }
 });
-
+function search() {
+  const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  getEnterpriseSellerRecordOfValue({enterprise: this.enterprise,quality: searchValue.value}).then(res => {
+    if (res.total != 0){
+      data.value = res.rows
+    }
+    window.$message.success(res.msg)
+  })
+}
 
 getEnterpriseSellerHistory({
   page: paginationReactive.page,

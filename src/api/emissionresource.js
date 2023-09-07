@@ -73,3 +73,12 @@ export function getRankingByEmission(query){
         params: query
     })
 }
+
+
+export function getEnterpriseEmissionResourceOfValue(query){
+    return request({
+        url: '/query/searchResEmiRecord',
+        method: 'post',
+        params: query
+    })
+}

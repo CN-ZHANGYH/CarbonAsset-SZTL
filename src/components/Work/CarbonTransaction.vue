@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {getEnterpriseTxList} from "../../api/transaction.js";
+import {getEnterpriseTxList, getEnterpriseTxRecord} from "../../api/transaction.js";
 const txData = ref([])
 const searchValue = ref("")
 
@@ -102,7 +102,14 @@ getEnterpriseTxList({
 })
 
 function search(){
-
+  const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  console.log(enterprise)
+  getEnterpriseTxRecord({enterprise:enterprise,quality: searchValue.value}).then(res => {
+    if (res.total != 0){
+      txData.value = res.rows
+    }
+    window.$message.success(res.msg)
+  })
 }
 </script>
 

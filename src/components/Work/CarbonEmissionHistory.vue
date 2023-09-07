@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import {getEnterpriseEmissionList} from "../../api/emissionresource.js";
+import {getEnterpriseEmissionList, getEnterpriseEmissionResourceOfValue} from "../../api/emissionresource.js";
 import {NTag} from "naive-ui";
 const enterprise = JSON.parse(localStorage.getItem("user")).nickName
 const searchValue = ref("")
@@ -83,7 +83,14 @@ const columns = reactive(
 )
 
 function search(){
-
+  const enterprise  = JSON.parse(localStorage.getItem("user")).nickName
+  getEnterpriseEmissionResourceOfValue({enterprise: enterprise,method: searchValue.value}).then(res => {
+    if (res.total != 0){
+      EmData.value = res.rows
+      console.log(res.rows)
+    }
+    window.$message.success(res.msg)
+  })
 }
 
 const paginationReactive = reactive({
