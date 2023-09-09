@@ -1,216 +1,215 @@
 <template>
-  <n-space vertical>
-    <n-layout>
-
-      <n-layout-header :shadow="true">
-        <div class="header-content">
-          <img src="../../assets/logo.png" alt="">
-          <div class="button-container">
-            <router-link to="/Login">
-              <n-button type="success">
-                前往登录/注册
-              </n-button>
-            </router-link>
+   <div class="LoginHome">
+      <div class="topBox">
+        <div class="bg"></div>
+        <div class="box">
+          <img src="../../assets/font.png" class="font">
+          <div class="driver"></div>
+          <div class="loginButton">
+            <a href="#" class="btn" @click="goToLogin">
+              LOGIN IN
+              <span>
+                  <n-icon>
+                    <arrow-icon />
+                  </n-icon>
+              </span>
+            </a>
           </div>
         </div>
-      </n-layout-header>
+      </div>
+      <div class="rightBottom">
+        <div class="bg"></div>
+        <div class="object"></div>
+     </div>
 
-      <n-layout-content>
-        <n-row gutter="100">
-          <n-col :span="12" class="yuan-col">
-            <div class="yuan-container">
-              <div class="yuan">
-                <div class="title">
-                  <h1>
-                    数字碳链管理平台<br>
-                    Digital Carbon Chain
-                  </h1>
-                  <p>
-                    数字碳链管理平台是一个用户交互管理分析调查的平台，
-                    碳资源排放管理、交易管理、资质管理等等...
-                  </p>
-                </div>
-              </div>
-            </div>
-          </n-col>
-          <n-col :span="12" class="carousel-col">
-            <div class="text">
-              <h1>链上排放 公开可信</h1>
-              <p>分析观察管理碳排放资源与交易</p>
-            </div>
+     <div class="leftBottom">
+       <div class="carousel">
+         <n-carousel
+             prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
+             next-slide-style="transform: translateX(50%) translateZ(-800px);"
+             autoplay>
+           <img
+               class="carousel-img"
+               src="../../assets/img/img.png"
+           >
+           <img
+               class="carousel-img"
+               src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
+           >
+         </n-carousel>
+       </div>
+     </div>
 
-            <div class="carousel">
-              <n-carousel autoplay>
-                <img
-                    class="carousel-img"
-                    src="../../assets/img/img.png"
-                >
-                <img
-                    class="carousel-img"
-                    src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-                >
-                <img
-                    class="carousel-img"
-                    src="../../assets/img/img.png"
-                >
-                <img
-                    class="carousel-img"
-                    src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
-                >
-              </n-carousel>
-            </div>
+     <div class="topTitle">
+       <h2>
+         数字碳链 Digital Carbon Chain
+       </h2>
+       <h3>
+         致力于构建可靠、安全、高效的数字碳链平台，提供企业碳排放数据的准确性和可信度。平台支持碳核算、积分奖励和交易等内容，帮助企业和个人减少碳排放，
+         促进数字碳资产等流通并推动数字交易的新玩法。平台适用于各类企业和监督机构，能够实现碳排放数据的自动化记录、碳核算、积分奖励和交易等功能，推动绿色低碳发展
+       </h3>
+     </div>
 
-            <div class="number">
-              <n-row>
-                <n-col :span="4">
-                  <n-statistic label="注册人数">
-                    <span>1 K+</span>
-                  </n-statistic>
-                </n-col>
-                <n-col :span="5">
-                  <n-statistic label="加入企业数">
-                    <span>10 K+</span>
-                  </n-statistic>
-                </n-col>
-                <n-col :span="5">
-                  <n-statistic label="交易数">
-                    <span>10 K+</span>
-                  </n-statistic>
-                </n-col>
-                <n-col :span="5">
-                  <n-statistic label="排放量">
-                    <span>10 K+</span>
-                  </n-statistic>
-                </n-col>
-              </n-row>
-            </div>
-          </n-col>
-        </n-row>
-      </n-layout-content>
-
-    </n-layout>
-  </n-space>
+   </div>
 </template>
 
-<style scoped lang="less">
-.n-layout-header {
-  position: relative;
-  z-index: 2;
-  background: #fff;
-  height: 70px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  img {
-    margin-left: 30px;
-  }
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .button-container {
-      margin-right: 20px;
+<script lang="ts">
+import { ArrowForward as ArrowIcon } from '@vicons/ionicons5'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  components: {
+    ArrowIcon
+  },
+  methods:{
+    goToLogin(){
+      this.$router.push('/Login')
     }
   }
-  .n-button {
-    width: 200px;
-    height: 50px;
-    font-size: 20px;
-    border-radius: 20px;
-    margin-top: 10px;
+})
+</script>
+
+<style scoped lang="less">
+@import "../../assets/css/btn";
+
+.LoginHome {
+  position: relative;
+  height: 100vh;
+}
+
+.topBox {
+  .bg {
+    width: 1000px;
+    height: 1000px;
+    background-image: url("../../assets/shape.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    top: -25%;
+    left: -6%;
+    animation-name: slideDown;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+  .box {
+    .font {
+      position: absolute;
+      top: 70px;
+      left: 50px;
+    }
+    .driver {
+      position: absolute;
+      left:6%;
+      top: 24%;
+      width: 250px;
+      height: 4px;
+      opacity: 0.5;
+      background: #FFFFFF;
+    }
+    .button {
+      position: absolute;
+      left:6%;
+      top: 28%;
+      font-size: 64px;
+      opacity: 0.5;
+      color: #FFFFFF;
+      font-weight: 600;
+      letter-spacing: 0px;
+      .n-icon {
+        font-size: 64px;
+        margin-left: 40px;
+      }
+    }
   }
 }
 
-.n-layout-content {
-  position: relative;
-  z-index: 1;
-  height: 750px;
-  // 半圆
-  .yuan-col {
-    height: 750px;
+.rightBottom {
+  width: 680px;
+  height: 450px;
+  position: absolute;
+  //background: pink;
+  right: 0;
+  bottom: 0;
+  .bg {
+    width: 690px;
+    height: 280px;
+    background-image: url("../../assets/shapebottom.png");
+    background-repeat: no-repeat;
+    position: absolute;
     overflow: hidden;
-    .yuan-container {
-      width: 200px;
-      height: 300px;
-      overflow: hidden;
-      .yuan:before {
-        content: "";
-        position: absolute;
-        top: -35%;
-        left: -45%;
-        width: 140%;
-        height: 180%;
-        background-color: #25a140;
-        border-radius: 50%;
-        box-shadow: 4px 2px 10px rgba(0, 0, 0, 0.3);
-      }
-    }
+    right: 0;
+    bottom: 0;
   }
+  .object {
+    background-image: url("../../assets/object.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 460px;
+    height: 380px;
+    right: 0;
+    top: 12%;
+  }
+}
 
-  .yuan {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .title {
-      position: absolute;
-      z-index: 2;
-      top: 28%;
-      left: 15%;
-      h1 {
-        font-size: 50px;
-        font-weight: 800;
-        color: #fff;
-      }
-      p {
-        width: 500px;
-        //background: pink;
-        margin-top: 30px;
-        color: #fff;
-        font-size: 20px;
-      }
+.leftBottom{
+  position:absolute;
+  bottom: 4%;
+  left: 10%;
+  width: 54%;
+  height: 54%;
+  border-radius: 20px;
+  .carousel {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    .carousel-img {
+      border-radius: 20px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
+}
 
-  .carousel-col {
-    .text {
-      padding-top: 10%;
-      padding-right: 5%;
-      text-align: right;
-      color: #25a140;
-      h1 {
-        font-size: 30px;
-      }
-      p {
-        color: #000;
-        font-size: 18px;
-        font-weight: 500;
-      }
-    }
-    .carousel {
-      padding-top: 20px;
-      .carousel-img {
-        width: 95%;
-        height: 400px;
-        object-fit: cover;
-      }
-    }
+.topTitle {
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  width: 900px;
+  height: 200px;
+  text-align: center;
+  h2 {
+    font-size: 40px;
+    margin-bottom: 2%;
   }
+}
 
-  .number {
-    margin-top: 6%;
-    .n-col {
-      border-right: 1px solid #ccc;
-      margin-left: 3%;
-      margin-right: 2%;
-    }
-    .n-col:last-child {
-      border: 0;
-      margin-right: 0;
-    }
-    span {
-      color: #25a140;
-      font-weight: 800;
-      font-size: 28px;
-      text-align: left;
-    }
-  }
+
+.btn {
+  animation-name: btnDown;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+@keyframes btnDown {
+  0% { top: 150%; }
+  100% { top: 0%; }
+}
+
+@keyframes slideDown {
+  0% { top: -100%; }
+}
+
+.leftBottom {
+  animation-name: leftBottom;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes leftBottom {
+  from { left: -100%; }
+  to { left: 10%; }
 }
 </style>

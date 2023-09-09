@@ -1,0 +1,98 @@
+.box .square{
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  filter: hue-rotate(calc(var(--x) * 80deg));
+  animation: animate 10s linear infinite;
+  animation-delay: calc(var(--x) * -2s);
+}
+
+@keyframes animate {
+  0% , 100%{
+    transform: translateY(-50px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+}
+.square:nth-child(1){
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  bottom: 20%;
+  left: 0;
+  background: rgba(151, 227, 130, 0.42);
+}
+
+.square:nth-child(2){
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  bottom: 4%;
+  left: 8%;
+  background: #99e5d7;
+}
+
+.square:nth-child(3){
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  bottom: 28%;
+  left: 20%;
+  z-index: -1;
+  background: rgba(225, 137, 174, 0.42);
+}
+
+.square:nth-child(4){
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  bottom: 24%;
+  left: 28%;
+  z-index: -1;
+  background: rgba(176, 255, 151, 0.42);
+}
+
+.square:nth-child(5){
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  bottom: 15%;
+  left: 12%;
+  z-index: -2;
+  background: rgba(229, 105, 190, 0.42);
+}
+
+.square:nth-child(6){
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  bottom: 5%;
+  left: 24%;
+  z-index: 2;
+  background: rgba(175, 234, 204, 0.75);
+}
+
+.square:nth-child(7){
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 5%;
+  left: 4%;
+  z-index: 2;
+  background: rgba(238, 180, 199, 0.75);
+}
+
+.square:nth-child(8){
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  bottom: 24%;
+  left: 9%;
+  z-index: -1;
+  background: rgba(176, 255, 151, 0.42);
+  z-index: 2;
+}

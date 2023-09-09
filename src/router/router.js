@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginHome from '../view/login/LoginHome.vue';
 import Login from '../view/login/Login.vue';
 import PersonalHome from "../view/PersonalHome.vue";
 import MasterConsole from "../view/Dashboard/MasterConsole.vue";
@@ -22,9 +21,13 @@ import {getUserKey} from "../utils/auth.js";
 const routes = [
     {
         path: '/',
-        name: '数字碳链',
+        redirect: '/LoginHome'
+    },
+    {
+        path: '/LoginHome',
+        name: 'LoginHome',
         meta: {title: "数字碳链"},
-        component: LoginHome
+        component: component => import("/src/view/login/LoginHome.vue")
     },
     {
         path: '/404',
