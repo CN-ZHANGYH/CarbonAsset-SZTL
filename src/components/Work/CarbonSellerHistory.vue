@@ -1,11 +1,17 @@
 <template>
     <n-row :gutter="12">
-      <n-col :span="6" :offset="17">
+      <n-col :span="6" :offset="19">
         <div class="container">
-          <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
-          <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
+          <n-input placeholder="请输入搜索内容" round  v-model:value="searchValue" clearable>
+            <template #prefix>
+              <n-button quaternary circle type="success" @click="search">
+                <template #icon>
+                  <n-icon :component="Search" />
+                </template>
+              </n-button>
+            </template>
+          </n-input>
         </div>
-
       </n-col>
     </n-row>
     <n-space vertical :size="12" style="height: auto">
@@ -19,6 +25,7 @@
 </template>
 
 <script setup>
+import { Search } from '@vicons/ionicons5'
 import {getEnterpriseSellerHistory, getEnterpriseSellerRecordOfValue} from "../../api/asset.js";
 import {NButton, NTag} from "naive-ui";
 
@@ -129,10 +136,5 @@ getEnterpriseSellerHistory({
 </script>
 
 <style scoped lang="less">
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
+@import "../../assets/css/search";
 </style>

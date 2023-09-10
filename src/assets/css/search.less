@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.n-input {
+  width: 180px;
+  background-color: #E7E7E7;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.n-icon {
+  color: gray;
+}
+
+.n-button {
+  margin-left: -10px;
+}
+
+.n-input:focus,
+.container:hover .n-input{
+  width: 280px;
+  opacity: 1;
+  background: #fff;
+}
+
+.n-input:focus,
+.container:hover .n-icon{
+  color: #2FA157;
+}

@@ -1,12 +1,18 @@
 <template>
 <!--  搜索 -->
     <n-row :gutter="12">
-        <n-col :span="6" :offset="17">
-            <div class="container">
-                <n-input type="text" class="input-box" placeholder="请输入"  v-model:value="searchValue"/>
-                <n-button type="success" strong secondary class="button" @click="search">搜索</n-button>
-            </div>
-
+        <n-col :span="6" :offset="19">
+          <div class="container">
+            <n-input placeholder="请输入搜索内容" round  v-model:value="searchValue" clearable>
+              <template #prefix>
+                <n-button quaternary circle type="success" @click="search">
+                  <template #icon>
+                    <n-icon :component="Search" />
+                  </template>
+                </n-button>
+              </template>
+            </n-input>
+          </div>
         </n-col>
     </n-row>
 <!--  表单 -->
@@ -22,6 +28,7 @@
 </template>
 
 <script setup>
+import { Search } from '@vicons/ionicons5'
 import {getEnterpriseTxList, getEnterpriseTxRecord} from "../../api/transaction.js";
 import {NPopover, NTag} from "naive-ui";
 const txData = ref([])
@@ -131,15 +138,6 @@ function search(){
 }
 </script>
 
-<style lang="less" scoped>
-.n-space {
-  height: auto;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
+<style scoped lang="less">
+@import "../../assets/css/search";
 </style>
