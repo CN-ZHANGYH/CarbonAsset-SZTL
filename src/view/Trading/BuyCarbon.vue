@@ -53,9 +53,13 @@
                         <h3>{{item.title}}</h3>
                         <p style="color:#878B96">{{item.description}}</p>
                       </div>
-                      <div style="margin-top: 10px">
-                        <n-tag type="info" bordered="true" style="margin-right: 10px">数量：{{item.assetQuantity}}</n-tag>
-                        <n-tag type="info">单价：¥{{item.assetAmount}}</n-tag>
+                      <div style="margin-top: 10px" class="box_tag">
+                        <div class="tag">
+                          数量 {{item.assetQuantity}}
+                        </div>
+                        <div class="tag">
+                          单价 ¥{{item.assetAmount}}
+                        </div>
                       </div>
                     </div>
                     <div class="footer" style="display: flex; align-items: center;">
@@ -255,8 +259,7 @@ function handlerBuy(){
     width: 100%;
     height: 420px;
     border-radius: 20px;
-    /* 添加其他样式属性 */
-    transition: box-shadow 0.3s ease; /* 添加过渡效果 */
+    transition: box-shadow 0.3s ease;
 }
 .text {
     height:140px;
@@ -290,16 +293,15 @@ function handlerBuy(){
 }
 
 .box:hover {
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
 }
-
 
 .image-container {
     position: relative;
-    width: 97%; /* 调整为实际大小 */
-    height: 200px; /* 调整为实际大小 */
+    width: 97%;
+    height: 200px;
     overflow: hidden;
-    border-radius: 20px; /* 添加圆角 */
+    border-radius: 20px;
     margin-top: 5px;
     margin-left: 5px;
 }
@@ -341,5 +343,4 @@ function handlerBuy(){
   background: #000 !important;
   color: #fff !important;
 }
-
 </style>
