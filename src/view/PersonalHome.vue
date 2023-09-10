@@ -1,26 +1,24 @@
 <template>
-  <div style="height: 360px; position: relative">
-    <n-layout position="absolute">
-      <n-layout-header style="height: 64px;" bordered>
-        <NavHead/>
-      </n-layout-header>
-      <n-layout has-sider position="absolute" class="container">
-        <n-layout-sider
-            show-trigger
-            collapse-mode="width"
-            :collapsed-width="64"
-            :width="240"
-            :native-scrollbar="false"
-            :inverted="inverted"
-            bordered content-style="padding-top:35%;">
-          <NavLeft/>
-        </n-layout-sider>
-        <n-layout class="main">
-          <router-view></router-view>
-        </n-layout>
-      </n-layout>
+  <n-layout>
+    <n-layout-header style="height: 64px;" bordered>
+      <NavHead/>
+    </n-layout-header>
+    <n-layout has-sider>
+      <n-layout-sider
+          show-trigger
+          collapse-mode="width"
+          :collapsed-width="64"
+          :width="240"
+          :native-scrollbar="false"
+          :inverted="inverted"
+          bordered content-style="padding-top:5%;">
+        <NavLeft/>
+      </n-layout-sider>
+      <n-layout-content content-style="padding: 24px;background: #F2F5F8;">
+        <router-view></router-view>
+      </n-layout-content>
     </n-layout>
-  </div>
+  </n-layout>
 </template>
 
 <script lang="ts">
