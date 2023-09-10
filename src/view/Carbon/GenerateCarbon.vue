@@ -47,5 +47,6 @@ export default defineComponent({
 .n-card {
   height: 800px;
   //margin-bottom: 100px;
+  border-radius: 20px;
 }
 </style>

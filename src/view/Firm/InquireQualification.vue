@@ -164,7 +164,7 @@ function updateUserProfile(){
 }
 
 .n-card {
-  height: auto;
+  border-radius: 20px;
 }
 
 .avatar {

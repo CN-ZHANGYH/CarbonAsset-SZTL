@@ -47,9 +47,9 @@ export default defineComponent({
   height: 100vh;
 }
 .main {
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 5%;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-top: 5.5%;
   background: #F2F5F8;
 }
 </style>

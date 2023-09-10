@@ -115,6 +115,7 @@ getOwnerWorkProgress({enterprise:enterprise}).then(res => {
 <style scoped lang='less'>
 .n-card {
   margin-bottom: 20px;
+  border-radius: 20px;
 }
 .notification {
   margin-bottom: 60px;

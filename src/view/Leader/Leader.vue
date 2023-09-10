@@ -22,5 +22,6 @@ import {defineComponent, ref} from "vue";
 .n-card {
   height: auto;
   margin-bottom: 80px;
+  border-radius: 20px;
 }
 </style>

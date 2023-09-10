@@ -234,7 +234,9 @@ function handlerBuy(){
 </script>
 
 <style scoped lang="less">
-
+.n-card {
+  border-radius: 20px;
+}
 .n-grid {
   height: auto;
 }

@@ -4,7 +4,6 @@
       :collapsed-width="64"
       :collapsed-icon-size="22"
       :options="transformedMenuOptions"
-      :default-expanded-keys="defaultExpandedKeys"
       accordion
       style="height: 100%"
   />

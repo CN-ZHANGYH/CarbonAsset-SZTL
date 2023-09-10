@@ -24,7 +24,7 @@
                   </n-collapse>
               </n-card>
           </n-grid-item>
-          <n-grid-item :span="5" :offset="0">
+          <n-grid-item :span="5" :offset="0" style="margin-left: 20px">
               <div style="margin-left: 25px">
                   <n-steps :current="currentRef" :status="currentStatus">
                       <n-step
@@ -233,6 +233,7 @@ function formCheck(){
 .n-card {
   height: auto;
   margin-bottom: 80px;
+  border-radius: 20px;
 }
 
 .light-green {

@@ -37,4 +37,7 @@ export default defineComponent({
 .mt-4 {
   margin-bottom: 80px;
 }
+.n-card {
+  border-radius: 20px;
+}
 </style>

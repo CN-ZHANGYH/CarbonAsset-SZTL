@@ -12,5 +12,6 @@ import CarbonSellerHistory from "../../components/Work/CarbonSellerHistory.vue";
 .n-card {
   height: auto;
   margin-bottom: 80px;
+  border-radius: 20px;
 }
 </style>

@@ -77,6 +77,7 @@ refQuaStatus()
 .n-card {
   height: 180px;
   margin-bottom: 25px;
+  border-radius: 20px;
 }
 .write {
   height: auto;

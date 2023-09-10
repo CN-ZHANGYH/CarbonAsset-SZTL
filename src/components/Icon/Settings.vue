@@ -33,6 +33,7 @@ const handleGridItemClick = () => {
   justify-content: center;
   background: #fff;
   margin-bottom: 20px;
+  border-radius: 15px;
   span{
     display: flex;
     justify-content: center;

@@ -93,7 +93,7 @@ export default defineComponent({
     align-items: center;
   }
   .text-center {
-    margin-top: 10px; /* 调整图片与文字之间的垂直间距 */
+    margin-top: 10px;
   }
 }
 </style>

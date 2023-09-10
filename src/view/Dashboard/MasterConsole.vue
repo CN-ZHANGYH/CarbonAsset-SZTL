@@ -31,7 +31,7 @@
           <template #header-extra>
             <n-tag type="info">周</n-tag>
           </template>
-          <h1>{{enterpriseTotalEmission}}tCO₂e</h1>
+          <h1>{{enterpriseTotalEmission}} tCO₂e</h1>
           <template #footer>
             <div class="text-sn"><span>总需碳排放量：{{enterpriseTotalEmission}}</span><span><n-button type="success" strong style="margin-left: 20px" @click="updateEmissionShow = true">更新</n-button></span></div>
           </template>
@@ -198,7 +198,7 @@ function updateEmissions(){
         updateEmissionShow.value = false
         setTimeout(()=>{
           window.location.reload();
-        },100)
+        },250)
       })
     } else {
       window.$message.error("请输入总需排放数量")
@@ -215,7 +215,7 @@ function updateBalances() {
         enterpriseForm.value.enterpriseBalance = 0
         setTimeout(()=>{
           window.location.reload();
-        },100)
+        },250)
       })
     }else {
         window.$message.error("请输入金额")
@@ -240,10 +240,15 @@ function toBuy(){
 .n-card {
   margin-bottom: 30px;
   height: 221px;
+  border-radius: 20px;
 }
 .text-sn{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.n-card:hover {
+  border: 0px solid #fff;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 </style>

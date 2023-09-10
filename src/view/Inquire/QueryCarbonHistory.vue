@@ -14,5 +14,6 @@ import CarbonEmissionHistory from "../../components/Work/CarbonEmissionHistory.v
 .n-card {
   height: auto;
   margin-bottom: 80px;
+  border-radius: 20px;
 }
 </style>
