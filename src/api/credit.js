@@ -25,3 +25,14 @@ export function creditExchange(data){
         data: data
     })
 }
+
+
+export function enterpriseCollectCard(query){
+    return request({
+        url: `/card/collect`,
+        method: 'get',
+        params: query
+    })
+}
+
+

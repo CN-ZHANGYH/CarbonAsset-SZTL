@@ -62,8 +62,8 @@
             </div>
             <div class="box_button">
                 <n-button :bordered="false" type="success" class="back" @click="openEchange(item)">兑换</n-button>
-                <n-button class="heart" :bordered="false" type="info">
-                    <img src="../../assets/aixing.png" alt="添加收藏">
+                <n-button class="heart" :bordered="false" type="info"  @click="collect(item)">
+                    <img src="../../assets/aixing.png" alt="添加收藏" >
                 </n-button>
             </div>
         </div>
@@ -106,14 +106,14 @@
 
 <script setup>
 import {getCardList} from "../../api/souvenir.js";
-import {creditExchange} from "../../api/credit.js";
+import {creditExchange, enterpriseCollectCard} from "../../api/credit.js";
 import {getEnterpriseInfo} from "../../api/enterprise.js";
-import {getEnterpriseNewSellerHistory} from "../../api/asset.js";
 const showModal = ref(false)
 const overlap = ref(false)
 const data = ref([])
 const item = ref({})
 const total = ref(0)
+const isCollect = ref(false)
 const enterprise = ref({})
 const form = ref({
     pageNum: 1,
@@ -176,6 +176,21 @@ onMounted(() => {
     enterprise.value = res.enterprise
   })
 })
+
+function collect(item){
+    isCollect.value = !isCollect.value
+    enterpriseCollectCard({
+        enterprise_id: enterprise.value.enterprise_id,
+        card_id: item.id,
+        isCollect: isCollect.value
+    }).then(res => {
+      if (res.code === 200) {
+        document.querySelector('.heart').style.backgroundColor = 'red'; // 设置按钮背景颜色为红色
+      }
+        window.$message.success(res.msg)
+      console.log(res)
+    })
+}
 </script>
 
 <style scoped lang="less">

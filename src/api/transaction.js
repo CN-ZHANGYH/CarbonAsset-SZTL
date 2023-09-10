@@ -15,3 +15,11 @@ export function getNewTxList(){
         method: 'get'
     })
 }
+
+export function getEnterpriseTxRecord(query) {
+    return request({
+        url: "/query/searchTxRecord",
+        method: 'post',
+        params: query
+    })
+}
