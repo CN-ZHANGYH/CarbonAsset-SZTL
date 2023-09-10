@@ -50,7 +50,6 @@ const routes = [
     {
         path:'/PersonalHome',
         component: PersonalHome,
-        // redirect:'/PersonalHome',
         children:[
             {
                 path:'MasterConsole',

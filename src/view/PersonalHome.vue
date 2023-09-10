@@ -1,22 +1,21 @@
 <template>
-  <div style="height: 100vh; position: relative">
+  <div style="height: 360px; position: relative">
     <n-layout position="absolute">
-      <n-layout-header bordered>
+      <n-layout-header style="height: 64px;" bordered>
         <NavHead/>
       </n-layout-header>
-      <n-layout has-sider position="absolute" style="top: 75px; bottom: 64px;">
+      <n-layout has-sider position="absolute" class="container">
         <n-layout-sider
-            bordered
             show-trigger
             collapse-mode="width"
             :collapsed-width="64"
             :width="240"
             :native-scrollbar="false"
             :inverted="inverted"
-        >
+            bordered content-style="padding-top:35%;">
           <NavLeft/>
         </n-layout-sider>
-        <n-layout content-style="padding: 24px;background: #F2F5F8;height:auto" :native-scrollbar="false">
+        <n-layout class="main">
           <router-view></router-view>
         </n-layout>
       </n-layout>
@@ -44,7 +43,13 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.n-layout .n-layout--absolute-positioned {
-  height: auto;
+.n-layout {
+  height: 100vh;
+}
+.main {
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 5%;
+  background: #F2F5F8;
 }
 </style>
