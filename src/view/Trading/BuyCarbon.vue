@@ -51,7 +51,7 @@
                     <div class="text">
                       <div>
                         <h3>{{item.title}}</h3>
-                        <p style="color:#878B96">{{item.description}}</p>
+                        <p class="description">{{item.description}}</p>
                       </div>
                       <div style="margin-top: 10px" class="box_tag">
                         <div class="tag">
@@ -342,5 +342,15 @@ function handlerBuy(){
 .footer_btn:focus {
   background: #000 !important;
   color: #fff !important;
+}
+
+.description {
+  color:#878B96;
+  line-height: 24px;
+  height:50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  //white-space: nowrap;
+  //background: pink;
 }
 </style>
