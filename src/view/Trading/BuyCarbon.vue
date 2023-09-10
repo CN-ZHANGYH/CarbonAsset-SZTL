@@ -347,10 +347,10 @@ function handlerBuy(){
 .description {
   color:#878B96;
   line-height: 24px;
-  height:50px;
+  height:48px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  //white-space: nowrap;
-  //background: pink;
 }
 </style>
