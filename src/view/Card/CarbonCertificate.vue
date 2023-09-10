@@ -21,53 +21,67 @@
     <n-card>
 
     </n-card>
+<!--    <n-gi v-for="item in data">-->
+<!--        <div class="box_container">-->
+<!--            <div class="box_title">-->
+<!--                <h1 style="color: #121212">{{item.name}}</h1>-->
+<!--                <n-popover :overlap="overlap" placement="right-start" trigger="click">-->
+<!--                    <template #trigger>-->
+<!--                        <h4 style="color:#848484;" @click="">View all</h4>-->
+<!--                    </template>-->
+<!--                    <div>-->
+<!--                        <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">-->
+<!--                            <n-descriptions-item label="卡片名称">-->
+<!--                              {{item.name}}-->
+<!--                            </n-descriptions-item>-->
+<!--                            <n-descriptions-item label="卡片寄语">-->
+<!--                                {{item.description}}-->
+<!--                            </n-descriptions-item>-->
+<!--                            <n-descriptions-item label="卡片等级">-->
+<!--                              <n-rate readonly :default-value="item.level" />-->
+<!--                            </n-descriptions-item>-->
+<!--                            <n-descriptions-item label="积分">-->
+<!--                              {{item.credit}}-->
+<!--                            </n-descriptions-item>-->
+<!--                            <n-descriptions-item label="卡片寄语">-->
+<!--                              {{item.description}}-->
+<!--                            </n-descriptions-item>-->
+<!--                        </n-descriptions>-->
+<!--                    </div>-->
+<!--                </n-popover>-->
+<!--            </div>-->
+<!--            <div class="box">-->
+<!--                <div class="image-container">-->
+<!--                    <img :src="item.url" class="img">-->
+<!--                    <div class="image-overlay"></div>-->
+<!--                </div>-->
+<!--                <div class="box_text text_back">-->
+<!--                    <n-rate readonly :default-value="item.level" />-->
+<!--                    <h4>{{item.credit}} 积分</h4>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="box_button">-->
+<!--                <n-button :bordered="false" type="success" class="back" @click="openEchange(item)">兑换</n-button>-->
+<!--                <n-button class="heart" :bordered="false" type="info"  @click="collect(item)">-->
+<!--                    <img src="../../assets/aixing.png" alt="添加收藏" >-->
+<!--                </n-button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </n-gi>-->
+
     <n-gi v-for="item in data">
         <div class="box_container">
             <div class="box_title">
-                <h1 style="color: #121212">{{item.name}}</h1>
-                <n-popover :overlap="overlap" placement="right-start" trigger="click">
-                    <template #trigger>
-                        <h4 style="color:#848484;" @click="">View all</h4>
-                    </template>
-                    <div>
-                        <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
-                            <n-descriptions-item label="卡片名称">
-                              {{item.name}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片寄语">
-                                {{item.description}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片等级">
-                              <n-rate readonly :default-value="item.level" />
-                            </n-descriptions-item>
-                            <n-descriptions-item label="积分">
-                              {{item.credit}}
-                            </n-descriptions-item>
-                            <n-descriptions-item label="卡片寄语">
-                              {{item.description}}
-                            </n-descriptions-item>
-                        </n-descriptions>
-                    </div>
-                </n-popover>
+              <img :src="item.url" alt="">
             </div>
-            <div class="box">
-                <div class="image-container">
-                    <img :src="item.url" class="img">
-                    <div class="image-overlay"></div>
-                </div>
-                <div class="box_text text_back">
-                    <n-rate readonly :default-value="item.level" />
-                    <h4>{{item.credit}} 积分</h4>
-                </div>
+            <div class="box_main">
+              <h2>{{item.name}}</h2>
+              <p>{{item.description}}</p>
             </div>
-            <div class="box_button">
-                <n-button :bordered="false" type="success" class="back" @click="openEchange(item)">兑换</n-button>
-                <n-button class="heart" :bordered="false" type="info"  @click="collect(item)">
-                    <img src="../../assets/aixing.png" alt="添加收藏" >
-                </n-button>
-            </div>
+            <div class="box_footer"></div>
         </div>
     </n-gi>
+
     <n-gi :span="12" :offset="1.5" style="margin-top: 5%">
       <n-pagination
           v-model:page="form.pageNum"
@@ -195,136 +209,41 @@ function collect(item){
 
 <style scoped lang="less">
 .box_container {
-  position: relative;
-  width: 250px;
-  height: 320px;
-  margin-top:7%;
+  width: 300px;
+  height: 400px;
   background: #fff;
-  padding: 25px;
-  border-radius: 30px;
-  transition: box-shadow 0.3s ease; /* 添加过渡效果 */
+  border-radius: 20px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .box_title {
-  display: flex;
-  justify-content: space-between;
-  align-items:flex-end;
-  margin-bottom: 20px;
-}
-
-.box {
-  display: flex;
-  justify-content: center;
-  height: 240px;
-  width: 200px;
-  margin-left: 10%;
-  border-radius: 23px;
-  background: #E9E9E9;
-  transition: box-shadow 0.3s ease; /* 添加过渡效果 */
-}
-
-.box_text {
-  position:absolute;
-  top: 50%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.text_back {
-  top: 76%;
-  h4 {
-    color:#121212;
-    margin-left: 10px;
-  }
-  h4:first-child {
-    margin-right: 40px;
+  width: 280px;
+  height: 140px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  img {
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
   }
 }
 
-.box_button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: -20px;
-  .back {
-    width: 90px;
-    height: 40px;
-    border-radius: 18px;
-    border:0px;
-    background-color: #000;
-    color: #fff;
-    margin-right: 10px;
-  }
-
-  .heart {
-    position: relative;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 15px;
-    background: #0DB7B7;
-    img {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%,0%);
-      height: 15px;
-      width: 15px;
-      transition: box-shadow 0.1s ease; /* 添加过渡效果 */
-
-    }
-    img:hover {
-      height: 16px;
-      width: 16px;
-    }
+.box_main {
+  width: 260px;
+  height: 160px;
+  background: pink;
+  h2 {
+    color: #000;
   }
 }
 
-.image-container {
-  position: relative;
-  width: 200px; /* 调整为实际大小 */
-  height: 180px; /* 调整为实际大小 */
-  overflow: hidden;
-  border-radius: 25px; /* 添加圆角 */
-}
-.box:hover {
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
-}
-
-.box_container:hover {
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
-}
-
-.image-container img {
-  width: 200px;
-  height: 180px;
-  border-bottom: 1px solid;
-  border-radius: inherit; /* 继承圆角 */
-  transition: transform 0.3s ease;
+.box_footer {
+  width: 280px;
+  height: 80px;
+  background: green;
 
 }
-
-.image-container img:hover {
-  transform: scale(1.2);
-}
-
-.image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  /* 这里可以添加动画样式 */
-  animation: your-animation 1s infinite;
-
-}
-
-.popover-grid {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  grid-gap: 12px;
-  justify-content: center;
-  align-items: center;
-}
-
 </style>

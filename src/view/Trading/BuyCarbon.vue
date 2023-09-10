@@ -1,6 +1,7 @@
 <template>
     <n-card title="购买碳额度" style="height: auto">
         <n-grid :x-gap="10" :cols="5">
+<!--    轮播图      -->
             <n-grid-item :span="13" :offset="0">
                 <div style="text-align: center;">
                     <n-carousel
@@ -38,7 +39,9 @@
                     </n-carousel>
                 </div>
             </n-grid-item>
-              <n-grid-item  v-for="(item,index) in productList">
+
+<!--    card      -->
+              <n-grid-item  v-for="(item,index) in productList" style="margin-bottom: 10%">
                 <div class="hello">
                   <div class="box">
                     <div class="image-container">
@@ -51,23 +54,24 @@
                         <p style="color:#878B96">{{item.description}}</p>
                       </div>
                       <div style="margin-top: 10px">
-                        <n-tag type="info" bordered="true">数量：{{item.assetQuantity}}</n-tag>
-                        <n-tag type="info">单价：{{item.assetAmount}}</n-tag>
+                        <n-tag type="info" bordered="true" style="margin-right: 10px">数量：{{item.assetQuantity}}</n-tag>
+                        <n-tag type="info">单价：¥{{item.assetAmount}}</n-tag>
                       </div>
                     </div>
                     <div class="footer" style="display: flex; align-items: center;">
-                      <img class="tou" style="margin-left: 5%" :src="item.image"/>
-                      <div class="name" style="margin-left: 10px;">
-                        <n-popover trigger="hover">
-                          <template #trigger>
-                            <h4 style="color:#5752ED;">{{ truncatedString(item.enterpriseAddress) }}</h4>
-                          </template>
-                          <span><n-button type="error" strong secondary>{{ item.enterpriseAddress }}</n-button></span>
-                        </n-popover>
-
-                        <h5 style="color: #8B93A1">{{ item.time }}</h5>
+                      <div class="footer_address">
+                        <img class="tou" style="margin-left: 5%" :src="item.image"/>
+                        <div class="name" style="margin-left: 10px;">
+                          <n-popover trigger="hover">
+                            <template #trigger>
+                              <h4 style="color:#5752ED;">{{ truncatedString(item.enterpriseAddress) }}</h4>
+                            </template>
+                            <span><n-button type="error" strong secondary>{{ item.enterpriseAddress }}</n-button></span>
+                          </n-popover>
+                          <h5 style="color: #8B93A1">{{ item.time }}</h5>
+                        </div>
                       </div>
-                      <n-button type="success" strong  style="margin-left: 5%;" @click="buySubmit(item)">购买</n-button>
+                      <n-button tertiary strong type="success" style="margin-left: 5%;" @click="buySubmit(item)" class="footer_btn">Buy</n-button>
                     </div>
                   </div>
                 </div>
@@ -234,6 +238,7 @@ function handlerBuy(){
 </script>
 
 <style scoped lang="less">
+@import "../../assets/css/card";
 .n-card {
   border-radius: 20px;
 }
@@ -242,28 +247,40 @@ function handlerBuy(){
 }
 .hello {
     width: 100%;
-    height: 500px;
+    height: 420px;
 }
 
 .box {
     width: 100%;
-    height: 85%;
+    height: 420px;
     border-radius: 20px;
-    border: 2px solid #EDEDF0;
     /* 添加其他样式属性 */
     transition: box-shadow 0.3s ease; /* 添加过渡效果 */
 }
 .text {
-    height:150px;
+    height:140px;
     margin-top: 10px;
     padding: 0 30px;
+    //background: pink;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #E8E8ED;
 }
 .footer {
-    height: 5px;
+    height: 65px;
     display: flex;
-    //background: #ffffff;
+    width: 97%;
     align-items: center;
+    display: flex;
+    justify-content: space-between;
 }
+
+.footer_address {
+  display: flex;
+  align-items: center;
+  width: 280px;
+}
+
 .tou {
     width: 40px;
     height: 40px;
@@ -278,10 +295,12 @@ function handlerBuy(){
 
 .image-container {
     position: relative;
-    width: 100%; /* 调整为实际大小 */
+    width: 97%; /* 调整为实际大小 */
     height: 200px; /* 调整为实际大小 */
     overflow: hidden;
     border-radius: 20px; /* 添加圆角 */
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
 .image-container img {
@@ -310,4 +329,16 @@ function handlerBuy(){
     width: 100%;
     height: 100%;
 }
+
+.footer_btn {
+  background: #000 ;
+  color: #fff ;
+  border-radius: 5px;
+}
+
+.footer_btn:focus {
+  background: #000 !important;
+  color: #fff !important;
+}
+
 </style>
