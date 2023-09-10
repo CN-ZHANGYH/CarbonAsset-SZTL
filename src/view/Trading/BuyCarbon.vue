@@ -196,6 +196,7 @@ const onUpdatePageSize = (pageSize) => {
 function getList(){
   window.$loadingBar.start()
   getAllSellerAssetList(queryParam.value).then(res => {
+    console.log(res)
     productList.value = res.rows
     total.value = res.total
     window.$loadingBar.finish()
@@ -206,7 +207,7 @@ getList()
 
 
 function truncatedString(val){
-    return val.substring(0, 11) + '...';
+    return val.substring(0, 15) + '...';
 }
 
 function buySubmit(item){

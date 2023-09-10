@@ -8,7 +8,7 @@
 
       </n-col>
     </n-row>
-    <n-space vertical :size="12">
+    <n-space vertical :size="12" style="height: auto">
       <n-data-table
           :bordered="false"
           :columns="columns"

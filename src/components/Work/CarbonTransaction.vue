@@ -23,6 +23,7 @@
 
 <script setup>
 import {getEnterpriseTxList, getEnterpriseTxRecord} from "../../api/transaction.js";
+import {NPopover, NTag} from "naive-ui";
 const txData = ref([])
 const searchValue = ref("")
 
@@ -50,17 +51,34 @@ const columns = reactive(
         {
             title: "交易Hash",
             key: "txHash",
-            render: (row) => ellipsisText(row.txHash, 8)
+            render(row) {
+            return h(
+                NTag,
+                {
+                  type: 'success',
+                  bordered: false,
+                },
+                {
+                  default: () =>  row.txHash
+                }
+            );
+          }
         },
         {
             title: "买家地址",
             key: "buyAddress",
-            render: (row) => ellipsisText(row.buyAddress, 10)
+            render(row) {
+              return h(
+                  {
+
+                  }
+              );
+            }
         },
         {
             title: "卖家地址",
             key: "sellerAddress",
-            render: (row) => ellipsisText(row.sellerAddress, 10)
+            render: (row) => ellipsisText(row.sellerAddress, 20)
         },
         {
             title: "交易数量",
@@ -115,7 +133,7 @@ function search(){
 
 <style lang="less" scoped>
 .n-space {
-  height: 460px;
+  height: auto;
 }
 
 .container {
