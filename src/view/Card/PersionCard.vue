@@ -43,9 +43,6 @@
                 <n-descriptions-item label="积分">
                   {{item.credit}}
                 </n-descriptions-item>
-                <n-descriptions-item label="卡片寄语">
-                  {{item.description}}
-                </n-descriptions-item>
               </n-descriptions>
             </div>
           </n-popover>
@@ -78,16 +75,6 @@
       />
     </n-gi>
   </n-grid>
-  <n-tooltip trigger="hover">
-    <template #trigger>
-      <div class="float" id="favorite-btn" @click="toggleFavorite">
-        <div class="text">
-          {{ isFavorite ? '已 拥 有' : '已 收 藏' }}
-        </div>
-      </div>
-    </template>
-    点击切换已拥有或收藏纪念卡
-  </n-tooltip>
   <n-modal
       v-model:show="showModal"
       type="success"
@@ -212,6 +199,7 @@ function openEchangeFloat(item) {
   background: #fff;
   padding: 25px;
   border-radius: 30px;
+  margin-left: 40px;
   transition: box-shadow 0.3s ease; /* 添加过渡效果 */
 }
 

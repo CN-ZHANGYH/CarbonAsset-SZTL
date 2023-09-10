@@ -1,74 +1,26 @@
 <template>
   <n-grid x-gap="12" :cols="4">
-    <n-gi :span="12">
-      <n-card style="height: 80px;border-radius: 20px" hoverable>
-        <n-descriptions column="4">
-          <n-descriptions-item label="拥有卡片">
-            {{total}}
-          </n-descriptions-item>
-          <n-descriptions-item label="我的收藏">
-            {{0}}
-          </n-descriptions-item>
-          <n-descriptions-item label="我的积分">
-            {{enterprise.enterprise_carbon_credits}}
-          </n-descriptions-item>
-          <n-descriptions-item label="更多">
-            {{10}}
-          </n-descriptions-item>
-        </n-descriptions>
-      </n-card>
-    </n-gi>
+<!--    <n-gi :span="12">-->
+<!--      <n-card style="height: 80px;border-radius: 20px" hoverable>-->
+<!--        <n-descriptions column="4">-->
+<!--          <n-descriptions-item label="拥有卡片">-->
+<!--            {{total}}-->
+<!--          </n-descriptions-item>-->
+<!--          <n-descriptions-item label="我的收藏">-->
+<!--            {{0}}-->
+<!--          </n-descriptions-item>-->
+<!--          <n-descriptions-item label="我的积分">-->
+<!--            {{enterprise.enterprise_carbon_credits}}-->
+<!--          </n-descriptions-item>-->
+<!--          <n-descriptions-item label="更多">-->
+<!--            {{10}}-->
+<!--          </n-descriptions-item>-->
+<!--        </n-descriptions>-->
+<!--      </n-card>-->
+<!--    </n-gi>-->
     <n-card>
 
     </n-card>
-<!--    <n-gi v-for="item in data">-->
-<!--        <div class="box_container">-->
-<!--            <div class="box_title">-->
-<!--                <h1 style="color: #121212">{{item.name}}</h1>-->
-<!--                <n-popover :overlap="overlap" placement="right-start" trigger="click">-->
-<!--                    <template #trigger>-->
-<!--                        <h4 style="color:#848484;" @click="">View all</h4>-->
-<!--                    </template>-->
-<!--                    <div>-->
-<!--                        <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">-->
-<!--                            <n-descriptions-item label="卡片名称">-->
-<!--                              {{item.name}}-->
-<!--                            </n-descriptions-item>-->
-<!--                            <n-descriptions-item label="卡片寄语">-->
-<!--                                {{item.description}}-->
-<!--                            </n-descriptions-item>-->
-<!--                            <n-descriptions-item label="卡片等级">-->
-<!--                              <n-rate readonly :default-value="item.level" />-->
-<!--                            </n-descriptions-item>-->
-<!--                            <n-descriptions-item label="积分">-->
-<!--                              {{item.credit}}-->
-<!--                            </n-descriptions-item>-->
-<!--                            <n-descriptions-item label="卡片寄语">-->
-<!--                              {{item.description}}-->
-<!--                            </n-descriptions-item>-->
-<!--                        </n-descriptions>-->
-<!--                    </div>-->
-<!--                </n-popover>-->
-<!--            </div>-->
-<!--            <div class="box">-->
-<!--                <div class="image-container">-->
-<!--                    <img :src="item.url" class="img">-->
-<!--                    <div class="image-overlay"></div>-->
-<!--                </div>-->
-<!--                <div class="box_text text_back">-->
-<!--                    <n-rate readonly :default-value="item.level" />-->
-<!--                    <h4>{{item.credit}} 积分</h4>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="box_button">-->
-<!--                <n-button :bordered="false" type="success" class="back" @click="openEchange(item)">兑换</n-button>-->
-<!--                <n-button class="heart" :bordered="false" type="info"  @click="collect(item)">-->
-<!--                    <img src="../../assets/aixing.png" alt="添加收藏" >-->
-<!--                </n-button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </n-gi>-->
-
     <n-gi v-for="item in data">
         <div class="box_container">
             <div class="box_title">
@@ -76,9 +28,26 @@
             </div>
             <div class="box_main">
               <h2>{{item.name}}</h2>
-              <p>{{item.description}}</p>
+              <p>卡片寄语：{{item.description}}</p>
+              <div class="star">
+                <span>卡片等级：</span><n-rate readonly :default-value="item.level" />
+              </div>
+              <button class="Btn">
+                <span class="leftContainer">
+                  <svg fill="white" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>
+                  <span class="like">喜爱人数</span>
+                </span>
+                 <span class="likeCount">2,050</span>
+              </button>
             </div>
-            <div class="box_footer"></div>
+          <div class="box_footer">
+            <h4>兑换积分：{{item.credit}}</h4>
+            <div>
+              <n-button type="error" class="exchange" tertiary strong>
+                兑换
+              </n-button>
+            </div>
+          </div>
         </div>
     </n-gi>
 
@@ -208,20 +177,23 @@ function collect(item){
 </script>
 
 <style scoped lang="less">
+@import "../../assets/css/btnCarbon";
 .box_container {
   width: 300px;
-  height: 400px;
+  height: 450px;
   background: #fff;
   border-radius: 20px;
-  margin: 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-left: 40px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .box_title {
   width: 280px;
-  height: 140px;
+  height: 200px;
   margin-top: 10px;
   margin-bottom: 5px;
   img {
@@ -233,17 +205,44 @@ function collect(item){
 
 .box_main {
   width: 260px;
-  height: 160px;
-  background: pink;
+  height: 180px;
   h2 {
     color: #000;
+  }
+  p {
+    color: #B5B6BB;
+    font-weight: 500;
+    margin:9px 0;
+  }
+  .star {
+    height: 25px;
+    //background: pink;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
   }
 }
 
 .box_footer {
-  width: 280px;
-  height: 80px;
-  background: green;
-
+  width:260px;
+  //background: pink;
+  height: 60px;
+  border-top: 2px solid #E8E8ED;
 }
+
+.box_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
+}
+
+.box_container:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
+}
+
 </style>
