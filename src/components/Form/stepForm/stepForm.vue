@@ -4,18 +4,36 @@
       <n-grid-item :span="4" :offset="0">
         <div class="hello">
           <div class="box">
-            <div class="image-container">
-              <img :src="qualification.qualificationUrl || defaultImage" class="img">
-              <div class="image-overlay"></div>
+            <div class="tou">
+              <img :src="avatar ? avatar : defaultAvatar">
             </div>
-            <div class="footer" style="display: flex; align-items: center;">
-              <img class="tou" style="margin-left: 20px" :src="avatar ? avatar : defaultAvatar"/>
-              <div class="name" style="margin-left: 10px;">
-                <h4 style="color:#5752ED;">
-                  <span v-if="qualification.qualificationName">{{ qualification.qualificationName }}</span>
-                  <span v-else>请尽快填写企业资质信息<br/>进行碳排放申请</span>
-                </h4>
-                <h5>{{qualification.qualificationVerifiedRegulator}}</h5>
+            <div class="box_content">
+              <div class="name">
+                <h2 style="color:#5752ED;">
+                  <template v-if="qualification.qualificationName">
+                    <span>{{ qualification.qualificationName }}</span>
+                    <h4 style="color: #8B93A1;font-size: 15px">{{qualification.qualificationVerifiedRegulator}}</h4>
+                    <h4 style="color: #000;font-size: 15px">可排放数量：{{qualification.qualificationEmissionLimit}}</h4>
+                  </template>
+                  <template v-else>
+                    <h3>请尽快填写企业资质信息
+                        <br/>进行碳排放申请
+                    </h3>
+                  </template>
+                </h2>
+<!--                <div class="box_img" style="margin-top: 15px">-->
+<!--                  <img :src="qualification.qualificationUrl || defaultImage" class="img">-->
+<!--                  <div class="image-overlay"></div>-->
+<!--                </div>-->
+                <n-popover trigger="hover">
+                  <template #trigger>
+                    <div class="box_img" style="margin-top: 15px">
+                      <img :src="qualification.qualificationUrl || defaultImage" class="img">
+                      <div class="image-overlay"></div>
+                    </div>
+                  </template>
+                  <span>这是您的上传的营业执照</span>
+                </n-popover>
               </div>
             </div>
           </div>
@@ -190,6 +208,7 @@
 </script>
 
 <style lang="less" scoped>
+@import "../../../assets/css/personage.less";
   .steps {
     max-width: 750px;
     margin: 16px auto;
@@ -213,46 +232,6 @@
   :deep(.slide-left-leave-to) {
     transform: translateX(10px);
   }
-
-  .hello {
-    width: auto;
-    height: 500px;
-    margin-top: 10%;
-    margin-left: 17%;
-  }
-
-  .box {
-    width: 300px;
-    height: 420px;
-    border-radius: 23px;
-    border: 2px solid #EDEDF0;
-    /* 添加其他样式属性 */
-    transition: box-shadow 0.3s ease; /* 添加过渡效果 */
-    background-color: #79E56F;
-    //background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-  }
-  .text {
-    height:150px;
-    margin-top: 10px;
-    padding: 0 30px;
-  }
-  .footer {
-    height: 30%;
-    display: flex;
-    //background: #ffffff;
-    align-items: center;
-  }
-  .tou {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid black;
-  }
-
-  .box:hover {
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
-  }
-
 
   .image-container {
     position: relative;
