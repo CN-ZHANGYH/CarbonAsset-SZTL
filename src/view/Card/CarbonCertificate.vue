@@ -189,21 +189,6 @@ function collect(item){
   margin-bottom: 10px;
 }
 
-//.box_title {
-//  width: 280px;
-//  height: 200px;
-//  margin-top: 10px;
-//  margin-bottom: 5px;
-//  img {
-//    border-radius: 20px;
-//    width: 100%;
-//    height: 100%;
-//  }
-//  img:hover {
-//    transform: scale(1.1);
-//  }
-//}
-
 .box_main {
   width: 260px;
   height: 180px;
@@ -248,6 +233,7 @@ function collect(item){
 
 .image-container {
   margin-top: 10px;
+  margin-bottom: 5px;
   position: relative;
   width: 280px; /* 调整为实际大小 */
   height: 200px; /* 调整为实际大小 */
@@ -261,7 +247,6 @@ function collect(item){
   border-bottom: 1px solid;
   border-radius: inherit; /* 继承圆角 */
   transition: transform 0.3s ease;
-
 }
 
 .image-container img:hover {
