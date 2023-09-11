@@ -23,9 +23,10 @@
     </n-card>
     <n-gi v-for="item in data">
         <div class="box_container">
-            <div class="box_title">
-              <img :src="item.url" alt="">
-            </div>
+          <div class="image-container">
+            <img :src="item.url" class="img">
+            <div class="image-overlay"></div>
+          </div>
             <div class="box_main">
               <h2>{{item.name}}</h2>
               <p>卡片寄语：{{item.description}}</p>
@@ -188,17 +189,20 @@ function collect(item){
   margin-bottom: 10px;
 }
 
-.box_title {
-  width: 280px;
-  height: 200px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  img {
-    border-radius: 20px;
-    width: 100%;
-    height: 100%;
-  }
-}
+//.box_title {
+//  width: 280px;
+//  height: 200px;
+//  margin-top: 10px;
+//  margin-bottom: 5px;
+//  img {
+//    border-radius: 20px;
+//    width: 100%;
+//    height: 100%;
+//  }
+//  img:hover {
+//    transform: scale(1.1);
+//  }
+//}
 
 .box_main {
   width: 260px;
@@ -240,6 +244,39 @@ function collect(item){
 
 .box_container:hover {
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3); /* 鼠标经过时的阴影效果 */
+}
+
+.image-container {
+  margin-top: 10px;
+  position: relative;
+  width: 280px; /* 调整为实际大小 */
+  height: 200px; /* 调整为实际大小 */
+  overflow: hidden;
+  border-radius: 25px; /* 添加圆角 */
+}
+
+.image-container img {
+  width: 280px;
+  height: 200px;
+  border-bottom: 1px solid;
+  border-radius: inherit; /* 继承圆角 */
+  transition: transform 0.3s ease;
+
+}
+
+.image-container img:hover {
+  transform: scale(1.2);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* 这里可以添加动画样式 */
+  animation: your-animation 1s infinite;
 }
 
 </style>
