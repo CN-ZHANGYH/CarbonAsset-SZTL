@@ -44,7 +44,7 @@
           <div class="box_footer">
             <h4>兑换积分：{{item.credit}}</h4>
             <div>
-              <n-button type="error" class="exchange" tertiary strong>
+              <n-button type="error" class="exchange" tertiary strong @click="showModal = true">
                 兑换
               </n-button>
             </div>
@@ -167,7 +167,8 @@ function collect(item){
         enterprise_id: enterprise.value.enterprise_id,
         card_id: item.id
     }).then(res => {
-      window.$message.success(res.msg)
+      // window.$message.success(res.msg)
+      item.liked += 1
     })
 }
 
