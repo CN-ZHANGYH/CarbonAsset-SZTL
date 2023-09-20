@@ -30,7 +30,7 @@ function renderIcon(icon: Component) {
 
 const menuOptions: MenuOption[] =  [
   {
-    label: 'Dashboard',
+    label: '首页',
     key: 'Dashboard',
     icon: renderIcon(SpeedOutline),
     children: [
