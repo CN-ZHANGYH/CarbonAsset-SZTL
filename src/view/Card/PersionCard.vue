@@ -13,7 +13,6 @@
             {{enterprise.enterprise_carbon_credits}}
           </n-descriptions-item>
           <n-descriptions-item label="已拥有/已收藏">
-            {{showPath}}
             <n-space><n-switch v-model:value="showPath" /></n-space>
           </n-descriptions-item>
         </n-descriptions>
@@ -59,7 +58,7 @@
             </div>
           </div>
           <div class="box_button">
-            <n-button class="heart" :bordered="false" type="info" @click="listSubmit(itemId)" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+            <n-button class="heart" :bordered="false" type="info" @click="listSubmit(item.id)">
               <img src="../../assets/aixing.png" alt="添加收藏">
             </n-button>
           </div>
@@ -68,7 +67,6 @@
     </template>
     <template v-else>
       <n-gi v-for="item in data">
-        <p>收藏</p>
         <div class="box_container">
           <div class="box_title">
             <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
@@ -104,7 +102,7 @@
             </div>
           </div>
           <div class="box_button">
-            <n-button class="heart" :bordered="false" type="info" @click="isActive = !isActive" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+            <n-button class="heart" :bordered="false" type="info" @click="CancelSubmit(itemId)">
               <img src="../../assets/aixing.png" alt="添加收藏">
             </n-button>
           </div>
@@ -123,6 +121,7 @@
       />
     </n-gi>
   </n-grid>
+<!-- 收藏纪念卡 -->
   <n-modal
       v-model:show="showModal"
       class="custom-card"
@@ -142,6 +141,27 @@
       <n-button type="error" size="large"  strong secondary @click="showModal = !showModal">取消</n-button>
     </div>
   </n-modal>
+
+<!-- 取消纪念卡 -->
+  <n-modal
+      v-model:show="showCancel"
+      class="custom-card"
+      preset="card"
+      style="width: 600px"
+      title="注意"
+      size="huge"
+      :bordered="false"
+      :segmented="segmented"
+  >
+    <n-alert type="info" :bordered="false">
+      请确认是否取消该纪念卡收藏
+    </n-alert>
+    <br>
+    <div style="text-align: center">
+      <n-button style="margin-right: 30px" type="success" size="large" strong secondary @click="handlerCancel">确定</n-button>
+      <n-button type="error" size="large"  strong secondary @click="showCancel = !showCancel">取消</n-button>
+    </div>
+  </n-modal>
 </template>
 
 <script setup>
@@ -150,6 +170,7 @@ import {creditExchange} from "../../api/credit.js";
 import {getEnterpriseInfo} from "../../api/enterprise.js";
 import {getEnterpriseHasCardList,getEnterpriseCollectCard} from "../../api/card.js";
 const showModal = ref(false)
+const showCancel = ref(false)
 const overlap = ref(false)
 const data = ref([])
 const item = ref({})
@@ -182,7 +203,6 @@ watch(()=>showPath.value,()=>{
     enterprise.value = res.enterprise
   }):getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
     console.log(res ,"我是收藏")
-    enterpriseHas.value=res.enterprise
   })
 })
 
@@ -251,16 +271,32 @@ function openEchangeFloat(item) {
   showModal.value = true;
 }
 
-function listSubmit(itemId) {
+function listSubmit(id) {
   showModal.value = true;
-  console.log(itemId);
-  this.itemId = itemId;
+  console.log(id);
+  this.itemId = id;
 }
 function handlerCollect(){
   showModal.value  = false
-  console.log('确定收藏',itemId.value);
+  const enterprise_id = JSON.parse(localStorage.getItem("user")).nickName;
+  const card_id = itemId.value;
+  getEnterpriseCollectCard({enterprise_id,card_id}).then(res => {
+    console.log(res)
+  })
+  // console.log('确定收藏',enterprise_id,card_id);
+}
+
+function CancelSubmit(itemId) {
+  showCancel.value = true;
+  console.log(itemId);
+}
+function handlerCancel(){
+  showCancel.value  = false
+  console.log('取消收藏',itemId.value);
   // getEnterpriseCollectCard()
 }
+
+
 </script>
 
 <style scoped lang="less">
