@@ -13,6 +13,7 @@
             {{enterprise.enterprise_carbon_credits}}
           </n-descriptions-item>
           <n-descriptions-item label="已拥有/已收藏">
+<!--            {{showPath}}-->
             <n-space><n-switch v-model:value="showPath" /></n-space>
           </n-descriptions-item>
         </n-descriptions>
@@ -21,48 +22,94 @@
     <n-card>
 
     </n-card>
-    <n-gi v-for="item in data">
-      <div class="box_container">
-        <div class="box_title">
-          <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
-          <n-popover :overlap="overlap" placement="right-start" trigger="click">
-            <template #trigger>
-              <h4 style="color:#848484;" @click="">View all</h4>
-            </template>
-            <div>
-              <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
-                <n-descriptions-item label="卡片名称">
-                  {{item.name}}
-                </n-descriptions-item>
-                <n-descriptions-item label="卡片寄语">
-                  {{item.description}}
-                </n-descriptions-item>
-                <n-descriptions-item label="卡片等级">
-                  <n-rate readonly :default-value="item.level" />
-                </n-descriptions-item>
-                <n-descriptions-item label="积分">
-                  {{item.credit}}
-                </n-descriptions-item>
-              </n-descriptions>
+    <template v-if="showPath">
+      <n-gi v-for="item in data">
+        <div class="box_container">
+          <div class="box_title">
+            <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
+            <n-popover :overlap="overlap" placement="right-start" trigger="click">
+              <template #trigger>
+                <h4 style="color:#848484;" @click="">View all</h4>
+              </template>
+              <div>
+                <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
+                  <n-descriptions-item label="卡片名称">
+                    {{item.name}}
+                  </n-descriptions-item>
+                  <n-descriptions-item label="卡片寄语">
+                    {{item.description}}
+                  </n-descriptions-item>
+                  <n-descriptions-item label="卡片等级">
+                    <n-rate readonly :default-value="item.level" />
+                  </n-descriptions-item>
+                  <n-descriptions-item label="积分">
+                    {{item.credit}}
+                  </n-descriptions-item>
+                </n-descriptions>
+              </div>
+            </n-popover>
+          </div>
+          <div class="box">
+            <div class="image-container">
+              <img :src="item.url" class="img">
+              <div class="image-overlay"></div>
             </div>
-          </n-popover>
-        </div>
-        <div class="box">
-          <div class="image-container">
-            <img :src="item.url" class="img">
-            <div class="image-overlay"></div>
+            <div class="box_text text_back">
+              <n-rate readonly :default-value="item.level" />
+            </div>
           </div>
-          <div class="box_text text_back">
-            <n-rate readonly :default-value="item.level" />
+          <div class="box_button">
+            <n-button class="heart" :bordered="false" type="info" @click="isActive = !isActive" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+              <img src="../../assets/aixing.png" alt="添加收藏">
+            </n-button>
           </div>
         </div>
-        <div class="box_button">
-          <n-button class="heart" :bordered="false" type="info" @click="isActive = !isActive" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
-            <img src="../../assets/aixing.png" alt="添加收藏">
-          </n-button>
+      </n-gi>
+    </template>
+    <template v-else>
+      <n-gi v-for="item in data">
+        <div class="box_container">
+          <div class="box_title">
+            <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
+            <n-popover :overlap="overlap" placement="right-start" trigger="click">
+              <template #trigger>
+                <h4 style="color:#848484;" @click="">View all</h4>
+              </template>
+              <div>
+                <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
+                  <n-descriptions-item label="卡片名称">
+                    {{item.name}}
+                  </n-descriptions-item>
+                  <n-descriptions-item label="卡片寄语">
+                    {{item.description}}
+                  </n-descriptions-item>
+                  <n-descriptions-item label="卡片等级">
+                    <n-rate readonly :default-value="item.level" />
+                  </n-descriptions-item>
+                  <n-descriptions-item label="积分">
+                    {{item.credit}}
+                  </n-descriptions-item>
+                </n-descriptions>
+              </div>
+            </n-popover>
+          </div>
+          <div class="box">
+            <div class="image-container">
+              <img :src="item.url" class="img">
+              <div class="image-overlay"></div>
+            </div>
+            <div class="box_text text_back">
+              <n-rate readonly :default-value="item.level" />
+            </div>
+          </div>
+          <div class="box_button">
+            <n-button class="heart" :bordered="false" type="info" @click="isActive = !isActive" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+              <img src="../../assets/aixing.png" alt="添加收藏">
+            </n-button>
+          </div>
         </div>
-      </div>
-    </n-gi>
+      </n-gi>
+    </template>
     <n-gi :span="12" :offset="1.5" style="margin-top: 5%">
       <n-pagination
           v-model:page="form.pageNum"
@@ -115,7 +162,9 @@ const form = ref({
 })
 const creditForm = ref({})
 const enterprise = ref({})
+const enterpriseHas = ref({})
 const isFavorite = ref(false);
+const showPath=ref(true)
 function getList() {
   window.$loadingBar.start()
   getCardList(form.value).then(res => {
@@ -125,6 +174,15 @@ function getList() {
     window.$loadingBar.finish()
   })
 }
+
+watch(()=>showPath.value,()=>{
+  !showPath.value? getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+    enterprise.value = res.enterprise
+  }):getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+    console.log(res ,"我是收藏")
+    enterpriseHas.value=res.enterprise
+  })
+})
 
 // 页数
 const pageSizes = [
@@ -172,7 +230,8 @@ onMounted(() => {
   })
 })
 getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-    console.log(res + "我是收藏")
+    console.log(res ,"我是收藏")
+  enterpriseHas.value=res.enterprise
 })
 
 function toggleFavorite() {

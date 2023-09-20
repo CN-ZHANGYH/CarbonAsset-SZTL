@@ -7,3 +7,4 @@ export function getEnterpriseHasCardList(query){
         params: query
     })
 }
+

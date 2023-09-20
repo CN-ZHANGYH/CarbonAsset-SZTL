@@ -237,6 +237,7 @@ function handlerBuy(){
   // 调用购买的操作
   buyProduct(buyForm.value).then(res => {
     window.$message.success(res.msg)
+    showModal.value = false
   })
 
 }
