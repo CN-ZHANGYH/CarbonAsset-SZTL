@@ -44,7 +44,7 @@
           <div class="box_footer">
             <h4>兑换积分：{{item.credit}}</h4>
             <div>
-              <n-button type="error" class="exchange" tertiary strong @click="showModal = true">
+              <n-button type="error" class="exchange" tertiary strong @click="openEchange(item)">
                 兑换
               </n-button>
             </div>
