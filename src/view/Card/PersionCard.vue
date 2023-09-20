@@ -22,7 +22,7 @@
     <n-card>
 
     </n-card>
-    <template v-if="showPath">
+    <template v-if="!showPath">
       <n-gi v-for="item in data">
         <div class="box_container">
           <div class="box_title">
@@ -68,6 +68,7 @@
     </template>
     <template v-else>
       <n-gi v-for="item in data">
+        <p>收藏</p>
         <div class="box_container">
           <div class="box_title">
             <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
