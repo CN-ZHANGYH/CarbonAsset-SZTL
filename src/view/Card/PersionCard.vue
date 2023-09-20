@@ -164,16 +164,11 @@ const enterpriseHas = ref({})
 const isFavorite = ref(false);
 const showPath=ref(false)
 
-const store = {
-  data: [],
-  total: 0
-}
+
 function getList() {
   window.$loadingBar.start()
   getCardList(form.value).then(res => {
     console.log(res)
-    store.data = res.rows
-    store.total = res.total
     data.value = res.rows
     total.value = res.total
     window.$loadingBar.finish()
@@ -260,9 +255,6 @@ function listSubmit() {
 
 function handlerCollect(){
   showModal.value  = false
-  const data = store.data
-  const total = store.total
-  console.log(data)
 }
 </script>
 
