@@ -8,3 +8,11 @@ export function getEnterpriseHasCardList(query){
     })
 }
 
+export function getEnterpriseCollectCard(query){
+    return request({
+        url: '/card/collect',
+        method: 'post',
+        params: query
+    })
+}
+

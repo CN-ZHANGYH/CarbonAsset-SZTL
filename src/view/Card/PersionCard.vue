@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="box_button">
-            <n-button class="heart" :bordered="false" type="info" @click="isActive = !isActive" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+            <n-button class="heart" :bordered="false" type="info" @click="listSubmit" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
               <img src="../../assets/aixing.png" alt="添加收藏">
             </n-button>
           </div>
@@ -125,25 +125,22 @@
   </n-grid>
   <n-modal
       v-model:show="showModal"
-      type="success"
-      preset="dialog"
-      title="确认"
-      positive-text="兑换"
-      negative-text="取消"
-      @positive-click="submitCallback"
-      @negative-click="showModal = false"
+      class="custom-card"
+      preset="card"
+      style="width: 600px"
+      title="注意"
+      size="huge"
+      :bordered="false"
+      :segmented="segmented"
   >
     <n-alert type="info" :bordered="false">
-      请确认当前的积分是否足够兑换
+      请确认是否收藏纪念卡
     </n-alert>
-    <n-descriptions column="1" label-placement="left" style="margin-top: 5%;margin-left: 10%">
-      <n-descriptions-item label="企业名称">
-        {{creditForm.userName}}
-      </n-descriptions-item>
-      <n-descriptions-item label="纪念卡名称">
-        {{creditForm.cardName}}
-      </n-descriptions-item>
-    </n-descriptions>
+    <br>
+    <div style="text-align: center">
+      <n-button style="margin-right: 30px" type="success" size="large" strong secondary @click="handlerCollect">收藏</n-button>
+      <n-button type="error" size="large"  strong secondary @click="showModal = !showModal">取消</n-button>
+    </div>
   </n-modal>
 </template>
 
@@ -151,7 +148,7 @@
 import {getCardList} from "../../api/souvenir.js";
 import {creditExchange} from "../../api/credit.js";
 import {getEnterpriseInfo} from "../../api/enterprise.js";
-import {getEnterpriseHasCardList} from "../../api/card.js";
+import {getEnterpriseHasCardList,getEnterpriseCollectCard} from "../../api/card.js";
 const showModal = ref(false)
 const overlap = ref(false)
 const data = ref([])
@@ -165,11 +162,18 @@ const creditForm = ref({})
 const enterprise = ref({})
 const enterpriseHas = ref({})
 const isFavorite = ref(false);
-const showPath=ref(true)
+const showPath=ref(false)
+
+const store = {
+  data: [],
+  total: 0
+}
 function getList() {
   window.$loadingBar.start()
   getCardList(form.value).then(res => {
     console.log(res)
+    store.data = res.rows
+    store.total = res.total
     data.value = res.rows
     total.value = res.total
     window.$loadingBar.finish()
@@ -229,11 +233,12 @@ onMounted(() => {
   getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
     enterprise.value = res.enterprise
   })
+  getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
+    console.log(res,"我是收藏")
+    enterpriseHas.value=res.enterprise
+  })
 })
-getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-  console.log(res ,"我是收藏")
-  enterpriseHas.value=res.enterprise
-})
+
 
 function toggleFavorite() {
   isFavorite.value = !isFavorite.value;
@@ -247,6 +252,17 @@ function openEchangeFloat(item) {
 
   creditForm.value.userName = JSON.parse(localStorage.getItem("user")).nickName;
   showModal.value = true;
+}
+
+function listSubmit() {
+  showModal.value  = true
+}
+
+function handlerCollect(){
+  showModal.value  = false
+  const data = store.data
+  const total = store.total
+  console.log(data)
 }
 </script>
 
