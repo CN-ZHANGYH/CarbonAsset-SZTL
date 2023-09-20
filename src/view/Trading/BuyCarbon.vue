@@ -238,6 +238,7 @@ function handlerBuy(){
   buyProduct(buyForm.value).then(res => {
     window.$message.success(res.msg)
   })
+  showModal.value = false
 
 }
 </script>
