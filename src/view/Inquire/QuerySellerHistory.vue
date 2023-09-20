@@ -3,7 +3,7 @@ import CarbonSellerHistory from "../../components/Work/CarbonSellerHistory.vue";
 </script>
 
 <template>
-    <n-card title="碳排放记录">
+    <n-card title="出售记录">
       <CarbonSellerHistory/>
     </n-card>
 </template>

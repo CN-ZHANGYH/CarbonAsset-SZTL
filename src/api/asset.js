@@ -50,7 +50,7 @@ export function getEnterpriseSellerHistory(query){
 export function getEnterpriseSellerRecordOfValue(query){
     return request({
         url: '/query/searchSellRecord',
-        method: 'get',
+        method: 'post',
         params: query
     })
 }
