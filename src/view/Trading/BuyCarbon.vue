@@ -201,6 +201,7 @@ function getList(){
   window.$loadingBar.start()
   getAllSellerAssetList(queryParam.value).then(res => {
     console.log(res)
+    console.log(res)
     productList.value = res.rows
     total.value = res.total
     window.$loadingBar.finish()
@@ -239,6 +240,7 @@ function handlerBuy(){
     window.$message.success(res.msg)
     showModal.value = false
   })
+  showModal.value = false
 
 }
 </script>

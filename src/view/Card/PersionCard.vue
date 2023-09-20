@@ -13,7 +13,7 @@
             {{enterprise.enterprise_carbon_credits}}
           </n-descriptions-item>
           <n-descriptions-item label="已拥有/已收藏">
-<!--            {{showPath}}-->
+            {{showPath}}
             <n-space><n-switch v-model:value="showPath" /></n-space>
           </n-descriptions-item>
         </n-descriptions>
@@ -230,7 +230,7 @@ onMounted(() => {
   })
 })
 getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-    console.log(res ,"我是收藏")
+  console.log(res ,"我是收藏")
   enterpriseHas.value=res.enterprise
 })
 
@@ -408,3 +408,4 @@ function openEchangeFloat(item) {
   color: white;
 }
 </style>
+

@@ -31,6 +31,7 @@
 import { Search } from '@vicons/ionicons5'
 import {getEnterpriseTxList, getEnterpriseTxRecord} from "../../api/transaction.js";
 import {NPopover, NTag} from "naive-ui";
+import {getEnterpriseInfo} from "../../api/enterprise.js";
 const txData = ref([])
 const searchValue = ref("")
 
@@ -74,13 +75,7 @@ const columns = reactive(
         {
             title: "买家地址",
             key: "buyAddress",
-            render(row) {
-              return h(
-                  {
-
-                  }
-              );
-            }
+            render: (row) => ellipsisText(row.buyAddress, 20)
         },
         {
             title: "卖家地址",
@@ -128,12 +123,13 @@ getEnterpriseTxList({
 
 function search(){
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
-  console.log(enterprise)
-  getEnterpriseTxRecord({enterprise:enterprise,quality: searchValue.value}).then(res => {
-    if (res.total != 0){
-      txData.value = res.rows
-    }
-    window.$message.success(res.msg)
+  getEnterpriseInfo({enterprise: enterprise}).then(res => {
+    getEnterpriseTxRecord({buyerId:res.enterprise.enterprise_id,quality: searchValue.value}).then(res => {
+      if (res.total != 0){
+        txData.value = res.rows
+      }
+      window.$message.success(res.msg)
+    })
   })
 }
 </script>
