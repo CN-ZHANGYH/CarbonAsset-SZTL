@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="box_button">
-            <n-button class="heart" :bordered="false" type="info" @click="listSubmit" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
+            <n-button class="heart" :bordered="false" type="info" @click="listSubmit(itemId)" :style="{ backgroundColor: isActive ? 'red' : '#0DB7B7' }">
               <img src="../../assets/aixing.png" alt="添加收藏">
             </n-button>
           </div>
@@ -164,6 +164,8 @@ const enterpriseHas = ref({})
 const isFavorite = ref(false);
 const showPath=ref(false)
 
+const itemId = ref(0)
+
 
 function getList() {
   window.$loadingBar.start()
@@ -249,12 +251,15 @@ function openEchangeFloat(item) {
   showModal.value = true;
 }
 
-function listSubmit() {
-  showModal.value  = true
+function listSubmit(itemId) {
+  showModal.value = true;
+  console.log(itemId);
+  this.itemId = itemId;
 }
-
 function handlerCollect(){
   showModal.value  = false
+  console.log('确定收藏',itemId.value);
+  // getEnterpriseCollectCard()
 }
 </script>
 
