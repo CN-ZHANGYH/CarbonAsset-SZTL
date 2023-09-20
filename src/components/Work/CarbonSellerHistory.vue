@@ -2,7 +2,7 @@
     <n-row :gutter="12">
       <n-col :span="6" :offset="19">
         <div class="container">
-          <n-input placeholder="请输入搜索内容" round  v-model:value="searchValue" clearable>
+          <n-input placeholder="请输入出售数量" round  v-model:value="searchValue" clearable>
             <template #prefix>
               <n-button quaternary circle type="success" @click="search">
                 <template #icon>

@@ -11,7 +11,7 @@
             }"
           >
             <template #header-extra>
-              <n-tag type="success">日</n-tag>
+              <n-tag type="success" :bordered="false">🗺️</n-tag>
             </template>
             <h1>{{enterpriseTotalCredit}}</h1>
             <template #footer>
@@ -29,7 +29,7 @@
             }"
         >
           <template #header-extra>
-            <n-tag type="info">周</n-tag>
+            <n-tag type="info" :bordered="false">🌅</n-tag>
           </template>
           <h1>{{enterpriseTotalEmission}} tCO₂e</h1>
           <template #footer>
@@ -47,7 +47,7 @@
             }"
         >
           <template #header-extra>
-            <n-tag type="success">日</n-tag>
+            <n-tag type="success" :bordered="false">🌇</n-tag>
           </template>
           <h1>{{enterpriseEmissionLimit}}</h1>
           <template #footer>
@@ -65,7 +65,7 @@
             }"
         >
           <template #header-extra>
-            <n-tag type="warning">年</n-tag>
+            <n-tag type="warning" :bordered="false">🌈</n-tag>
           </template>
           <h1>¥ {{enterpriseBalance}}</h1>
           <template #footer>

@@ -10,7 +10,7 @@
 
 <script setup>
 import {getEnterpriseEmissionRanking, getRankingByEmission} from "../../api/emissionresource.js";
-import {NAvatar} from "naive-ui";
+import {NAvatar, NTag} from "naive-ui";
 const resourceRanking = ref(0)
 const enterpriseName = JSON.parse(localStorage.getItem("user")).nickName
 const columns = reactive([
@@ -35,6 +35,18 @@ const columns = reactive([
     {
         title: '企业地址',
         key: 'enterprise_address',
+        render(row) {
+          return h(
+              NTag,
+              {
+                type: 'success',
+                bordered: false,
+              },
+              {
+                default: () =>  row.enterprise_address
+              }
+          );
+        }
     },
     {
         title: '积分',

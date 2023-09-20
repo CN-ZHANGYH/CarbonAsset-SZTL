@@ -34,7 +34,19 @@ const  columns = reactive([
     },
     {
         title: '账户地址',
-        key: 'enterprise_address'
+        key: 'enterprise_address',
+        render(row) {
+          return h(
+              NTag,
+              {
+                type: 'info',
+                bordered: false,
+              },
+              {
+                default: () =>  row.enterprise_address
+              }
+          );
+        }
     },
     {
         title: '认证状态',

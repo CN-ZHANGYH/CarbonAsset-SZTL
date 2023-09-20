@@ -2,7 +2,7 @@
   <n-row :gutter="12">
     <n-col :span="6" :offset="19">
       <div class="container">
-        <n-input placeholder="请输入搜索内容" round  v-model:value="searchValue" clearable>
+        <n-input placeholder="请输入排放方式" round  v-model:value="searchValue" clearable>
           <template #prefix>
             <n-button quaternary circle type="success" @click="search">
               <template #icon>
@@ -47,7 +47,19 @@ const columns = reactive(
         },
         {
             title: "碳排放量",
-            key: "emissions"
+            key: "emissions",
+            render(row){
+              return h(
+                  NTag,
+                  {
+                    bordered: false,
+                    type: 'info'
+                  },
+                  {
+                    default: () => row.emissions + "KG"
+                  }
+              )
+            }
         },
         {
             title: "排放企业",
