@@ -201,6 +201,7 @@ function getList(){
   window.$loadingBar.start()
   getAllSellerAssetList(queryParam.value).then(res => {
     console.log(res)
+    console.log(res)
     productList.value = res.rows
     total.value = res.total
     window.$loadingBar.finish()

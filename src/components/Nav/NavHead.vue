@@ -26,13 +26,15 @@ import { h, defineComponent, ref, onMounted } from 'vue'
 import {
   PersonCircleOutline as UserIcon,
   Pencil as EditIcon,
+  ChevronForwardCircleOutline,
   LogOutOutline as LogoutIcon
 } from "@vicons/ionicons5";
 import router from "../../router/router.js";
 import useUserStore from "../../store/modules/user.js";
+import {getEnterpriseInfo} from "../../api/enterprise.js";
 
 const defaultAvatar = '/src/assets/avatar.png' // 默认头像的路径
-
+const address = ref("")
 const imageUrl = ref("")
 
 const renderIcon = (icon) => {
@@ -43,8 +45,14 @@ const renderIcon = (icon) => {
   };
 };
 
+
 // 下拉菜单
 const options = [
+  {
+    label: "",
+    key: 'address',
+    icon: renderIcon(ChevronForwardCircleOutline)
+  },
   {
     label: "用户资料",
     key: "profile",
@@ -70,6 +78,8 @@ function handleSelect(key){
 
 onMounted(() => {
   imageUrl.value = JSON.parse(localStorage.getItem("user")).avatar
+  const  enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  options[0].label = enterprise
 })
 </script>
 
