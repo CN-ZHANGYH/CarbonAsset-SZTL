@@ -167,8 +167,7 @@ function collect(item){
         enterprise_id: enterprise.value.enterprise_id,
         card_id: item.id
     }).then(res => {
-      // window.$message.success(res.msg)
-      item.liked += 1
+      window.$message.success(res.msg)
     })
 }
 
