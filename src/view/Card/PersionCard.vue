@@ -13,7 +13,7 @@
             {{enterprise.enterprise_carbon_credits}}
           </n-descriptions-item>
           <n-descriptions-item label="已拥有/已收藏">
-            <n-space><n-switch v-model:value="showPath" /></n-space>
+            <n-space><n-switch v-model:value="showPath" @change="changeSubmit"/></n-space>
           </n-descriptions-item>
         </n-descriptions>
       </n-card>
@@ -21,94 +21,50 @@
     <n-card>
 
     </n-card>
-    <template v-if="!showPath">
-      <n-gi v-for="item in data">
-        <div class="box_container">
-          <div class="box_title">
-            <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
-            <n-popover :overlap="overlap" placement="right-start" trigger="click">
-              <template #trigger>
-                <h4 style="color:#848484;" @click="">View all</h4>
-              </template>
-              <div>
-                <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
-                  <n-descriptions-item label="卡片名称">
-                    {{item.name}}
-                  </n-descriptions-item>
-                  <n-descriptions-item label="卡片寄语">
-                    {{item.description}}
-                  </n-descriptions-item>
-                  <n-descriptions-item label="卡片等级">
-                    <n-rate readonly :default-value="item.level" />
-                  </n-descriptions-item>
-                  <n-descriptions-item label="积分">
-                    {{item.credit}}
-                  </n-descriptions-item>
-                </n-descriptions>
-              </div>
-            </n-popover>
-          </div>
-          <div class="box">
-            <div class="image-container">
-              <img :src="item.url" class="img">
-              <div class="image-overlay"></div>
+
+    <n-gi v-for="item in data">
+      <div class="box_container">
+        <div class="box_title">
+          <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
+          <n-popover :overlap="overlap" placement="right-start" trigger="click">
+            <template #trigger>
+              <h4 style="color:#848484;" @click="">View all</h4>
+            </template>
+            <div>
+              <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
+                <n-descriptions-item label="卡片名称">
+                  {{item.name}}
+                </n-descriptions-item>
+                <n-descriptions-item label="卡片寄语">
+                  {{item.description}}
+                </n-descriptions-item>
+                <n-descriptions-item label="卡片等级">
+                  <n-rate readonly :default-value="item.level" />
+                </n-descriptions-item>
+                <n-descriptions-item label="积分">
+                  {{item.credit}}
+                </n-descriptions-item>
+              </n-descriptions>
             </div>
-            <div class="box_text text_back">
-              <n-rate readonly :default-value="item.level" />
-            </div>
+          </n-popover>
+        </div>
+        <div class="box">
+          <div class="image-container">
+            <img :src="item.url" class="img">
+            <div class="image-overlay"></div>
           </div>
-          <div class="box_button">
-            <n-button class="heart" :bordered="false" type="info" @click="listSubmit(item.id)">
-              <img src="../../assets/aixing.png" alt="取消收藏">
-            </n-button>
+          <div class="box_text text_back">
+            <n-rate readonly :default-value="item.level" />
           </div>
         </div>
-      </n-gi>
-    </template>
-    <template v-else>
-      <n-gi v-for="item in data">
-        <div class="box_container">
-          <div class="box_title">
-            <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
-            <n-popover :overlap="overlap" placement="right-start" trigger="click">
-              <template #trigger>
-                <h4 style="color:#848484;" @click="">View all</h4>
-              </template>
-              <div>
-                <n-descriptions column="1" label-placement="left" style="width: 200px;height: 200px;margin-top: 10px;margin-left: 10px">
-                  <n-descriptions-item label="卡片名称">
-                    {{item.name}}
-                  </n-descriptions-item>
-                  <n-descriptions-item label="卡片寄语">
-                    {{item.description}}
-                  </n-descriptions-item>
-                  <n-descriptions-item label="卡片等级">
-                    <n-rate readonly :default-value="item.level" />
-                  </n-descriptions-item>
-                  <n-descriptions-item label="积分">
-                    {{item.credit}}
-                  </n-descriptions-item>
-                </n-descriptions>
-              </div>
-            </n-popover>
-          </div>
-          <div class="box">
-            <div class="image-container">
-              <img :src="item.url" class="img">
-              <div class="image-overlay"></div>
-            </div>
-            <div class="box_text text_back">
-              <n-rate readonly :default-value="item.level" />
-            </div>
-          </div>
-          <div class="box_button">
-            <n-button class="heart" :bordered="false" type="info" @click="CancelSubmit(itemId)">
-              <img src="../../assets/aixing.png" alt="添加收藏">
-            </n-button>
-          </div>
+        <div class="box_button">
+          <n-button class="heart" :bordered="false" type="info" @click="listSubmit(item.id)">
+            <img src="../../assets/aixing.png" alt="取消收藏">
+          </n-button>
         </div>
-      </n-gi>
-    </template>
+      </div>
+    </n-gi>
+
     <n-gi :span="12" :offset="1.5" style="margin-top: 5%">
       <n-pagination
           v-model:page="form.pageNum"
@@ -165,8 +121,8 @@
 </template>
 
 <script setup>
-import {getCardList} from "../../api/souvenir.js";
-import {getEnterpriseCollectCard} from "../../api/card.js";
+import {getCardList, getCardListByEnterpriseName} from "../../api/souvenir.js";
+import {getEnterpriseCollectCard, getEnterpriseHasCardList} from "../../api/card.js";
 const showModal = ref(false)
 const showCancel = ref(false)
 const overlap = ref(false)
@@ -245,6 +201,26 @@ function handlerCancel(){
 }
 
 
+function changeSubmit(){
+  const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  if (showPath.value){
+    getEnterpriseHasCardList({enterprise: enterprise}).then(res => {
+      data.value = res.data
+    })
+  }else {
+    getCardListByEnterpriseName({name:enterprise}).then(res => {
+      data.value = res.data
+    })
+  }
+}
+
+onMounted(()=> {
+  const enterprise = JSON.parse(localStorage.getItem("user")).nickName
+  getCardListByEnterpriseName({name:enterprise}).then(res => {
+    console.log(res.data)
+    data.value = res.data
+  })
+})
 </script>
 
 <style scoped lang="less">
