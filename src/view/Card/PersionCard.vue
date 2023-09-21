@@ -217,7 +217,6 @@ function changeSubmit(){
 onMounted(()=> {
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
   getCardListByEnterpriseName({name:enterprise}).then(res => {
-    console.log(res.data)
     data.value = res.data
   })
 })
