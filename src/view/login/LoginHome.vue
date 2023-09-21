@@ -30,11 +30,11 @@
              autoplay>
            <img
                class="carousel-img"
-               src="../../assets/img/img.png"
+               src="../../assets/img/img1.jpg"
            >
            <img
                class="carousel-img"
-               src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
+               src="../../assets/img/img.jpg"
            >
          </n-carousel>
        </div>

@@ -59,7 +59,7 @@
           </div>
           <div class="box_button">
             <n-button class="heart" :bordered="false" type="info" @click="listSubmit(item.id)">
-              <img src="../../assets/aixing.png" alt="添加收藏">
+              <img src="../../assets/aixing.png" alt="取消收藏">
             </n-button>
           </div>
         </div>
@@ -166,9 +166,7 @@
 
 <script setup>
 import {getCardList} from "../../api/souvenir.js";
-import {creditExchange} from "../../api/credit.js";
-import {getEnterpriseInfo} from "../../api/enterprise.js";
-import {getEnterpriseHasCardList,getEnterpriseCollectCard} from "../../api/card.js";
+import {getEnterpriseCollectCard} from "../../api/card.js";
 const showModal = ref(false)
 const showCancel = ref(false)
 const overlap = ref(false)
@@ -179,10 +177,7 @@ const form = ref({
   pageNum: 1,
   pageSize: 8
 })
-const creditForm = ref({})
 const enterprise = ref({})
-const enterpriseHas = ref({})
-const isFavorite = ref(false);
 const showPath=ref(false)
 
 const itemId = ref(0)
@@ -197,14 +192,6 @@ function getList() {
     window.$loadingBar.finish()
   })
 }
-
-watch(()=>showPath.value,()=>{
-  !showPath.value? getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-    enterprise.value = res.enterprise
-  }):getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-    console.log(res ,"我是收藏")
-  })
-})
 
 // 页数
 const pageSizes = [
@@ -231,46 +218,7 @@ const onUpdatePageSize = (pageSize) => {
   form.value.page = 1
   getList()
 }
-
-const isActive = ref(false)
 getList()
-
-function openEchange(item){
-  creditForm.value.cardName = item.name
-  creditForm.value.userName = JSON.parse(localStorage.getItem("user")).nickName
-  showModal.value = true
-}
-function submitCallback(){
-  creditExchange(creditForm.value).then(res => {
-    window.$message.success(res.msg)
-  })
-}
-
-onMounted(() => {
-  getEnterpriseInfo({enterprise:JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-    enterprise.value = res.enterprise
-  })
-  getEnterpriseHasCardList({enterprise: JSON.parse(localStorage.getItem("user")).nickName}).then(res => {
-    console.log(res,"我是收藏")
-    enterpriseHas.value=res.enterprise
-  })
-})
-
-
-function toggleFavorite() {
-  isFavorite.value = !isFavorite.value;
-}
-function openEchangeFloat(item) {
-  if (isFavorite.value) {
-    creditForm.value.cardName = "已拥有";
-  } else {
-    creditForm.value.cardName = item.name;
-  }
-
-  creditForm.value.userName = JSON.parse(localStorage.getItem("user")).nickName;
-  showModal.value = true;
-}
-
 function listSubmit(id) {
   showModal.value = true;
   console.log(id);
