@@ -7,7 +7,7 @@
             {{total}}
           </n-descriptions-item>
           <n-descriptions-item label="我的收藏">
-            {{0}}
+            {{collectTotal}}
           </n-descriptions-item>
           <n-descriptions-item label="我的积分">
             {{credit}}
@@ -131,6 +131,7 @@ const credit = ref(0)
 const data = ref([])
 const item = ref({})
 const total = ref(0)
+const collectTotal = ref(0)
 const form = ref({
   pageNum: 1,
   pageSize: 8
@@ -191,11 +192,6 @@ function handlerCollect(){
   })
   // console.log('确定收藏',enterprise_id,card_id);
 }
-
-function CancelSubmit(itemId) {
-  showCancel.value = true;
-  console.log(itemId);
-}
 function handlerCancel(){
   showCancel.value  = false
   console.log('取消收藏',itemId.value);
@@ -220,10 +216,15 @@ onMounted(()=> {
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
   getCardListByEnterpriseName({name:enterprise}).then(res => {
     data.value = res.data
+    total.value = res.data.length
   })
 
   getEnterpriseInfo({enterprise:enterprise}).then(res => {
     credit.value = res.enterprise.enterprise_carbon_credits
+  })
+
+  getEnterpriseHasCardList({enterprise: enterprise}).then(res => {
+    collectTotal.value = res.data.length
   })
 })
 </script>
