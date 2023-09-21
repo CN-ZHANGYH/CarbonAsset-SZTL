@@ -10,7 +10,7 @@
             {{0}}
           </n-descriptions-item>
           <n-descriptions-item label="我的积分">
-            {{enterprise.enterprise_carbon_credits}}
+            {{credit}}
           </n-descriptions-item>
           <n-descriptions-item label="已拥有/已收藏">
             <n-space><n-switch v-model:value="showPath" @change="changeSubmit"/></n-space>
@@ -123,9 +123,11 @@
 <script setup>
 import {getCardList, getCardListByEnterpriseName} from "../../api/souvenir.js";
 import {getEnterpriseCollectCard, getEnterpriseHasCardList} from "../../api/card.js";
+import {getEnterpriseInfo} from "../../api/enterprise.js";
 const showModal = ref(false)
 const showCancel = ref(false)
 const overlap = ref(false)
+const credit = ref(0)
 const data = ref([])
 const item = ref({})
 const total = ref(0)
@@ -218,6 +220,10 @@ onMounted(()=> {
   const enterprise = JSON.parse(localStorage.getItem("user")).nickName
   getCardListByEnterpriseName({name:enterprise}).then(res => {
     data.value = res.data
+  })
+
+  getEnterpriseInfo({enterprise:enterprise}).then(res => {
+    credit.value = res.enterprise.enterprise_carbon_credits
   })
 })
 </script>
