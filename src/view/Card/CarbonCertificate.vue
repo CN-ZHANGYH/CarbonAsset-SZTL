@@ -1,27 +1,6 @@
 <template>
   <n-grid x-gap="12" :cols="4">
-<!--    <n-gi :span="12">-->
-<!--      <n-card style="height: 80px;border-radius: 20px" hoverable>-->
-<!--        <n-descriptions column="4">-->
-<!--          <n-descriptions-item label="拥有卡片">-->
-<!--            {{total}}-->
-<!--          </n-descriptions-item>-->
-<!--          <n-descriptions-item label="我的收藏">-->
-<!--            {{0}}-->
-<!--          </n-descriptions-item>-->
-<!--          <n-descriptions-item label="我的积分">-->
-<!--            {{enterprise.enterprise_carbon_credits}}-->
-<!--          </n-descriptions-item>-->
-<!--          <n-descriptions-item label="更多">-->
-<!--            {{10}}-->
-<!--          </n-descriptions-item>-->
-<!--        </n-descriptions>-->
-<!--      </n-card>-->
-<!--    </n-gi>-->
-    <n-card>
-
-    </n-card>
-    <n-gi v-for="item in data">
+    <n-gi v-for="item in data" style="margin-top: 0">
         <div class="box_container">
           <div class="image-container">
             <img :src="item.url" class="img">
