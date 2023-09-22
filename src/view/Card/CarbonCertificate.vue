@@ -158,7 +158,8 @@ function collect(item){
 .box_container {
   width: 300px;
   height: 450px;
-  background: #fff;
+  //background: #fff;
+  background: pink;
   border-radius: 20px;
   display: flex;
   align-items: center;
