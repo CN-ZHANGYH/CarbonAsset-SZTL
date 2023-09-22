@@ -69,7 +69,7 @@ const menuOptions: MenuOption[] =  [
         key: 'ApplicationCarbon',
       },
       {
-        label: '碳排放报告',
+        label: '碳排放进度',
         key: 'GenerateCarbon',
       },
     ],
