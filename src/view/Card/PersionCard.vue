@@ -1,5 +1,5 @@
 <template>
-  <n-grid x-gap="12" :cols="4" class="ngi">
+  <n-grid x-gap="12" :cols="4" style="align-items: end;">
     <n-gi :span="12">
       <n-card style="height: 80px;border-radius: 20px" hoverable>
         <n-descriptions column="4">
@@ -386,10 +386,6 @@ onMounted(()=> {
 #favorite-btn:active {
   background-color: #19AAA9;
   color: white;
-}
-
-.ngi {
-  align-items: end;
 }
 </style>
 

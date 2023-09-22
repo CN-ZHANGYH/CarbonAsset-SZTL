@@ -1,5 +1,5 @@
 <template>
-  <n-grid x-gap="12" :cols="4" class="ngi">
+  <n-grid x-gap="12" :cols="4" style="align-items: end;">
     <n-gi v-for="item in data">
         <div class="box_container">
           <div class="image-container">
@@ -241,9 +241,5 @@ function collect(item){
   pointer-events: none;
   /* 这里可以添加动画样式 */
   animation: your-animation 1s infinite;
-}
-
-.ngi {
-  align-items: end;
 }
 </style>
