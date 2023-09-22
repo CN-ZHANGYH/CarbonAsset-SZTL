@@ -22,7 +22,7 @@
 
     </n-card>
 
-    <n-gi v-for="item in data">
+    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }">
       <div class="box_container">
         <div class="box_title">
           <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>

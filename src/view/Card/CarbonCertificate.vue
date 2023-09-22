@@ -1,6 +1,6 @@
 <template>
   <n-grid x-gap="12" :cols="4">
-    <n-gi v-for="item in data">
+    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }">
         <div class="box_container">
           <div class="image-container">
             <img :src="item.url" class="img">
@@ -158,8 +158,7 @@ function collect(item){
 .box_container {
   width: 300px;
   height: 450px;
-  //background: #fff;
-  background: pink;
+  background: #fff;
   border-radius: 20px;
   display: flex;
   align-items: center;
