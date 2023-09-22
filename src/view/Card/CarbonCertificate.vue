@@ -1,6 +1,6 @@
 <template>
-  <n-grid x-gap="12" :cols="4">
-    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }" class="ngi">
+  <n-grid x-gap="12" :cols="4" class="ngi">
+    <n-gi v-for="item in data">
         <div class="box_container">
           <div class="image-container">
             <img :src="item.url" class="img">

@@ -1,5 +1,5 @@
 <template>
-  <n-grid x-gap="12" :cols="4">
+  <n-grid x-gap="12" :cols="4" class="ngi">
     <n-gi :span="12">
       <n-card style="height: 80px;border-radius: 20px" hoverable>
         <n-descriptions column="4">
@@ -22,7 +22,7 @@
 
     </n-card>
 
-    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }"  class="ngi">
+    <n-gi v-for="item in data">
       <div class="box_container">
         <div class="box_title">
           <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
