@@ -22,7 +22,7 @@
 
     </n-card>
 
-    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }">
+    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }"  class="ngi">
       <div class="box_container">
         <div class="box_title">
           <h1 style="color: #121212;font-family: 'Heiti SC'">{{item.name}}</h1>
@@ -386,6 +386,10 @@ onMounted(()=> {
 #favorite-btn:active {
   background-color: #19AAA9;
   color: white;
+}
+
+.ngi {
+  align-items: end;
 }
 </style>
 

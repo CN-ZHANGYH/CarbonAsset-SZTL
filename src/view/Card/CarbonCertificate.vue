@@ -1,6 +1,6 @@
 <template>
   <n-grid x-gap="12" :cols="4">
-    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }">
+    <n-gi v-for="item in data" :style="{ 'margin-top': index === 0 ? '0' : '' }" class="ngi">
         <div class="box_container">
           <div class="image-container">
             <img :src="item.url" class="img">
@@ -243,4 +243,7 @@ function collect(item){
   animation: your-animation 1s infinite;
 }
 
+.ngi {
+  align-items: end;
+}
 </style>
